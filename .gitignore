@@ -1,0 +1,40 @@
+# Build artifacts
+backend/target/
+*.class
+*.jar
+*.war
+
+# Database files
+*.db
+*.sqlite
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Node.js dependencies
+frontend/node_modules/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Environment variables
+.env
+.env.local
+.env.*.local
