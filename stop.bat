@@ -6,7 +6,7 @@ echo ========================================
 
 echo.
 echo Stopping backend server...
-for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080') do (
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":8080" ^| findstr "LISTENING"') do (
     echo Found process on port 8080, PID: %%a
     taskkill /F /PID %%a 2>nul
     if !errorlevel! equ 0 (
@@ -18,7 +18,7 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080') do (
 
 echo.
 echo Stopping frontend server...
-for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5173') do (
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":5173" ^| findstr "LISTENING"') do (
     echo Found process on port 5173, PID: %%a
     taskkill /F /PID %%a 2>nul
     if !errorlevel! equ 0 (
