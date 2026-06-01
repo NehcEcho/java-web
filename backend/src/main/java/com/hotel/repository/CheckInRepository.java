@@ -12,6 +12,7 @@ import java.util.List;
 public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
     List<CheckIn> findByStatus(CheckInStatus status);
     List<CheckIn> findByReservationId(Long reservationId);
+    List<CheckIn> findByActualCheckInBetween(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT c FROM CheckIn c WHERE c.actualCheckIn IS NOT NULL AND c.actualCheckIn >= :start AND c.actualCheckIn < :end")
     List<CheckIn> findTodayCheckIns(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);

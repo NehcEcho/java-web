@@ -8,11 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByUserId(Long userId);
     List<Reservation> findByStatus(ReservationStatus status);
+    List<Reservation> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT r FROM Reservation r WHERE r.room.id = :roomId AND r.status <> 'CANCELLED' AND r.checkInDate < :checkOut AND r.checkOutDate > :checkIn")
     List<Reservation> findConflictingReservations(@Param("roomId") Long roomId, @Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);

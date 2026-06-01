@@ -20,6 +20,8 @@ import ReservationDetailPage from '@/pages/customer/ReservationDetailPage';
 import ProfilePage from '@/pages/customer/ProfilePage';
 import UsersPage from '@/pages/admin/UsersPage';
 import ReviewsPage from '@/pages/admin/ReviewsPage';
+import AuditLogsPage from '@/pages/admin/AuditLogsPage';
+import ExportPage from '@/pages/admin/ExportPage';
 import type { ReactNode } from 'react';
 
 function AdminRoute({ children }: { children: ReactNode }) {
@@ -49,6 +51,8 @@ function AppRoutes() {
         <Route path="check-ins" element={<CheckInsPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="reviews" element={<ReviewsPage />} />
+        <Route path="audit-logs" element={<AuditLogsPage />} />
+        <Route path="export" element={<ExportPage />} />
       </Route>
       <Route path="/" element={<CustomerLayout />}>
         <Route index element={<HomePage />} />

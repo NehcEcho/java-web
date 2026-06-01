@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, DoorOpen, Building2, CalendarCheck, Hotel, LogOut, MessageSquare, Users } from 'lucide-react';
+import { LayoutDashboard, DoorOpen, Building2, CalendarCheck, Hotel, LogOut, MessageSquare, Users, FileText, Download } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const navItems = [
@@ -10,6 +10,8 @@ const navItems = [
   { to: '/admin/check-ins', icon: LogOut, label: '入住退房' },
   { to: '/admin/reviews', icon: MessageSquare, label: '评价管理' },
   { to: '/admin/users', icon: Users, label: '用户管理' },
+  { to: '/admin/audit-logs', icon: FileText, label: '操作日志' },
+  { to: '/admin/export', icon: Download, label: '数据导出' },
 ];
 
 export default function AdminLayout() {
