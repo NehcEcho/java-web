@@ -9,10 +9,13 @@ import com.hotel.entity.Room;
 import com.hotel.entity.RoomType;
 import com.hotel.entity.enums.RoomStatus;
 import com.hotel.exception.BusinessException;
+import com.hotel.repository.FavoriteRepository;
 import com.hotel.repository.ReservationRepository;
 import com.hotel.repository.RoomRepository;
 import com.hotel.repository.RoomTypeRepository;
+import com.hotel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,6 +34,8 @@ public class RoomService {
     private final RoomTypeRepository roomTypeRepository;
     private final ReviewService reviewService;
     private final ReservationRepository reservationRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final UserRepository userRepository;
 
     public List<RoomResponse> findAll() {
         return roomRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
@@ -40,8 +45,14 @@ public class RoomService {
         return roomRepository.findByStatus(status).stream().map(this::toResponse).collect(Collectors.toList());
     }
 
-    public List<RoomResponse> findAvailableRooms(LocalDate checkIn, LocalDate checkOut, Integer floor, String sortBy, String sortDir) {
+    public List<RoomResponse> findAvailableRooms(LocalDate checkIn, LocalDate checkOut, Long roomTypeId, Integer floor, String sortBy, String sortDir) {
         List<Room> rooms = roomRepository.findAvailableRooms(checkIn, checkOut);
+
+        if (roomTypeId != null) {
+            rooms = rooms.stream()
+                    .filter(r -> r.getRoomType().getId().equals(roomTypeId))
+                    .collect(Collectors.toList());
+        }
 
         if (floor != null) {
             rooms = rooms.stream()
@@ -97,6 +108,14 @@ public class RoomService {
         return toResponse(roomRepository.save(room));
     }
 
+    public void delete(Long id) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new BusinessException("房间不存在"));
+        if (room.getStatus() == RoomStatus.OCCUPIED) {
+            throw new BusinessException("已入住房间不能删除");
+        }
+        roomRepository.delete(room);
+    }
+
     public List<DateAvailability> getRoomAvailability(Long roomId, LocalDate month) {
         roomRepository.findById(roomId).orElseThrow(() -> new BusinessException("房间不存在"));
         LocalDate monthStart = month.withDayOfMonth(1);
@@ -134,7 +153,24 @@ public class RoomService {
         response.setRoomType(rtResponse);
         response.setAvgRating(reviewService.getAvgRating(room.getId()));
         response.setReviewCount(reviewService.getReviewCount(room.getId()));
-        response.setIsFavorited(false);
+
+        Long userId = getCurrentUserId();
+        response.setIsFavorited(userId != null && favoriteRepository.existsByUserIdAndRoomId(userId, room.getId()));
+
         return response;
+    }
+
+    private Long getCurrentUserId() {
+        try {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            if (username == null || "anonymousUser".equals(username)) {
+                return null;
+            }
+            return userRepository.findByUsername(username)
+                    .map(user -> user.getId())
+                    .orElse(null);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

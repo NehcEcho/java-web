@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/rooms/available").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/room-types").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/reviews/rooms/{roomId}").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

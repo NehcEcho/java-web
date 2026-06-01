@@ -193,7 +193,7 @@ export default function ReservationDetailPage() {
             {canReview && (
               <Button
                 className="w-full bg-gray-900 hover:bg-gray-800 text-white"
-                onClick={() => navigate(`/rooms/detail/${reservation.roomNumber}`)}
+                onClick={() => navigate(`/rooms/detail/${reservation.roomId}`)}
               >
                 写评价
               </Button>

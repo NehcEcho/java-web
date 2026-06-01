@@ -8,6 +8,7 @@ export interface Reservation {
   totalPrice: number;
   guestCount: number;
   specialRequests: string | null;
+  roomId: number;
   roomNumber: string;
   roomType: string;
   userId: number;

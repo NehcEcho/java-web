@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -27,14 +28,14 @@ public class DashboardService {
         long maintenanceRooms = roomRepository.countByStatus(RoomStatus.MAINTENANCE);
         long reservedRooms = roomRepository.countByStatus(RoomStatus.RESERVED);
         long pendingReservations = reservationRepository.findByStatus(ReservationStatus.PENDING).size();
-        long todayCheckIns = checkInRepository.findAll().stream()
-                .filter(ci -> ci.getActualCheckIn() != null
-                        && ci.getActualCheckIn().toLocalDate().equals(LocalDate.now()))
-                .count();
-        long todayCheckOuts = checkInRepository.findAll().stream()
-                .filter(ci -> ci.getActualCheckOut() != null
-                        && ci.getActualCheckOut().toLocalDate().equals(LocalDate.now()))
-                .count();
+
+        LocalDate today = LocalDate.now();
+        LocalDateTime dayStart = today.atStartOfDay();
+        LocalDateTime dayEnd = today.plusDays(1).atStartOfDay();
+
+        long todayCheckIns = checkInRepository.findTodayCheckIns(dayStart, dayEnd).size();
+        long todayCheckOuts = checkInRepository.findTodayCheckOuts(dayStart, dayEnd).size();
+
         return new DashboardStats(availableRooms, occupiedRooms, maintenanceRooms, reservedRooms,
                 totalRooms, todayCheckIns, todayCheckOuts, pendingReservations);
     }

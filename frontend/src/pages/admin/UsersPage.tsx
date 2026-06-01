@@ -1,27 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Loader2 } from 'lucide-react';
-
-// TODO: Add GET /api/auth/users endpoint to backend and create getUsers() in api/user.ts
-// For now, placeholder UI is shown
-
-interface UserProfile {
-  id: number;
-  username: string;
-  name: string;
-  role: string;
-  phone: string;
-  email: string;
-}
+import { getUsers, type UserProfile } from '@/api/user';
 
 export default function UsersPage() {
-  const [users] = useState<UserProfile[]>([]);
-  const [loading] = useState(true);
+  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // TODO: Uncomment when backend endpoint is ready
-  // useEffect(() => {
-  //   getUsers().then(setUsers).catch(() => {}).finally(() => setLoading(false));
-  // }, []);
+  useEffect(() => {
+    getUsers().then(setUsers).catch(() => {}).finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="p-6">

@@ -38,7 +38,7 @@ public class RoomController {
             @RequestParam(defaultValue = "price") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir,
             @RequestParam(required = false) Integer floor) {
-        return ApiResponse.success(roomService.findAvailableRooms(checkIn, checkOut, floor, sortBy, sortDir));
+        return ApiResponse.success(roomService.findAvailableRooms(checkIn, checkOut, roomTypeId, floor, sortBy, sortDir));
     }
 
     @GetMapping("/{id}")
@@ -66,5 +66,11 @@ public class RoomController {
     @PatchMapping("/{id}/status")
     public ApiResponse<RoomResponse> updateStatus(@PathVariable Long id, @Valid @RequestBody RoomStatusUpdateRequest request) {
         return ApiResponse.success(roomService.updateStatus(id, request.getStatus()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> delete(@PathVariable Long id) {
+        roomService.delete(id);
+        return ApiResponse.success(null);
     }
 }

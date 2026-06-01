@@ -15,6 +15,7 @@ public class ReservationResponse {
     private BigDecimal totalPrice;
     private Integer guestCount;
     private String specialRequests;
+    private Long roomId;
     private String roomNumber;
     private String roomType;
     private Long userId;

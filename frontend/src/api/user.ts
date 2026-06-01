@@ -26,6 +26,10 @@ export function changePassword(data: { oldPassword: string; newPassword: string 
   return api.put('/auth/password', data).then(res => res.data);
 }
 
+export function getUsers(): Promise<UserProfile[]> {
+  return api.get('/auth/users').then(res => res.data);
+}
+
 export function getRoomAvailability(roomId: number, month: string): Promise<DateAvailability[]> {
   const dateParam = `${month}-01`;
   return api.get(`/rooms/${roomId}/availability?month=${dateParam}`).then(res => res.data);

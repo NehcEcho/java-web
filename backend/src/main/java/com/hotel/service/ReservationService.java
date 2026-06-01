@@ -111,6 +111,7 @@ public class ReservationService {
         response.setTotalPrice(r.getTotalPrice());
         response.setGuestCount(r.getGuestCount());
         response.setSpecialRequests(r.getSpecialRequests());
+        response.setRoomId(r.getRoom().getId());
         response.setRoomNumber(r.getRoom().getRoomNumber());
         response.setRoomType(r.getRoom().getRoomType().getName());
         response.setUserId(r.getUser().getId());
