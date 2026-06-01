@@ -78,6 +78,7 @@ export default function ReservationDetailPage() {
   };
 
   const RoomImg = getRoomImage(reservation.roomType);
+  const typeName = t(getRoomTypeKey(reservation.roomType));
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
@@ -101,7 +102,7 @@ export default function ReservationDetailPage() {
                   <RoomImg className="w-full h-full object-cover" roomNumber={reservation.roomNumber} />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-xl font-bold mb-1">{reservation.roomNumber} - {reservation.roomType}</h2>
+                  <h2 className="text-xl font-bold mb-1">{reservation.roomNumber} - {typeName}</h2>
                   <p className="text-gray-500 text-sm mb-2">{t('reservationDetail.bookingNumber', { id: reservation.id })}</p>
                 </div>
               </div>

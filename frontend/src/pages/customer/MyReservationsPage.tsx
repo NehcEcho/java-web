@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { formatPrice, formatDate } from '@/lib/utils';
+import { formatPrice, formatDate, getRoomTypeKey } from '@/lib/utils';
 import { toast } from 'sonner';
 import { getRoomImage } from '@/components/images';
 import { Clock, History } from 'lucide-react';
@@ -72,6 +72,7 @@ export default function MyReservationsPage() {
 
   const renderCard = (r: Reservation, showCancel: boolean) => {
     const RoomImg = getRoomImage(r.roomType || '');
+    const typeName = t(getRoomTypeKey(r.roomType || ''));
     return (
       <Card
         key={r.id}
@@ -84,7 +85,7 @@ export default function MyReservationsPage() {
         <CardContent className="pt-4">
           <div className="flex justify-between items-start mb-3">
             <div>
-              <h3 className="font-bold text-lg">{r.roomNumber} - {r.roomType}</h3>
+              <h3 className="font-bold text-lg">{r.roomNumber} - {typeName}</h3>
               <p className="text-sm text-gray-500">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)} · {t('myReservations.guests', { count: r.guestCount })}</p>
             </div>
             <Badge className={statusConfig[r.status]?.className ?? ''}>{statusConfig[r.status]?.label ?? r.status}</Badge>

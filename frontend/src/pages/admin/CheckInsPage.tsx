@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { formatPrice, formatDate } from '@/lib/utils';
+import { formatPrice, formatDate, getRoomTypeKey } from '@/lib/utils';
 import { toast } from 'sonner';
 import { CalendarDays, ArrowRightLeft, FileDown, Loader2 } from 'lucide-react';
 
@@ -144,7 +144,7 @@ export default function CheckInsPage() {
                   <TableRow key={r.id} className="hover:bg-gray-50 transition-colors">
                     <TableCell>{r.id}</TableCell>
                     <TableCell>{r.userName}</TableCell>
-                    <TableCell>{r.roomNumber} ({r.roomType})</TableCell>
+                    <TableCell>{r.roomNumber} ({t(getRoomTypeKey(r.roomType))})</TableCell>
                     <TableCell className="text-sm">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)}</TableCell>
                     <TableCell className="font-medium">{formatPrice(r.totalPrice)}</TableCell>
                     <TableCell className="text-right">
@@ -245,7 +245,7 @@ export default function CheckInsPage() {
           <DialogHeader><DialogTitle>{t('checkIns.checkInDialog')}</DialogTitle></DialogHeader>
           {selectedRes && (
             <div className="space-y-3">
-              <p>{t('checkIns.roomLabel')}：{selectedRes.roomNumber} ({selectedRes.roomType})</p>
+              <p>{t('checkIns.roomLabel')}：{selectedRes.roomNumber} ({t(getRoomTypeKey(selectedRes.roomType))})</p>
               <p>{t('checkIns.customerLabel')}：{selectedRes.userName}</p>
               <p>{t('checkIns.dateLabel')}：{formatDate(selectedRes.checkInDate)} ~ {formatDate(selectedRes.checkOutDate)}</p>
               <p className="font-medium">{t('checkIns.totalPriceLabel')}：{formatPrice(selectedRes.totalPrice)}</p>

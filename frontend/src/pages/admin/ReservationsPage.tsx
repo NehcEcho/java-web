@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { formatPrice, formatDate } from '@/lib/utils';
+import { formatPrice, formatDate, getRoomTypeKey } from '@/lib/utils';
 import { toast } from 'sonner';
 
 function ReservationsSkeleton() {
@@ -108,7 +108,7 @@ export default function ReservationsPage() {
                 <TableRow key={r.id} className="hover:bg-gray-50 transition-colors">
                   <TableCell>{r.id}</TableCell>
                   <TableCell>{r.userName}</TableCell>
-                  <TableCell>{r.roomNumber} ({r.roomType})</TableCell>
+                  <TableCell>{r.roomNumber} ({t(getRoomTypeKey(r.roomType))})</TableCell>
                   <TableCell className="text-sm">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)}</TableCell>
                   <TableCell>{r.guestCount}{t('reservationsPage.guests')}</TableCell>
                   <TableCell className="font-medium text-amber-600">{formatPrice(r.totalPrice)}</TableCell>

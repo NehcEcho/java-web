@@ -318,6 +318,11 @@
     "maintenance": "Maintenance",
     "availableToBook": "Available"
   },
+  "roomType": {
+    "single": "Single Room",
+    "double": "Double Room",
+    "suite": "Suite"
+  },
   "reservation": {
     "checkInDate": "Check-in Date",
     "checkOutDate": "Check-out Date",

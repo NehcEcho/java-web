@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { toast } from 'sonner';
+import { getRoomTypeKey } from '@/lib/utils';
 
 function RoomsSkeleton() {
   return (
@@ -180,7 +181,7 @@ export default function RoomsPage() {
                 <TableRow key={room.id} className="hover:bg-gray-50 transition-colors">
                   <TableCell className="font-medium">{room.roomNumber}</TableCell>
                   <TableCell>{room.floor}F</TableCell>
-                  <TableCell>{room.roomType?.name ?? '-'}</TableCell>
+                  <TableCell>{t(getRoomTypeKey(room.roomType?.name ?? ''))}</TableCell>
                   <TableCell>¥{room.roomType?.basePrice ?? '-'}{t('common.perNight')}</TableCell>
                   <TableCell>
                     <Select value={room.status} onValueChange={(v: string | null) => { if (v) handleStatusChange(room.id, v); }}>
@@ -228,7 +229,7 @@ export default function RoomsPage() {
                 <SelectTrigger className="h-11 rounded-xl"><SelectValue placeholder={t('rooms.selectRoomType')} /></SelectTrigger>
                 <SelectContent>
                   {roomTypes.map((rt) => (
-                    <SelectItem key={rt.id} value={String(rt.id)}>{rt.name} - ¥{rt.basePrice}{t('common.perNight')}</SelectItem>
+                    <SelectItem key={rt.id} value={String(rt.id)}>{t(getRoomTypeKey(rt.name))} - ¥{rt.basePrice}{t('common.perNight')}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>

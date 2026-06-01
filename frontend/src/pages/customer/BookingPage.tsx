@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { CalendarPicker } from '@/components/shared/CalendarPicker';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getRoomTypeKey } from '@/lib/utils';
 import { getRoomImage } from '@/components/images';
 import { toast } from 'sonner';
 import { Breadcrumb } from '@/components/shared/Breadcrumb';
@@ -91,6 +91,7 @@ export default function BookingPage() {
     : 0;
   const totalPrice = nights * (room.roomType?.basePrice ?? 0);
   const RoomImg = getRoomImage(room.roomType?.name ?? '');
+  const typeName = t(getRoomTypeKey(room.roomType?.name ?? ''));
 
   const hasDateConflict = (() => {
     if (!form.checkInDate || !form.checkOutDate) return false;
@@ -145,7 +146,7 @@ export default function BookingPage() {
         <CardContent className="pt-4">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-xl font-bold">{room.roomNumber} - {room.roomType?.name}</h2>
+              <h2 className="text-xl font-bold">{room.roomNumber} - {typeName}</h2>
               <p className="text-gray-500">{room.roomType?.description}</p>
             </div>
             <div className="text-right">

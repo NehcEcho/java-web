@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Trash2 } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getRoomTypeKey } from '@/lib/utils';
 import { getRoomImage } from '@/components/images';
 import { toast } from 'sonner';
 
@@ -81,6 +81,7 @@ export default function MyFavoritesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {favorites.map(fav => {
           const RoomImg = getRoomImage(fav.roomTypeName);
+  const typeName = t(getRoomTypeKey(fav.roomTypeName));
           return (
             <Card key={fav.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 group cursor-pointer" onClick={() => navigate(`/rooms/detail/${fav.roomId}`)}>
               <div className="h-44 overflow-hidden">
@@ -88,7 +89,7 @@ export default function MyFavoritesPage() {
               </div>
               <CardContent className="pt-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold">{fav.roomNumber} - {fav.roomTypeName}</h3>
+                  <h3 className="text-lg font-bold">{fav.roomNumber} - {typeName}</h3>
                   <Badge className="bg-green-100 text-green-800">{fav.status === 'AVAILABLE' ? t('room.availableToBook') : fav.status}</Badge>
                 </div>
                 <div className="flex items-center gap-1 mb-3">

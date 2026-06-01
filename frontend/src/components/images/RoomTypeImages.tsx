@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 const baseUrl = 'https://images.unsplash.com';
 
 const singleImages = [
@@ -57,18 +59,21 @@ function RoomImg({ src, className = '', roomNumber, tag, tagClass }: { src: stri
 }
 
 export function RoomImageSingle({ className = '', roomNumber }: { className?: string; roomNumber?: string }) {
+  const { t } = useTranslation();
   const idx = hash(roomNumber || '0') % singleImages.length;
-  return <RoomImg src={singleImages[idx]} className={className} roomNumber={roomNumber} tag="单人" tagClass="bg-slate-100/80 text-slate-600" />;
+  return <RoomImg src={singleImages[idx]} className={className} roomNumber={roomNumber} tag={t('roomType.single')} tagClass="bg-slate-100/80 text-slate-600" />;
 }
 
 export function RoomImageDouble({ className = '', roomNumber }: { className?: string; roomNumber?: string }) {
+  const { t } = useTranslation();
   const idx = hash(roomNumber || '0') % doubleImages.length;
-  return <RoomImg src={doubleImages[idx]} className={className} roomNumber={roomNumber} tag="双人" tagClass="bg-amber-100/80 text-amber-700" />;
+  return <RoomImg src={doubleImages[idx]} className={className} roomNumber={roomNumber} tag={t('roomType.double')} tagClass="bg-amber-100/80 text-amber-700" />;
 }
 
 export function RoomImageSuite({ className = '', roomNumber }: { className?: string; roomNumber?: string }) {
+  const { t } = useTranslation();
   const idx = hash(roomNumber || '0') % suiteImages.length;
-  return <RoomImg src={suiteImages[idx]} className={className} roomNumber={roomNumber} tag="套房" tagClass="bg-indigo-100/80 text-indigo-700" />;
+  return <RoomImg src={suiteImages[idx]} className={className} roomNumber={roomNumber} tag={t('roomType.suite')} tagClass="bg-indigo-100/80 text-indigo-700" />;
 }
 
 let heroIdx = 0;

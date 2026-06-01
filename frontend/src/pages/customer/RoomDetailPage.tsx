@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Users, Wifi, CalendarDays, Building2 } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getRoomTypeKey } from '@/lib/utils';
 import { getRoomImage } from '@/components/images';
 import { Breadcrumb } from '@/components/shared/Breadcrumb';
 import { FavoriteButton } from '@/components/shared/FavoriteButton';
@@ -55,6 +55,7 @@ export default function RoomDetailPage() {
 
   const amenities = room.roomType.amenities ? room.roomType.amenities.split(',') : [];
   const RoomImg = getRoomImage(room.roomType.name);
+  const typeName = t(getRoomTypeKey(room.roomType.name));
   const avgRating = room.avgRating ?? 0;
   const reviewCount = room.reviewCount ?? 0;
 
@@ -93,7 +94,7 @@ export default function RoomDetailPage() {
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold tracking-tight">{room.roomNumber} - {room.roomType.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight">{room.roomNumber} - {typeName}</h1>
               <Badge className="bg-green-100 text-green-800">{room.status === 'AVAILABLE' ? t('room.availableToBook') : room.status}</Badge>
             </div>
             <p className="text-gray-600">{room.roomType.description}</p>

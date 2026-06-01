@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Users, Wifi, ArrowUpDown, Star } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getRoomTypeKey } from '@/lib/utils';
 import { getRoomImage } from '@/components/images';
 import { StarRating } from '@/components/shared/StarRating';
 import { FavoriteButton } from '@/components/shared/FavoriteButton';
@@ -106,6 +106,7 @@ export default function CustomerRoomsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRooms.map(room => {
           const RoomImg = getRoomImage(room.roomType.name);
+          const typeName = t(getRoomTypeKey(room.roomType.name));
           return (
             <Card key={room.id} className="overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 group cursor-pointer rounded-2xl" onClick={() => navigate(`/rooms/detail/${room.id}`)}>
               <div className="h-44 overflow-hidden relative">
@@ -116,7 +117,7 @@ export default function CustomerRoomsPage() {
               </div>
               <CardContent className="pt-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold">{room.roomNumber} - {room.roomType.name}</h3>
+                  <h3 className="text-lg font-bold">{room.roomNumber} - {typeName}</h3>
                   <Badge className="bg-green-100 text-green-800">{room.status === 'AVAILABLE' ? t('room.availableToBook') : room.status}</Badge>
                 </div>
                 <p className="text-sm text-gray-500 mb-3">{room.roomType.description}</p>

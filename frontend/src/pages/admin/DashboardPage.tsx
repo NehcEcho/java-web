@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { getRoomTypeKey } from '@/lib/utils';
 import { DoorOpen, Users, CalendarCheck, Wrench, LogIn, LogOut, AlertCircle, TrendingUp, PieChart as PieIcon, BarChart3, UserCheck } from 'lucide-react';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
@@ -160,7 +161,7 @@ export default function DashboardPage() {
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={revenue?.byRoomType ?? []}
+                    data={(revenue?.byRoomType ?? []).map(d => ({ ...d, roomType: t(getRoomTypeKey(d.roomType)) }))}
                     dataKey="revenue"
                     nameKey="roomType"
                     cx="50%"

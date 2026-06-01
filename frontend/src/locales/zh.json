@@ -318,6 +318,11 @@
     "maintenance": "维修中",
     "availableToBook": "可预订"
   },
+  "roomType": {
+    "single": "单人间",
+    "double": "双人间",
+    "suite": "套房"
+  },
   "reservation": {
     "checkInDate": "入住日期",
     "checkOutDate": "退房日期",
