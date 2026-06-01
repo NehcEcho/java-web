@@ -100,7 +100,7 @@ export default function AuditLogsPage() {
         <CardContent>
           <div className="flex flex-wrap items-end gap-4">
             <div className="w-44">
-              <Select value={action} onValueChange={(v) => { setAction(v); setPage(0); }}>
+              <Select value={action} onValueChange={(v) => { setAction(v ?? ''); setPage(0); }}>
                 <SelectTrigger className="h-11 rounded-xl">
                   <SelectValue placeholder={t('auditLogs.actionType')} />
                 </SelectTrigger>
