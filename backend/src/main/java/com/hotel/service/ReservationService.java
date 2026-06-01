@@ -26,6 +26,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     public ReservationResponse create(ReservationRequest request, Long userId) {
         Room room = roomRepository.findById(request.getRoomId())
@@ -123,6 +124,14 @@ public class ReservationService {
         reservation.setStatus(ReservationStatus.CONFIRMED);
         reservation.getRoom().setStatus(RoomStatus.RESERVED);
         roomRepository.save(reservation.getRoom());
+
+        notificationService.createNotification(
+                reservation.getUser().getId(),
+                "预订已确认",
+                "您的预订 #" + reservation.getId() + " 已确认，房间 " + reservation.getRoom().getRoomNumber(),
+                "RESERVATION"
+        );
+
         return toResponse(reservationRepository.save(reservation));
     }
 
@@ -134,6 +143,14 @@ public class ReservationService {
             roomRepository.save(reservation.getRoom());
         }
         reservation.setStatus(ReservationStatus.CANCELLED);
+
+        notificationService.createNotification(
+                reservation.getUser().getId(),
+                "预订已取消",
+                "您的预订 #" + reservation.getId() + " 已取消",
+                "RESERVATION"
+        );
+
         return toResponse(reservationRepository.save(reservation));
     }
 

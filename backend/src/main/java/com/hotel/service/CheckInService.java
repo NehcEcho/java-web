@@ -31,6 +31,7 @@ public class CheckInService {
     private final CheckInRepository checkInRepository;
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
+    private final NotificationService notificationService;
 
     public CheckInResponse checkIn(CheckInRequest request) {
         Reservation reservation = reservationRepository.findById(request.getReservationId())
@@ -58,6 +59,13 @@ public class CheckInService {
         reservation.getRoom().setStatus(RoomStatus.OCCUPIED);
         roomRepository.save(reservation.getRoom());
 
+        notificationService.createNotification(
+                reservation.getUser().getId(),
+                "入住成功",
+                "您已成功入住房间 " + reservation.getRoom().getRoomNumber() + "，祝您入住愉快！",
+                "CHECK_IN"
+        );
+
         return toResponse(checkInRepository.save(checkIn));
     }
 
@@ -71,6 +79,14 @@ public class CheckInService {
         checkIn.setStatus(CheckInStatus.CHECKED_OUT);
         checkIn.getReservation().getRoom().setStatus(RoomStatus.AVAILABLE);
         roomRepository.save(checkIn.getReservation().getRoom());
+
+        notificationService.createNotification(
+                checkIn.getReservation().getUser().getId(),
+                "退房成功",
+                "您已成功退房，感谢您的入住，期待再次光临！",
+                "CHECK_OUT"
+        );
+
         return toResponse(checkInRepository.save(checkIn));
     }
 

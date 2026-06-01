@@ -1,6 +1,8 @@
 import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Hotel, LogOut, Heart, User } from 'lucide-react';
+import { NotificationBell } from '@/components/shared/NotificationBell';
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
 export default function CustomerLayout() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -26,6 +28,8 @@ export default function CustomerLayout() {
                 <Link to="/profile" className="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors flex items-center gap-1">
                   <User className="w-4 h-4" />个人中心
                 </Link>
+                <NotificationBell />
+                <LanguageSwitcher />
                 <span className="text-sm text-gray-500">{user?.username}</span>
                 <button onClick={logout} className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors">
                   <LogOut className="w-4 h-4" />退出

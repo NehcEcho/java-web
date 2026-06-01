@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "home": "Home",
+    "rooms": "Rooms",
+    "myReservations": "My Reservations",
+    "favorites": "Favorites",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "roomManagement": "Room Management",
+    "roomTypes": "Room Types",
+    "reservations": "Reservations",
+    "checkIns": "Check-ins",
+    "users": "Users",
+    "reviews": "Reviews"
+  },
+  "common": {
+    "loading": "Loading...",
+    "noData": "No data",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "reset": "Reset",
+    "submit": "Submit",
+    "back": "Back",
+    "success": "Success",
+    "error": "Error",
+    "price": "Price",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "loginSuccess": "Login successful",
+    "logoutSuccess": "Logged out"
+  },
+  "room": {
+    "roomNumber": "Room Number",
+    "floor": "Floor",
+    "roomType": "Room Type",
+    "basePrice": "Base Price",
+    "maxGuests": "Max Guests",
+    "amenities": "Amenities",
+    "description": "Description",
+    "available": "Available",
+    "occupied": "Occupied",
+    "reserved": "Reserved",
+    "maintenance": "Maintenance"
+  },
+  "reservation": {
+    "checkInDate": "Check-in Date",
+    "checkOutDate": "Check-out Date",
+    "guestCount": "Guests",
+    "specialRequests": "Special Requests",
+    "totalPrice": "Total Price",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    }
+  },
+  "notification": {
+    "title": "Notifications",
+    "noUnread": "No unread notifications",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "reservation": "Reservation",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out"
+  }
+}
