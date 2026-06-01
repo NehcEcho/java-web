@@ -40,6 +40,9 @@ class ReservationServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private ReservationService reservationService;
 
