@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { Hotel } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -22,7 +24,7 @@ export default function LoginPage() {
       await login(username, password);
       navigate('/admin/dashboard');
     } catch (err: any) {
-      toast.error(err.message || '登录失败');
+      toast.error(err.message || t('adminLogin.loginFailed'));
     } finally {
       setLoading(false);
     }
@@ -37,21 +39,21 @@ export default function LoginPage() {
               <Hotel className="w-7 h-7 text-white" />
             </div>
           </div>
-          <CardTitle className="text-xl">酒店管理系统</CardTitle>
-          <p className="text-sm text-gray-500 mt-1">管理后台</p>
+          <CardTitle className="text-xl">{t('adminLogin.title')}</CardTitle>
+          <p className="text-sm text-gray-500 mt-1">{t('adminLogin.subtitle')}</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">用户名</Label>
+              <Label htmlFor="username">{t('adminLogin.username')}</Label>
               <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="admin" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">密码</Label>
+              <Label htmlFor="password">{t('adminLogin.password')}</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••" required />
             </div>
             <Button type="submit" className="w-full bg-gray-900 hover:bg-gray-800 text-white" disabled={loading}>
-              {loading ? '登录中...' : '登录'}
+              {loading ? t('adminLogin.loggingIn') : t('adminLogin.login')}
             </Button>
           </form>
         </CardContent>

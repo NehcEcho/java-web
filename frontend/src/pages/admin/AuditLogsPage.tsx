@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getAuditLogs, type AuditLog, type AuditLogPage } from '@/api/export';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,28 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Loader2, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 
-const actionLabels: Record<string, string> = {
-  CREATE: '创建',
-  UPDATE: '更新',
-  DELETE: '删除',
-  CHECK_IN: '入住',
-  CHECK_OUT: '退房',
-  CANCEL: '取消',
-  LOGIN: '登录',
-  OTHER: '其他',
-};
-
-const entityLabels: Record<string, string> = {
-  Reservation: '预订',
-  Room: '房间',
-  CheckIn: '入住',
-  User: '用户',
-  Review: '评价',
-  Favorite: '收藏',
-  Other: '其他',
-};
-
 export default function AuditLogsPage() {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -37,6 +18,27 @@ export default function AuditLogsPage() {
   const [action, setAction] = useState<string>('');
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
+
+  const actionLabels: Record<string, string> = {
+    CREATE: t('auditLogs.actions.create'),
+    UPDATE: t('auditLogs.actions.update'),
+    DELETE: t('auditLogs.actions.delete'),
+    CHECK_IN: t('auditLogs.actions.checkIn'),
+    CHECK_OUT: t('auditLogs.actions.checkOut'),
+    CANCEL: t('auditLogs.actions.cancel'),
+    LOGIN: t('auditLogs.actions.login'),
+    OTHER: t('auditLogs.actions.other'),
+  };
+
+  const entityLabels: Record<string, string> = {
+    Reservation: t('auditLogs.entities.reservation'),
+    Room: t('auditLogs.entities.room'),
+    CheckIn: t('auditLogs.entities.checkIn'),
+    User: t('auditLogs.entities.user'),
+    Review: t('auditLogs.entities.review'),
+    Favorite: t('auditLogs.entities.favorite'),
+    Other: t('auditLogs.entities.other'),
+  };
 
   const load = async () => {
     setLoading(true);
@@ -50,7 +52,7 @@ export default function AuditLogsPage() {
       });
       setLogs(data.content);
       setTotalPages(data.totalPages);
-    } catch { toast.error('加载失败'); } finally { setLoading(false); }
+    } catch { toast.error(t('common.loadFailed')); } finally { setLoading(false); }
   };
 
   useEffect(() => { load(); }, [page, action]);
@@ -74,29 +76,29 @@ export default function AuditLogsPage() {
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-        <FileText className="w-8 h-8" /> 操作日志
+        <FileText className="w-8 h-8" /> {t('auditLogs.title')}
       </h1>
 
       <Card className="rounded-2xl shadow-sm">
         <CardHeader>
-          <CardTitle className="text-lg">筛选条件</CardTitle>
+          <CardTitle className="text-lg">{t('auditLogs.filterConditions')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
             <Select value={action} onValueChange={(v) => setAction(v ?? '')}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="操作类型" />
+                <SelectValue placeholder={t('auditLogs.actionType')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">全部</SelectItem>
+                <SelectItem value="">{t('common.all')}</SelectItem>
                 {Object.entries(actionLabels).map(([key, label]) => (
                   <SelectItem key={key} value={key}>{label}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <Input type="date" value={start} onChange={e => setStart(e.target.value)} placeholder="开始日期" className="w-40" />
-            <Input type="date" value={end} onChange={e => setEnd(e.target.value)} placeholder="结束日期" className="w-40" />
-            <Button onClick={handleSearch} className="bg-gray-900 text-white hover:bg-gray-800">查询</Button>
+            <Input type="date" value={start} onChange={e => setStart(e.target.value)} placeholder={t('auditLogs.startDate')} className="w-40" />
+            <Input type="date" value={end} onChange={e => setEnd(e.target.value)} placeholder={t('auditLogs.endDate')} className="w-40" />
+            <Button onClick={handleSearch} className="bg-gray-900 text-white hover:bg-gray-800">{t('auditLogs.query')}</Button>
           </div>
         </CardContent>
       </Card>
@@ -106,10 +108,10 @@ export default function AuditLogsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>时间</TableHead>
-                <TableHead>操作人</TableHead>
-                <TableHead>操作</TableHead>
-                <TableHead>对象</TableHead>
+                <TableHead>{t('auditLogs.time')}</TableHead>
+                <TableHead>{t('auditLogs.operator')}</TableHead>
+                <TableHead>{t('auditLogs.action')}</TableHead>
+                <TableHead>{t('auditLogs.object')}</TableHead>
                 <TableHead>IP</TableHead>
               </TableRow>
             </TableHeader>
@@ -137,7 +139,7 @@ export default function AuditLogsPage() {
 
           {totalPages > 1 && (
             <div className="flex items-center justify-between mt-4">
-              <p className="text-sm text-gray-500">第 {page + 1} / {totalPages} 页</p>
+              <p className="text-sm text-gray-500">{t('auditLogs.pageInfo', { current: page + 1, total: totalPages })}</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>
                   <ChevronLeft className="w-4 h-4" />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getCheckIns, checkIn, checkOut, extendStay, transferRoom, downloadInvoice, type CheckIn, type ExtendStayRequest, type TransferRoomRequest } from '@/api/checkIns';
 import { getReservations, type Reservation } from '@/api/reservations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,6 +30,7 @@ function CheckInsSkeleton() {
 }
 
 export default function CheckInsPage() {
+  const { t } = useTranslation();
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [pendingReservations, setPendingReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,7 @@ export default function CheckInsPage() {
       const [ci, res] = await Promise.all([getCheckIns(), getReservations()]);
       setCheckIns(ci);
       setPendingReservations(res.filter(r => r.status === 'CONFIRMED'));
-    } catch { toast.error('加载失败'); } finally { setLoading(false); }
+    } catch { toast.error(t('common.loadFailed')); } finally { setLoading(false); }
   };
 
   useEffect(() => { load(); }, []);
@@ -59,21 +61,21 @@ export default function CheckInsPage() {
     if (!selectedRes) return;
     try {
       await checkIn({ reservationId: selectedRes.id, deposit: deposit ? Number(deposit) : undefined, notes: notes || undefined });
-      toast.success('入住办理成功');
+      toast.success(t('checkIns.checkInSuccess'));
       setDialogOpen(false);
       setDeposit('');
       setNotes('');
       load();
-    } catch (err: any) { toast.error(err.message || '入住办理失败'); }
+    } catch (err: any) { toast.error(err.message || t('checkIns.checkInFailed')); }
   };
 
   const handleCheckOut = async (id: number) => {
-    if (!confirm('确认退房？')) return;
+    if (!confirm(t('checkIns.confirmCheckOutMessage'))) return;
     try {
       await checkOut(id);
-      toast.success('退房成功');
+      toast.success(t('checkIns.checkOutSuccess'));
       load();
-    } catch (err: any) { toast.error(err.message || '退房失败'); }
+    } catch (err: any) { toast.error(err.message || t('checkIns.checkOutFailed')); }
   };
 
   const handleExtend = async () => {
@@ -82,12 +84,12 @@ export default function CheckInsPage() {
     try {
       const data: ExtendStayRequest = { newCheckOutDate, reason: extendReason || undefined };
       await extendStay(selectedCheckIn.id, data);
-      toast.success('延住成功');
+      toast.success(t('checkIns.extendSuccess'));
       setExtendDialogOpen(false);
       setNewCheckOutDate('');
       setExtendReason('');
       load();
-    } catch (err: any) { toast.error(err.message || '延住失败'); } finally { setSubmitting(false); }
+    } catch (err: any) { toast.error(err.message || t('checkIns.extendFailed')); } finally { setSubmitting(false); }
   };
 
   const handleTransfer = async () => {
@@ -96,19 +98,19 @@ export default function CheckInsPage() {
     try {
       const data: TransferRoomRequest = { newRoomId: Number(newRoomId), reason: transferReason || undefined };
       await transferRoom(selectedCheckIn.id, data);
-      toast.success('换房成功');
+      toast.success(t('checkIns.transferSuccess'));
       setTransferDialogOpen(false);
       setNewRoomId('');
       setTransferReason('');
       load();
-    } catch (err: any) { toast.error(err.message || '换房失败'); } finally { setSubmitting(false); }
+    } catch (err: any) { toast.error(err.message || t('checkIns.transferFailed')); } finally { setSubmitting(false); }
   };
 
   const handleDownloadInvoice = async (id: number) => {
     try {
       await downloadInvoice(id);
-      toast.success('发票下载成功');
-    } catch (err: any) { toast.error(err.message || '发票下载失败'); }
+      toast.success(t('checkIns.invoiceDownloadSuccess'));
+    } catch (err: any) { toast.error(err.message || t('checkIns.invoiceDownloadFailed')); }
   };
 
   if (loading) return <CheckInsSkeleton />;
@@ -118,23 +120,23 @@ export default function CheckInsPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">入住退房管理</h1>
+      <h1 className="text-3xl font-bold tracking-tight">{t('checkIns.title')}</h1>
 
       <Card className="rounded-2xl shadow-sm hover:shadow-lg transition-all">
-        <CardHeader><CardTitle>待入住预订 ({pendingReservations.length})</CardTitle></CardHeader>
+        <CardHeader><CardTitle>{t('checkIns.pendingReservations')} ({pendingReservations.length})</CardTitle></CardHeader>
         <CardContent>
           {pendingReservations.length === 0 ? (
-            <p className="text-center text-gray-500 py-4">暂无待入住预订</p>
+            <p className="text-center text-gray-500 py-4">{t('checkIns.noPendingReservations')}</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>预订ID</TableHead>
-                  <TableHead>客户</TableHead>
-                  <TableHead>房间</TableHead>
-                  <TableHead>入住-退房</TableHead>
-                  <TableHead>总价</TableHead>
-                  <TableHead className="text-right">操作</TableHead>
+                  <TableHead>{t('checkIns.reservationId')}</TableHead>
+                  <TableHead>{t('checkIns.customer')}</TableHead>
+                  <TableHead>{t('checkIns.room')}</TableHead>
+                  <TableHead>{t('checkIns.checkInCheckOut')}</TableHead>
+                  <TableHead>{t('checkIns.totalPrice')}</TableHead>
+                  <TableHead className="text-right">{t('common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -146,7 +148,7 @@ export default function CheckInsPage() {
                     <TableCell className="text-sm">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)}</TableCell>
                     <TableCell className="font-medium">{formatPrice(r.totalPrice)}</TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" onClick={() => { setSelectedRes(r); setDialogOpen(true); }} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">办理入住</Button>
+                      <Button size="sm" onClick={() => { setSelectedRes(r); setDialogOpen(true); }} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">{t('checkIns.checkInAction')}</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -158,18 +160,18 @@ export default function CheckInsPage() {
 
       {staying.length > 0 && (
         <Card className="rounded-2xl shadow-sm hover:shadow-lg transition-all">
-          <CardHeader><CardTitle>在住客人 ({staying.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t('checkIns.stayingGuests')} ({staying.length})</CardTitle></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>入住ID</TableHead>
-                  <TableHead>客户</TableHead>
-                  <TableHead>房间</TableHead>
-                  <TableHead>入住时间</TableHead>
-                  <TableHead>退房日期</TableHead>
-                  <TableHead>押金</TableHead>
-                  <TableHead className="text-right">操作</TableHead>
+                  <TableHead>{t('checkIns.checkInId')}</TableHead>
+                  <TableHead>{t('checkIns.customer')}</TableHead>
+                  <TableHead>{t('checkIns.room')}</TableHead>
+                  <TableHead>{t('checkIns.checkInTime')}</TableHead>
+                  <TableHead>{t('checkIns.checkOutDate')}</TableHead>
+                  <TableHead>{t('checkIns.deposit')}</TableHead>
+                  <TableHead className="text-right">{t('common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -184,12 +186,12 @@ export default function CheckInsPage() {
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button size="sm" variant="outline" className="h-9 rounded-xl" onClick={() => { setSelectedCheckIn(ci); setExtendDialogOpen(true); }}>
-                          <CalendarDays className="w-4 h-4 mr-1" /> 延住
+                          <CalendarDays className="w-4 h-4 mr-1" /> {t('checkIns.extendStay')}
                         </Button>
                         <Button size="sm" variant="outline" className="h-9 rounded-xl" onClick={() => { setSelectedCheckIn(ci); setTransferDialogOpen(true); }}>
-                          <ArrowRightLeft className="w-4 h-4 mr-1" /> 换房
+                          <ArrowRightLeft className="w-4 h-4 mr-1" /> {t('checkIns.transferRoom')}
                         </Button>
-                        <Button size="sm" variant="outline" className="h-9 rounded-xl text-red-600 active:scale-[0.98] transition-all" onClick={() => handleCheckOut(ci.id)}>退房</Button>
+                        <Button size="sm" variant="outline" className="h-9 rounded-xl text-red-600 active:scale-[0.98] transition-all" onClick={() => handleCheckOut(ci.id)}>{t('checkIns.checkOut')}</Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -202,18 +204,18 @@ export default function CheckInsPage() {
 
       {checkedOut.length > 0 && (
         <Card className="rounded-2xl shadow-sm hover:shadow-lg transition-all">
-          <CardHeader><CardTitle>已退房记录 ({checkedOut.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t('checkIns.checkedOutRecords')} ({checkedOut.length})</CardTitle></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>入住ID</TableHead>
-                  <TableHead>客户</TableHead>
-                  <TableHead>房间</TableHead>
-                  <TableHead>入住时间</TableHead>
-                  <TableHead>退房时间</TableHead>
-                  <TableHead>总价</TableHead>
-                  <TableHead className="text-right">操作</TableHead>
+                  <TableHead>{t('checkIns.checkInId')}</TableHead>
+                  <TableHead>{t('checkIns.customer')}</TableHead>
+                  <TableHead>{t('checkIns.room')}</TableHead>
+                  <TableHead>{t('checkIns.checkInTime')}</TableHead>
+                  <TableHead>{t('checkIns.checkOutTime')}</TableHead>
+                  <TableHead>{t('checkIns.totalPrice')}</TableHead>
+                  <TableHead className="text-right">{t('common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -227,7 +229,7 @@ export default function CheckInsPage() {
                     <TableCell className="font-medium">{formatPrice(ci.reservation.totalPrice)}</TableCell>
                     <TableCell className="text-right">
                       <Button size="sm" variant="outline" className="h-9 rounded-xl" onClick={() => handleDownloadInvoice(ci.id)}>
-                        <FileDown className="w-4 h-4 mr-1" /> 下载发票
+                        <FileDown className="w-4 h-4 mr-1" /> {t('checkIns.downloadInvoice')}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -240,53 +242,53 @@ export default function CheckInsPage() {
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
-          <DialogHeader><DialogTitle>办理入住</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{t('checkIns.checkInDialog')}</DialogTitle></DialogHeader>
           {selectedRes && (
             <div className="space-y-3">
-              <p>房间：{selectedRes.roomNumber} ({selectedRes.roomType})</p>
-              <p>客户：{selectedRes.userName}</p>
-              <p>日期：{formatDate(selectedRes.checkInDate)} ~ {formatDate(selectedRes.checkOutDate)}</p>
-              <p className="font-medium">总价：{formatPrice(selectedRes.totalPrice)}</p>
+              <p>{t('checkIns.roomLabel')}：{selectedRes.roomNumber} ({selectedRes.roomType})</p>
+              <p>{t('checkIns.customerLabel')}：{selectedRes.userName}</p>
+              <p>{t('checkIns.dateLabel')}：{formatDate(selectedRes.checkInDate)} ~ {formatDate(selectedRes.checkOutDate)}</p>
+              <p className="font-medium">{t('checkIns.totalPriceLabel')}：{formatPrice(selectedRes.totalPrice)}</p>
               <div className="space-y-2 pt-2">
-                <Label>押金（选填）</Label>
-                <Input type="number" value={deposit} onChange={e => setDeposit(e.target.value)} placeholder="输入押金金额" className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+                <Label>{t('checkIns.depositLabel')}</Label>
+                <Input type="number" value={deposit} onChange={e => setDeposit(e.target.value)} placeholder={t('checkIns.depositPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
               <div className="space-y-2">
-                <Label>备注（选填）</Label>
-                <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="入住备注" className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+                <Label>{t('checkIns.notesLabel')}</Label>
+                <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder={t('checkIns.notesPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)} className="h-11 rounded-xl">取消</Button>
-            <Button onClick={handleCheckIn} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">确认入住</Button>
+            <Button variant="outline" onClick={() => setDialogOpen(false)} className="h-11 rounded-xl">{t('common.cancel')}</Button>
+            <Button onClick={handleCheckIn} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">{t('checkIns.confirmCheckIn')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={extendDialogOpen} onOpenChange={setExtendDialogOpen}>
         <DialogContent>
-          <DialogHeader><DialogTitle>延住</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{t('checkIns.extendStayDialog')}</DialogTitle></DialogHeader>
           {selectedCheckIn && (
             <div className="space-y-3">
-              <p>客户：{selectedCheckIn.reservation.userName}</p>
-              <p>房间：{selectedCheckIn.reservation.roomNumber}</p>
-              <p>原退房日期：{formatDate(selectedCheckIn.reservation.checkOutDate)}</p>
+              <p>{t('checkIns.customerLabel')}：{selectedCheckIn.reservation.userName}</p>
+              <p>{t('checkIns.roomLabel')}：{selectedCheckIn.reservation.roomNumber}</p>
+              <p>{t('checkIns.originalCheckOutDate')}：{formatDate(selectedCheckIn.reservation.checkOutDate)}</p>
               <div className="space-y-2 pt-2">
-                <Label>新退房日期</Label>
+                <Label>{t('checkIns.newCheckOutDate')}</Label>
                 <Input type="date" value={newCheckOutDate} onChange={e => setNewCheckOutDate(e.target.value)} min={selectedCheckIn.reservation.checkOutDate} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
               <div className="space-y-2">
-                <Label>原因（选填）</Label>
-                <Input value={extendReason} onChange={e => setExtendReason(e.target.value)} placeholder="延住原因" className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+                <Label>{t('checkIns.reasonLabel')}</Label>
+                <Input value={extendReason} onChange={e => setExtendReason(e.target.value)} placeholder={t('checkIns.extendReasonPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setExtendDialogOpen(false)} className="h-11 rounded-xl">取消</Button>
+            <Button variant="outline" onClick={() => setExtendDialogOpen(false)} className="h-11 rounded-xl">{t('common.cancel')}</Button>
             <Button onClick={handleExtend} disabled={submitting || !newCheckOutDate} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">
               {submitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              确认延住
+              {t('checkIns.confirmExtend')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -294,26 +296,26 @@ export default function CheckInsPage() {
 
       <Dialog open={transferDialogOpen} onOpenChange={setTransferDialogOpen}>
         <DialogContent>
-          <DialogHeader><DialogTitle>换房</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{t('checkIns.transferRoomDialog')}</DialogTitle></DialogHeader>
           {selectedCheckIn && (
             <div className="space-y-3">
-              <p>客户：{selectedCheckIn.reservation.userName}</p>
-              <p>当前房间：{selectedCheckIn.reservation.roomNumber}</p>
+              <p>{t('checkIns.customerLabel')}：{selectedCheckIn.reservation.userName}</p>
+              <p>{t('checkIns.currentRoom')}：{selectedCheckIn.reservation.roomNumber}</p>
               <div className="space-y-2 pt-2">
-                <Label>新房间ID</Label>
-                <Input type="number" value={newRoomId} onChange={e => setNewRoomId(e.target.value)} placeholder="输入新房间ID" className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+                <Label>{t('checkIns.newRoomId')}</Label>
+                <Input type="number" value={newRoomId} onChange={e => setNewRoomId(e.target.value)} placeholder={t('checkIns.newRoomIdPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
               <div className="space-y-2">
-                <Label>原因（选填）</Label>
-                <Input value={transferReason} onChange={e => setTransferReason(e.target.value)} placeholder="换房原因" className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+                <Label>{t('checkIns.reasonLabel')}</Label>
+                <Input value={transferReason} onChange={e => setTransferReason(e.target.value)} placeholder={t('checkIns.transferReasonPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setTransferDialogOpen(false)} className="h-11 rounded-xl">取消</Button>
+            <Button variant="outline" onClick={() => setTransferDialogOpen(false)} className="h-11 rounded-xl">{t('common.cancel')}</Button>
             <Button onClick={handleTransfer} disabled={submitting || !newRoomId} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">
               {submitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              确认换房
+              {t('checkIns.confirmTransfer')}
             </Button>
           </DialogFooter>
         </DialogContent>
