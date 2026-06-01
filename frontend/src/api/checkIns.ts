@@ -14,6 +14,7 @@ export interface CheckIn {
     status: string;
     totalPrice: number;
     guestCount: number;
+    roomId: number;
     roomNumber: string;
     roomType: string;
     userName: string;
@@ -26,6 +27,16 @@ export interface CheckInRequest {
   notes?: string;
 }
 
+export interface ExtendStayRequest {
+  newCheckOutDate: string;
+  reason?: string;
+}
+
+export interface TransferRoomRequest {
+  newRoomId: number;
+  reason?: string;
+}
+
 export async function checkIn(data: CheckInRequest): Promise<CheckIn> {
   const res = await api.post('/check-ins', data);
   return res.data;
@@ -36,7 +47,29 @@ export async function checkOut(id: number): Promise<CheckIn> {
   return res.data;
 }
 
+export async function extendStay(id: number, data: ExtendStayRequest): Promise<CheckIn> {
+  const res = await api.patch(`/check-ins/${id}/extend`, data);
+  return res.data;
+}
+
+export async function transferRoom(id: number, data: TransferRoomRequest): Promise<CheckIn> {
+  const res = await api.patch(`/check-ins/${id}/transfer`, data);
+  return res.data;
+}
+
 export async function getCheckIns(): Promise<CheckIn[]> {
   const res = await api.get('/check-ins');
   return res.data;
+}
+
+export async function downloadInvoice(id: number): Promise<void> {
+  const res = await api.get(`/check-ins/${id}/invoice`, { responseType: 'blob' });
+  const url = window.URL.createObjectURL(new Blob([res.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `invoice-${id}.pdf`);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
 }

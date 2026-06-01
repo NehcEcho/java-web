@@ -24,8 +24,17 @@ export interface ReservationRequest {
   specialRequests?: string;
 }
 
+export interface BatchReservationRequest {
+  reservations: ReservationRequest[];
+}
+
 export async function createReservation(data: ReservationRequest): Promise<Reservation> {
   const res = await api.post('/reservations', data);
+  return res.data;
+}
+
+export async function createBatchReservation(data: BatchReservationRequest): Promise<Reservation[]> {
+  const res = await api.post('/reservations/batch', data);
   return res.data;
 }
 

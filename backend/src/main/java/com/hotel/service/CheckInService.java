@@ -2,9 +2,12 @@ package com.hotel.service;
 
 import com.hotel.dto.checkin.CheckInRequest;
 import com.hotel.dto.checkin.CheckInResponse;
+import com.hotel.dto.checkin.ExtendStayRequest;
+import com.hotel.dto.checkin.TransferRoomRequest;
 import com.hotel.dto.reservation.ReservationResponse;
 import com.hotel.entity.CheckIn;
 import com.hotel.entity.Reservation;
+import com.hotel.entity.Room;
 import com.hotel.entity.enums.CheckInStatus;
 import com.hotel.entity.enums.ReservationStatus;
 import com.hotel.entity.enums.RoomStatus;
@@ -15,7 +18,9 @@ import com.hotel.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +74,70 @@ public class CheckInService {
         return toResponse(checkInRepository.save(checkIn));
     }
 
+    public CheckInResponse extendStay(Long id, ExtendStayRequest request) {
+        CheckIn checkIn = checkInRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("入住记录不存在"));
+        if (checkIn.getStatus() != CheckInStatus.STAYING) {
+            throw new BusinessException("该房间未在住状态");
+        }
+
+        Reservation reservation = checkIn.getReservation();
+        if (!request.getNewCheckOutDate().isAfter(reservation.getCheckOutDate())) {
+            throw new BusinessException("新退房日期必须晚于原退房日期");
+        }
+
+        long extraDays = ChronoUnit.DAYS.between(reservation.getCheckOutDate(), request.getNewCheckOutDate());
+        BigDecimal extraCharge = reservation.getRoom().getRoomType().getBasePrice().multiply(BigDecimal.valueOf(extraDays));
+
+        reservation.setCheckOutDate(request.getNewCheckOutDate());
+        reservation.setTotalPrice(reservation.getTotalPrice().add(extraCharge));
+        reservationRepository.save(reservation);
+
+        if (request.getReason() != null) {
+            checkIn.setNotes((checkIn.getNotes() != null ? checkIn.getNotes() + "; " : "") + "延住: " + request.getReason());
+        }
+        return toResponse(checkInRepository.save(checkIn));
+    }
+
+    public CheckInResponse transferRoom(Long id, TransferRoomRequest request) {
+        CheckIn checkIn = checkInRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("入住记录不存在"));
+        if (checkIn.getStatus() != CheckInStatus.STAYING) {
+            throw new BusinessException("该房间未在住状态");
+        }
+
+        Reservation reservation = checkIn.getReservation();
+        Room oldRoom = reservation.getRoom();
+        Room newRoom = roomRepository.findById(request.getNewRoomId())
+                .orElseThrow(() -> new BusinessException("新房间不存在"));
+
+        if (newRoom.getStatus() != RoomStatus.AVAILABLE) {
+            throw new BusinessException("新房间不可用");
+        }
+
+        if (!newRoom.getRoomType().getId().equals(oldRoom.getRoomType().getId())) {
+            long remainingDays = ChronoUnit.DAYS.between(LocalDateTime.now().toLocalDate(), reservation.getCheckOutDate());
+            BigDecimal oldRoomPrice = oldRoom.getRoomType().getBasePrice().multiply(BigDecimal.valueOf(remainingDays));
+            BigDecimal newRoomPrice = newRoom.getRoomType().getBasePrice().multiply(BigDecimal.valueOf(remainingDays));
+            BigDecimal priceDiff = newRoomPrice.subtract(oldRoomPrice);
+            reservation.setTotalPrice(reservation.getTotalPrice().add(priceDiff));
+        }
+
+        oldRoom.setStatus(RoomStatus.AVAILABLE);
+        roomRepository.save(oldRoom);
+
+        newRoom.setStatus(RoomStatus.OCCUPIED);
+        roomRepository.save(newRoom);
+
+        reservation.setRoom(newRoom);
+        reservationRepository.save(reservation);
+
+        if (request.getReason() != null) {
+            checkIn.setNotes((checkIn.getNotes() != null ? checkIn.getNotes() + "; " : "") + "换房: " + request.getReason());
+        }
+        return toResponse(checkInRepository.save(checkIn));
+    }
+
     public List<CheckInResponse> findAll() {
         return checkInRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
     }
@@ -91,6 +160,7 @@ public class CheckInService {
         resResponse.setTotalPrice(r.getTotalPrice());
         resResponse.setGuestCount(r.getGuestCount());
         resResponse.setSpecialRequests(r.getSpecialRequests());
+        resResponse.setRoomId(r.getRoom().getId());
         resResponse.setRoomNumber(r.getRoom().getRoomNumber());
         resResponse.setRoomType(r.getRoom().getRoomType().getName());
         resResponse.setUserId(r.getUser().getId());

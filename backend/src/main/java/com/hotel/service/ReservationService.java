@@ -57,6 +57,41 @@ public class ReservationService {
         return toResponse(reservationRepository.save(reservation));
     }
 
+    public List<ReservationResponse> createBatch(List<ReservationRequest> requests, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException("用户不存在"));
+
+        List<ReservationResponse> results = new java.util.ArrayList<>();
+        for (ReservationRequest request : requests) {
+            Room room = roomRepository.findById(request.getRoomId())
+                    .orElseThrow(() -> new BusinessException("房间不存在: " + request.getRoomId()));
+
+            long nights = ChronoUnit.DAYS.between(request.getCheckInDate(), request.getCheckOutDate());
+            if (nights <= 0) {
+                throw new BusinessException("退房日期必须晚于入住日期");
+            }
+            BigDecimal totalPrice = room.getRoomType().getBasePrice().multiply(BigDecimal.valueOf(nights));
+
+            List<Reservation> conflicts = reservationRepository.findConflictingReservations(
+                    room.getId(), request.getCheckInDate(), request.getCheckOutDate());
+            if (!conflicts.isEmpty()) {
+                throw new BusinessException("房间 " + room.getRoomNumber() + " 在此日期已被预订");
+            }
+
+            Reservation reservation = new Reservation();
+            reservation.setCheckInDate(request.getCheckInDate());
+            reservation.setCheckOutDate(request.getCheckOutDate());
+            reservation.setStatus(ReservationStatus.PENDING);
+            reservation.setTotalPrice(totalPrice);
+            reservation.setGuestCount(request.getGuestCount());
+            reservation.setSpecialRequests(request.getSpecialRequests());
+            reservation.setUser(user);
+            reservation.setRoom(room);
+            results.add(toResponse(reservationRepository.save(reservation)));
+        }
+        return results;
+    }
+
     public List<ReservationResponse> findAll() {
         return reservationRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
     }

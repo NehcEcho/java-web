@@ -1,6 +1,7 @@
 package com.hotel.controller;
 
 import com.hotel.dto.ApiResponse;
+import com.hotel.dto.reservation.BatchReservationRequest;
 import com.hotel.dto.reservation.ReservationRequest;
 import com.hotel.dto.reservation.ReservationResponse;
 import com.hotel.entity.User;
@@ -28,6 +29,13 @@ public class ReservationController {
                                                      @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = getUserId(userDetails);
         return ApiResponse.success(reservationService.create(request, userId));
+    }
+
+    @PostMapping("/batch")
+    public ApiResponse<List<ReservationResponse>> createBatch(@Valid @RequestBody BatchReservationRequest request,
+                                                               @AuthenticationPrincipal UserDetails userDetails) {
+        Long userId = getUserId(userDetails);
+        return ApiResponse.success(reservationService.createBatch(request.getReservations(), userId));
     }
 
     @GetMapping
