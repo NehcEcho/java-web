@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getAvailableRooms, type Room } from '@/api/rooms';
 import { getRoomTypes, type RoomType } from '@/api/roomTypes';
@@ -25,18 +25,24 @@ export default function CustomerRoomsPage() {
   const [sortBy, setSortBy] = useState<'price' | 'floor'>('price');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
   const [selectedFloor, setSelectedFloor] = useState<number | undefined>(undefined);
+  const fetchedRef = useRef(false);
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     const ci = checkIn || new Date().toISOString().split('T')[0];
     const co = checkOut || new Date(Date.now() + 86400000).toISOString().split('T')[0];
-    Promise.all([
-      getAvailableRooms(ci, co, sortBy, sortDir, selectedFloor),
-      getRoomTypes()
-    ]).then(([r, rt]) => {
+    try {
+      const [r, rt] = await Promise.all([
+        getAvailableRooms(ci, co, sortBy, sortDir, selectedFloor),
+        getRoomTypes()
+      ]);
       setRooms(r);
       setRoomTypes(rt);
-    }).catch(() => {}).finally(() => setLoading(false));
+    } catch {} finally { setLoading(false); }
   }, [checkIn, checkOut, sortBy, sortDir, selectedFloor]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const filteredRooms = selectedType ? rooms.filter(r => r.roomType.id === selectedType) : rooms;
 
