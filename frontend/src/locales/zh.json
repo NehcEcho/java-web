@@ -32,7 +32,11 @@
     "error": "操作失败",
     "price": "价格",
     "status": "状态",
-    "actions": "操作"
+    "actions": "操作",
+    "all": "全部",
+    "sort": "排序",
+    "floor": "楼层",
+    "perNight": "/晚"
   },
   "auth": {
     "login": "登录",
@@ -40,7 +44,10 @@
     "username": "用户名",
     "password": "密码",
     "loginSuccess": "登录成功",
-    "logoutSuccess": "已退出登录"
+    "logoutSuccess": "已退出登录",
+    "loginRequired": "请先登录",
+    "loginMessage": "预订房间需要登录账号",
+    "goToLogin": "去登录"
   },
   "room": {
     "roomNumber": "房间号",
@@ -53,7 +60,8 @@
     "available": "可用",
     "occupied": "已入住",
     "reserved": "已预订",
-    "maintenance": "维修中"
+    "maintenance": "维修中",
+    "availableToBook": "可预订"
   },
   "reservation": {
     "checkInDate": "入住日期",
@@ -76,5 +84,185 @@
     "reservation": "预订",
     "checkIn": "入住",
     "checkOut": "退房"
+  },
+  "home": {
+    "title": "精品酒店",
+    "subtitle": "舒适客房，贴心服务，让每一次入住都成为美好回忆",
+    "checkIn": "入住日期",
+    "checkOut": "退房日期",
+    "searchRooms": "搜索可用房间",
+    "viewAllRooms": "查看全部房型 →",
+    "roomOverview": "客房一览",
+    "roomOverviewDesc": "从高品质单人间到豪华套房，满足不同需求",
+    "features": {
+      "highQuality": {
+        "title": "高品质客房",
+        "desc": "精心设计的舒适空间，为您带来宾至如归的感受"
+      },
+      "wifi": {
+        "title": "免费WiFi",
+        "desc": "全覆盖高速无线网络，随时保持连接"
+      },
+      "dining": {
+        "title": "精致餐饮",
+        "desc": "中西合璧的早餐与特色料理，满足您的味蕾"
+      },
+      "parking": {
+        "title": "免费停车",
+        "desc": "宽敞安全的停车场，出行无忧"
+      }
+    },
+    "roomShowcase": {
+      "single": {
+        "name": "单人间",
+        "price": "¥299",
+        "desc": "简约舒适，商务出行首选"
+      },
+      "double": {
+        "name": "双人间",
+        "price": "¥399",
+        "desc": "宽敞温馨，双人同住更惬意"
+      },
+      "suite": {
+        "name": "套房",
+        "price": "¥699",
+        "desc": "奢华空间，尽享尊贵体验"
+      }
+    }
+  },
+  "rooms": {
+    "title": "客房浏览",
+    "availableRooms": "{{checkIn}} ~ {{checkOut}} 可预订房间",
+    "selectRoom": "选择心仪的房间",
+    "guests": "{{count}}人",
+    "reviews": "({{count}}条评价)",
+    "viewDetail": "查看详情",
+    "noRooms": "暂无可用房间"
+  },
+  "roomDetail": {
+    "roomNotFound": "房间不存在",
+    "backToList": "返回客房列表",
+    "maxGuests": "最多{{count}}人入住",
+    "floor": "{{count}}层",
+    "amenities": "房间设施",
+    "bookNow": "立即预订",
+    "guestReviews": "房客评价",
+    "score": "{{score}} 分",
+    "reviews": "{{count}} 条评价",
+    "rating": "评分",
+    "shareExperience": "分享您的入住体验...",
+    "submitting": "提交中...",
+    "submitReview": "提交评价",
+    "noReviews": "暂无评价",
+    "pleaseFillContent": "请填写评价内容",
+    "submitSuccess": "评价提交成功",
+    "submitFailed": "评价提交失败"
+  },
+  "booking": {
+    "title": "预订房间",
+    "roomNotFound": "房间不存在",
+    "backToList": "返回客房列表",
+    "perNight": "每晚",
+    "checkIn": "入住日期",
+    "checkOut": "退房日期",
+    "guestCount": "入住人数",
+    "maxGuests": "最多{{count}}人",
+    "specialRequests": "特殊要求（选填）",
+    "specialRequestsPlaceholder": "如有特殊要求请填写",
+    "dateConflict": "所选日期范围内包含已预订日期，请重新选择",
+    "nightsPrice": "{{nights}}晚 × {{price}}/晚",
+    "total": "总计: {{price}}",
+    "submitting": "提交中...",
+    "confirm": "确认预订",
+    "invalidDate": "请选择有效的入住和退房日期",
+    "dateConflictError": "所选日期包含已被预订的日期，请重新选择",
+    "success": "预订成功！"
+  },
+  "myReservations": {
+    "title": "我的预订",
+    "cancelSuccess": "取消成功",
+    "cancelFailed": "取消失败",
+    "active": "进行中",
+    "history": "历史记录",
+    "noActive": "暂无进行中的预订",
+    "noHistory": "暂无历史记录",
+    "cancel": "取消预订",
+    "guests": "{{count}}人",
+    "cancelDialog": {
+      "title": "取消预订",
+      "description": "确认取消此预订？此操作不可撤销。",
+      "confirm": "确认取消"
+    }
+  },
+  "myFavorites": {
+    "title": "我的收藏",
+    "cancelSuccess": "已取消收藏",
+    "operationFailed": "操作失败",
+    "noFavorites": "还没有收藏的房间",
+    "browseRooms": "浏览房间",
+    "noReviews": "暂无评价",
+    "cancelFavorite": "取消收藏"
+  },
+  "reservationDetail": {
+    "title": "预订详情",
+    "notFound": "预订不存在",
+    "bookingNumber": "预订编号: #{{id}}",
+    "progress": "预订进度",
+    "info": "预订信息",
+    "checkIn": "入住日期",
+    "checkOut": "退房日期",
+    "guestCount": "入住人数",
+    "guests": "{{count}}人",
+    "specialRequests": "特殊需求",
+    "none": "无",
+    "totalPrice": "订单总价",
+    "cancel": "取消预订",
+    "cancelSuccess": "取消成功",
+    "cancelFailed": "取消失败",
+    "writeReview": "写评价",
+    "cancelDialog": {
+      "title": "取消预订",
+      "description": "确认取消此预订？取消后无法恢复。",
+      "confirm": "确认取消"
+    }
+  },
+  "profile": {
+    "title": "个人中心",
+    "personalInfo": "个人信息",
+    "changePassword": "修改密码",
+    "name": "姓名",
+    "phone": "手机号",
+    "email": "邮箱",
+    "saving": "保存中...",
+    "saveSuccess": "保存成功",
+    "saveFailed": "保存失败",
+    "oldPassword": "原密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认新密码",
+    "changing": "修改中...",
+    "passwordMismatch": "两次密码不一致",
+    "passwordTooShort": "新密码至少6位",
+    "passwordChangeSuccess": "密码修改成功",
+    "passwordChangeFailed": "修改失败",
+    "fetchFailed": "获取资料失败"
+  },
+  "login": {
+    "customerLogin": "客户登录",
+    "customerRegister": "客户注册",
+    "username": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "name": "姓名",
+    "namePlaceholder": "请输入姓名",
+    "phone": "手机号",
+    "phonePlaceholder": "请输入手机号",
+    "processing": "处理中...",
+    "noAccount": "没有账号？",
+    "hasAccount": "已有账号？",
+    "goToRegister": "去注册",
+    "goToLogin": "去登录",
+    "loginFailed": "登录失败",
+    "registerFailed": "注册失败"
   }
 }

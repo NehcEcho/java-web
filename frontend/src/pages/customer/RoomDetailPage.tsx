@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getRoom, type Room } from '@/api/rooms';
 import { getRoomReviews, createReview, type Review } from '@/api/reviews';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
 export default function RoomDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -42,10 +44,10 @@ export default function RoomDetailPage() {
   if (!room) {
     return (
       <div className="max-w-4xl mx-auto px-6 py-8">
-        <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '客房浏览', href: '/rooms' }, { label: '房间详情' }]} />
+        <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.title'), href: '/rooms' }, { label: t('roomDetail.roomNotFound') }]} />
         <div className="text-center py-20">
-          <p className="text-gray-500 text-lg mb-4">房间不存在</p>
-          <Button variant="outline" onClick={() => navigate('/rooms')}>返回客房列表</Button>
+          <p className="text-gray-500 text-lg mb-4">{t('roomDetail.roomNotFound')}</p>
+          <Button variant="outline" onClick={() => navigate('/rooms')}>{t('roomDetail.backToList')}</Button>
         </div>
       </div>
     );
@@ -59,7 +61,7 @@ export default function RoomDetailPage() {
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!reviewContent.trim()) {
-      toast.error('请填写评价内容');
+      toast.error(t('roomDetail.pleaseFillContent'));
       return;
     }
     setSubmitting(true);
@@ -68,9 +70,9 @@ export default function RoomDetailPage() {
       setReviews(prev => [newReview, ...prev]);
       setReviewContent('');
       setReviewRating(5);
-      toast.success('评价提交成功');
+      toast.success(t('roomDetail.submitSuccess'));
     } catch (err: any) {
-      toast.error(err.message || '评价提交失败');
+      toast.error(err.message || t('roomDetail.submitFailed'));
     } finally {
       setSubmitting(false);
     }
@@ -78,7 +80,7 @@ export default function RoomDetailPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
-      <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '客房浏览', href: '/rooms' }, { label: '房间详情' }]} />
+      <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.title'), href: '/rooms' }, { label: t('roomDetail.roomNotFound') }]} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="relative h-80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150">
@@ -92,7 +94,7 @@ export default function RoomDetailPage() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <h1 className="text-3xl font-bold tracking-tight">{room.roomNumber} - {room.roomType.name}</h1>
-              <Badge className="bg-green-100 text-green-800">{room.status === 'AVAILABLE' ? '可预订' : room.status}</Badge>
+              <Badge className="bg-green-100 text-green-800">{room.status === 'AVAILABLE' ? t('room.availableToBook') : room.status}</Badge>
             </div>
             <p className="text-gray-600">{room.roomType.description}</p>
           </div>
@@ -100,25 +102,25 @@ export default function RoomDetailPage() {
           {avgRating > 0 && (
             <div className="flex items-center gap-2">
               <StarRating rating={Math.round(avgRating)} readonly size={18} />
-              <span className="text-sm text-gray-500">{avgRating.toFixed(1)} 分 · {reviewCount} 条评价</span>
+              <span className="text-sm text-gray-500">{t('roomDetail.score', { score: avgRating.toFixed(1) })} · {t('roomDetail.reviews', { count: reviewCount })}</span>
             </div>
           )}
 
           <div className="text-4xl font-bold text-amber-600">
-            {formatPrice(room.roomType.basePrice)}<span className="text-lg font-normal text-gray-500">/晚</span>
+            {formatPrice(room.roomType.basePrice)}<span className="text-lg font-normal text-gray-500">{t('common.perNight')}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-2 text-gray-600">
-              <Users className="w-5 h-5 text-amber-500" />最多{room.roomType.maxGuests}人入住
+              <Users className="w-5 h-5 text-amber-500" />{t('roomDetail.maxGuests', { count: room.roomType.maxGuests })}
             </div>
             <div className="flex items-center gap-2 text-gray-600">
-              <Building2 className="w-5 h-5 text-amber-500" />{room.floor}层
+              <Building2 className="w-5 h-5 text-amber-500" />{t('roomDetail.floor', { count: room.floor })}
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-2">房间设施</h3>
+            <h3 className="font-semibold mb-2">{t('roomDetail.amenities')}</h3>
             <div className="flex flex-wrap gap-2">
               {amenities.map(a => (
                 <Badge key={a} variant="outline" className="flex items-center gap-1">
@@ -129,18 +131,18 @@ export default function RoomDetailPage() {
           </div>
 
           <Button size="lg" className="w-full h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white text-base active:scale-[0.98] transition-all" onClick={() => navigate(`/booking/${room.id}`)}>
-            <CalendarDays className="w-5 h-5 mr-2" />立即预订
+            <CalendarDays className="w-5 h-5 mr-2" />{t('roomDetail.bookNow')}
           </Button>
         </div>
       </div>
 
       <div className="mt-12">
         <div className="flex items-center gap-3 mb-6">
-          <h2 className="text-2xl font-bold">房客评价</h2>
+          <h2 className="text-2xl font-bold">{t('roomDetail.guestReviews')}</h2>
           {avgRating > 0 && (
             <>
               <StarRating rating={Math.round(avgRating)} readonly size={16} />
-              <span className="text-sm text-gray-500">{avgRating.toFixed(1)} 分 · {reviewCount} 条评价</span>
+              <span className="text-sm text-gray-500">{t('roomDetail.score', { score: avgRating.toFixed(1) })} · {t('roomDetail.reviews', { count: reviewCount })}</span>
             </>
           )}
         </div>
@@ -150,18 +152,18 @@ export default function RoomDetailPage() {
             <CardContent className="p-6">
               <form onSubmit={handleSubmitReview} className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-700">评分</span>
+                  <span className="text-sm font-medium text-gray-700">{t('roomDetail.rating')}</span>
                   <StarRating rating={reviewRating} onChange={setReviewRating} size={22} />
                 </div>
                 <Textarea
                   value={reviewContent}
                   onChange={e => setReviewContent(e.target.value)}
-                  placeholder="分享您的入住体验..."
+                  placeholder={t('roomDetail.shareExperience')}
                   className="focus:ring-2 focus:ring-amber-500"
                   rows={3}
                 />
                 <Button type="submit" className="h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white active:scale-[0.98] transition-all" disabled={submitting}>
-                  {submitting ? '提交中...' : '提交评价'}
+                  {submitting ? t('roomDetail.submitting') : t('roomDetail.submitReview')}
                 </Button>
               </form>
             </CardContent>
@@ -169,7 +171,7 @@ export default function RoomDetailPage() {
         )}
 
         {reviews.length === 0 ? (
-          <p className="text-center text-gray-500 py-8">暂无评价</p>
+          <p className="text-center text-gray-500 py-8">{t('roomDetail.noReviews')}</p>
         ) : (
           <div className="space-y-4">
             {reviews.map(review => (

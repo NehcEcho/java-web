@@ -32,7 +32,11 @@
     "error": "Error",
     "price": "Price",
     "status": "Status",
-    "actions": "Actions"
+    "actions": "Actions",
+    "all": "All",
+    "sort": "Sort",
+    "floor": "Floor",
+    "perNight": "/night"
   },
   "auth": {
     "login": "Login",
@@ -40,7 +44,10 @@
     "username": "Username",
     "password": "Password",
     "loginSuccess": "Login successful",
-    "logoutSuccess": "Logged out"
+    "logoutSuccess": "Logged out",
+    "loginRequired": "Please login first",
+    "loginMessage": "Login required to book rooms",
+    "goToLogin": "Go to Login"
   },
   "room": {
     "roomNumber": "Room Number",
@@ -53,7 +60,8 @@
     "available": "Available",
     "occupied": "Occupied",
     "reserved": "Reserved",
-    "maintenance": "Maintenance"
+    "maintenance": "Maintenance",
+    "availableToBook": "Available"
   },
   "reservation": {
     "checkInDate": "Check-in Date",
@@ -76,5 +84,185 @@
     "reservation": "Reservation",
     "checkIn": "Check-in",
     "checkOut": "Check-out"
+  },
+  "home": {
+    "title": "Boutique Hotel",
+    "subtitle": "Comfortable rooms, attentive service, making every stay a beautiful memory",
+    "checkIn": "Check-in Date",
+    "checkOut": "Check-out Date",
+    "searchRooms": "Search Available Rooms",
+    "viewAllRooms": "View All Room Types →",
+    "roomOverview": "Room Overview",
+    "roomOverviewDesc": "From standard singles to luxury suites, meeting different needs",
+    "features": {
+      "highQuality": {
+        "title": "High Quality Rooms",
+        "desc": "Carefully designed comfortable spaces, bringing you a home-away-from-home experience"
+      },
+      "wifi": {
+        "title": "Free WiFi",
+        "desc": "Full coverage high-speed wireless network, stay connected anytime"
+      },
+      "dining": {
+        "title": "Fine Dining",
+        "desc": "Chinese and Western breakfast with specialty cuisine, satisfying your taste buds"
+      },
+      "parking": {
+        "title": "Free Parking",
+        "desc": "Spacious and secure parking lot, worry-free travel"
+      }
+    },
+    "roomShowcase": {
+      "single": {
+        "name": "Single Room",
+        "price": "¥299",
+        "desc": "Simple and comfortable, ideal for business trips"
+      },
+      "double": {
+        "name": "Double Room",
+        "price": "¥399",
+        "desc": "Spacious and cozy, more comfortable for two"
+      },
+      "suite": {
+        "name": "Suite",
+        "price": "¥699",
+        "desc": "Luxurious space, enjoy premium experience"
+      }
+    }
+  },
+  "rooms": {
+    "title": "Room Browser",
+    "availableRooms": "{{checkIn}} ~ {{checkOut}} Available Rooms",
+    "selectRoom": "Choose your favorite room",
+    "guests": "{{count}} guests",
+    "reviews": "({{count}} reviews)",
+    "viewDetail": "View Details",
+    "noRooms": "No rooms available"
+  },
+  "roomDetail": {
+    "roomNotFound": "Room not found",
+    "backToList": "Back to Room List",
+    "maxGuests": "Up to {{count}} guests",
+    "floor": "Floor {{count}}",
+    "amenities": "Room Amenities",
+    "bookNow": "Book Now",
+    "guestReviews": "Guest Reviews",
+    "score": "{{score}} points",
+    "reviews": "{{count}} reviews",
+    "rating": "Rating",
+    "shareExperience": "Share your stay experience...",
+    "submitting": "Submitting...",
+    "submitReview": "Submit Review",
+    "noReviews": "No reviews yet",
+    "pleaseFillContent": "Please fill in review content",
+    "submitSuccess": "Review submitted successfully",
+    "submitFailed": "Failed to submit review"
+  },
+  "booking": {
+    "title": "Book Room",
+    "roomNotFound": "Room not found",
+    "backToList": "Back to Room List",
+    "perNight": "per night",
+    "checkIn": "Check-in Date",
+    "checkOut": "Check-out Date",
+    "guestCount": "Guests",
+    "maxGuests": "Up to {{count}} guests",
+    "specialRequests": "Special Requests (Optional)",
+    "specialRequestsPlaceholder": "Fill in if you have special requests",
+    "dateConflict": "Selected dates include already booked dates, please reselect",
+    "nightsPrice": "{{nights}} nights × {{price}}/night",
+    "total": "Total: {{price}}",
+    "submitting": "Submitting...",
+    "confirm": "Confirm Booking",
+    "invalidDate": "Please select valid check-in and check-out dates",
+    "dateConflictError": "Selected dates include booked dates, please reselect",
+    "success": "Booking successful!"
+  },
+  "myReservations": {
+    "title": "My Reservations",
+    "cancelSuccess": "Cancelled successfully",
+    "cancelFailed": "Cancellation failed",
+    "active": "Active",
+    "history": "History",
+    "noActive": "No active reservations",
+    "noHistory": "No history records",
+    "cancel": "Cancel Reservation",
+    "guests": "{{count}} guests",
+    "cancelDialog": {
+      "title": "Cancel Reservation",
+      "description": "Confirm cancellation? This action cannot be undone.",
+      "confirm": "Confirm Cancel"
+    }
+  },
+  "myFavorites": {
+    "title": "My Favorites",
+    "cancelSuccess": "Removed from favorites",
+    "operationFailed": "Operation failed",
+    "noFavorites": "No favorite rooms yet",
+    "browseRooms": "Browse Rooms",
+    "noReviews": "No reviews yet",
+    "cancelFavorite": "Remove Favorite"
+  },
+  "reservationDetail": {
+    "title": "Reservation Details",
+    "notFound": "Reservation not found",
+    "bookingNumber": "Booking #{{id}}",
+    "progress": "Booking Progress",
+    "info": "Booking Information",
+    "checkIn": "Check-in Date",
+    "checkOut": "Check-out Date",
+    "guestCount": "Guests",
+    "guests": "{{count}} guests",
+    "specialRequests": "Special Requests",
+    "none": "None",
+    "totalPrice": "Order Total",
+    "cancel": "Cancel Reservation",
+    "cancelSuccess": "Cancelled successfully",
+    "cancelFailed": "Cancellation failed",
+    "writeReview": "Write Review",
+    "cancelDialog": {
+      "title": "Cancel Reservation",
+      "description": "Confirm cancellation? Cannot be undone after cancellation.",
+      "confirm": "Confirm Cancel"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Info",
+    "changePassword": "Change Password",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "saving": "Saving...",
+    "saveSuccess": "Saved successfully",
+    "saveFailed": "Save failed",
+    "oldPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "changing": "Changing...",
+    "passwordMismatch": "Passwords do not match",
+    "passwordTooShort": "New password must be at least 6 characters",
+    "passwordChangeSuccess": "Password changed successfully",
+    "passwordChangeFailed": "Change failed",
+    "fetchFailed": "Failed to fetch profile"
+  },
+  "login": {
+    "customerLogin": "Customer Login",
+    "customerRegister": "Customer Register",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter phone number",
+    "processing": "Processing...",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "goToRegister": "Register",
+    "goToLogin": "Login",
+    "loginFailed": "Login failed",
+    "registerFailed": "Registration failed"
   }
 }
