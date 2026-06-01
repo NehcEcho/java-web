@@ -32,9 +32,8 @@ function AdminRoute({ children }: { children: ReactNode }) {
 }
 
 function CustomerRoute({ children }: { children: ReactNode }) {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
-  if (isAdmin) return <Navigate to="/admin/dashboard" replace />;
   return <>{children}</>;
 }
 
