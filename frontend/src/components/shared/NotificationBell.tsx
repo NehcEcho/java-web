@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Bell, Check, CheckCheck } from 'lucide-react';
 import { getUnreadNotifications, getUnreadCount, markAsRead, markAllAsRead, type Notification } from '@/api/notifications';
 import { Button } from '@/components/ui/button';
@@ -9,14 +9,26 @@ export function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const loadedRef = useRef(false);
 
-  useEffect(() => {
-    loadCount();
-    const interval = setInterval(loadCount, 30000);
-    return () => clearInterval(interval);
+  const loadCount = useCallback(async () => {
+    try {
+      const c = await getUnreadCount();
+      setCount(c);
+    } catch {}
   }, []);
 
   useEffect(() => {
+    if (!loadedRef.current) {
+      loadedRef.current = true;
+      loadCount();
+    }
+    const interval = setInterval(loadCount, 60000);
+    return () => clearInterval(interval);
+  }, [loadCount]);
+
+  useEffect(() => {
+    if (!open) return;
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -24,14 +36,7 @@ export function NotificationBell() {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const loadCount = async () => {
-    try {
-      const c = await getUnreadCount();
-      setCount(c);
-    } catch {}
-  };
+  }, [open]);
 
   const loadNotifications = async () => {
     try {
