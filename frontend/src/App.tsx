@@ -1,28 +1,30 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/hooks/useAuth';
 import { Toaster } from '@/components/ui/sonner';
 import AdminLayout from '@/components/admin/AdminLayout';
 import CustomerLayout from '@/components/customer/CustomerLayout';
-import LoginPage from '@/pages/admin/LoginPage';
-import DashboardPage from '@/pages/admin/DashboardPage';
-import RoomsPage from '@/pages/admin/RoomsPage';
-import RoomTypesPage from '@/pages/admin/RoomTypesPage';
-import ReservationsPage from '@/pages/admin/ReservationsPage';
-import CheckInsPage from '@/pages/admin/CheckInsPage';
-import HomePage from '@/pages/customer/HomePage';
-import CustomerLoginPage from '@/pages/customer/CustomerLoginPage';
-import CustomerRoomsPage from '@/pages/customer/CustomerRoomsPage';
-import RoomDetailPage from '@/pages/customer/RoomDetailPage';
-import BookingPage from '@/pages/customer/BookingPage';
-import MyReservationsPage from '@/pages/customer/MyReservationsPage';
-import MyFavoritesPage from '@/pages/customer/MyFavoritesPage';
-import ReservationDetailPage from '@/pages/customer/ReservationDetailPage';
-import ProfilePage from '@/pages/customer/ProfilePage';
-import UsersPage from '@/pages/admin/UsersPage';
-import ReviewsPage from '@/pages/admin/ReviewsPage';
-import AuditLogsPage from '@/pages/admin/AuditLogsPage';
-import ExportPage from '@/pages/admin/ExportPage';
 import type { ReactNode } from 'react';
+
+const LoginPage = lazy(() => import('@/pages/admin/LoginPage'));
+const DashboardPage = lazy(() => import('@/pages/admin/DashboardPage'));
+const RoomsPage = lazy(() => import('@/pages/admin/RoomsPage'));
+const RoomTypesPage = lazy(() => import('@/pages/admin/RoomTypesPage'));
+const ReservationsPage = lazy(() => import('@/pages/admin/ReservationsPage'));
+const CheckInsPage = lazy(() => import('@/pages/admin/CheckInsPage'));
+const HomePage = lazy(() => import('@/pages/customer/HomePage'));
+const CustomerLoginPage = lazy(() => import('@/pages/customer/CustomerLoginPage'));
+const CustomerRoomsPage = lazy(() => import('@/pages/customer/CustomerRoomsPage'));
+const RoomDetailPage = lazy(() => import('@/pages/customer/RoomDetailPage'));
+const BookingPage = lazy(() => import('@/pages/customer/BookingPage'));
+const MyReservationsPage = lazy(() => import('@/pages/customer/MyReservationsPage'));
+const MyFavoritesPage = lazy(() => import('@/pages/customer/MyFavoritesPage'));
+const ReservationDetailPage = lazy(() => import('@/pages/customer/ReservationDetailPage'));
+const ProfilePage = lazy(() => import('@/pages/customer/ProfilePage'));
+const UsersPage = lazy(() => import('@/pages/admin/UsersPage'));
+const ReviewsPage = lazy(() => import('@/pages/admin/ReviewsPage'));
+const AuditLogsPage = lazy(() => import('@/pages/admin/AuditLogsPage'));
+const ExportPage = lazy(() => import('@/pages/admin/ExportPage'));
 
 function AdminRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -39,7 +41,8 @@ function CustomerRoute({ children }: { children: ReactNode }) {
 
 function AppRoutes() {
   return (
-    <Routes>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>}>
+      <Routes>
       <Route path="/admin/login" element={<LoginPage />} />
       <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
         <Route index element={<Navigate to="dashboard" replace />} />
@@ -64,7 +67,8 @@ function AppRoutes() {
         <Route path="my-favorites" element={<CustomerRoute><MyFavoritesPage /></CustomerRoute>} />
         <Route path="profile" element={<CustomerRoute><ProfilePage /></CustomerRoute>} />
       </Route>
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 }
 
