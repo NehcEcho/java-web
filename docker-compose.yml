@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    container_name: hotel-backend
+    ports:
+      - "1301:1301"
+    volumes:
+      - hotel-data:/app/data
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlite:/app/data/hotel.db
+      - JWT_SECRET=HotelManagementSecretKey2026ForJWTTokenGenerationAndValidation
+      - JWT_EXPIRATION=86400000
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: hotel-frontend
+    ports:
+      - "1300:1300"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  hotel-data:

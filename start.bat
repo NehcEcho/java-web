@@ -24,20 +24,20 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [3/4] Starting backend server on port 8080...
+echo [3/4] Starting backend server on port 1301...
 cd /d "%ROOT%backend"
 start "Backend" cmd /c "cd /d "%ROOT%backend" && mvn spring-boot:run"
 
 echo.
-echo [4/4] Starting frontend server on port 5173...
+echo [4/4] Starting frontend server on port 1300...
 cd /d "%ROOT%frontend"
 start "Frontend" cmd /c "cd /d "%ROOT%frontend" && npm run dev"
 
 echo.
 echo ========================================
 echo   Both servers are starting!
-echo   Backend:  http://localhost:8080
-echo   Frontend: http://localhost:5173
+echo   Backend:  http://localhost:1301
+echo   Frontend: http://localhost:1300
 echo ========================================
 echo.
 echo Press any key to exit this window...

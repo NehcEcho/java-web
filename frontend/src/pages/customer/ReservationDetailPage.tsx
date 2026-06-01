@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Users, MessageSquare, CheckCircle2, Circle, Loader2 } from 'lucide-react';
-import { formatPrice, formatDate } from '@/lib/utils';
+import { formatPrice, formatDate, getRoomTypeKey } from '@/lib/utils';
 import { getRoomImage } from '@/components/images';
 import { toast } from 'sonner';
 

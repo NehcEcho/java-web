@@ -32,6 +32,7 @@ export default function BookingPage() {
   const [checkOutMonth, setCheckOutMonth] = useState('');
 
   const checkInMinDate = new Date().toISOString().split('T')[0];
+  const maxDate = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
   const checkOutMinDate = form.checkInDate
     ? new Date(new Date(form.checkInDate).getTime() + 86400000).toISOString().split('T')[0]
     : checkInMinDate;
@@ -173,6 +174,7 @@ export default function BookingPage() {
               }}
               availability={availability}
               minDate={checkInMinDate}
+              maxDate={maxDate}
             />
           </div>
           <div className="space-y-2">
@@ -185,6 +187,7 @@ export default function BookingPage() {
               }}
               availability={availability}
               minDate={checkOutMinDate}
+              maxDate={maxDate}
             />
           </div>
         </div>

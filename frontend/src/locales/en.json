@@ -348,49 +348,39 @@
     "system": "System"
   },
   "home": {
-    "title": "Boutique Hotel",
-    "subtitle": "Comfortable rooms, attentive service, making every stay a beautiful memory",
-    "checkIn": "Check-in Date",
-    "checkOut": "Check-out Date",
+    "brand": "ÉLYSÉE",
+    "heroTitle": "Welcome to\nÉLYSÉE",
+    "heroSubtitle": "Where Every Moment Becomes a Masterpiece",
+    "heroCTA": "Discover Our Suites",
+    "bookStay": "Book Your Stay",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
     "searchRooms": "Search Available Rooms",
-    "viewAllRooms": "View All Room Types →",
-    "roomOverview": "Room Overview",
-    "roomOverviewDesc": "From standard singles to luxury suites, meeting different needs",
-    "features": {
-      "highQuality": {
-        "title": "High Quality Rooms",
-        "desc": "Carefully designed comfortable spaces, bringing you a home-away-from-home experience"
-      },
-      "wifi": {
-        "title": "Free WiFi",
-        "desc": "Full coverage high-speed wireless network, stay connected anytime"
-      },
-      "dining": {
-        "title": "Fine Dining",
-        "desc": "Chinese and Western breakfast with specialty cuisine, satisfying your taste buds"
-      },
-      "parking": {
-        "title": "Free Parking",
-        "desc": "Spacious and secure parking lot, worry-free travel"
-      }
+    "brandTitle": "A Tradition of Excellence",
+    "brandP1": "Established in 1995, ÉLYSÉE Grand Hotel has been the city's most distinguished address for discerning travelers. Our commitment to timeless elegance and impeccable service defines every stay.",
+    "brandP2": "From the hand-selected marble in our lobby to the thread-count of our linens, no detail is too small to escape our attention.",
+    "statYears": "Years of Service",
+    "statSuites": "Premium Suites",
+    "statGuests": "Happy Guests",
+    "roomsTitle": "Curated Accommodations",
+    "roomsDesc": "From intimate singles to palatial suites, each room is a sanctuary of comfort and refined taste.",
+    "roomsAction": "View Details →",
+    "singleDesc": "Cozy elegance for the solo traveler, with city views and premium amenities.",
+    "doubleDesc": "Spacious comfort for two, featuring a marble bathroom and sitting area.",
+    "suiteDesc": "The pinnacle of luxury — separate living quarters, panoramic views, butler service.",
+    "amenitiesTitle": "Exceptional Amenities",
+    "amenities": {
+      "dining": {"title": "Fine Dining", "desc": "Michelin-starred cuisine, world-class chefs"},
+      "spa": {"title": "Spa & Wellness", "desc": "Rejuvenating treatments, tranquil sanctuary"},
+      "pool": {"title": "Infinity Pool", "desc": "Panoramic skyline views, year-round access"},
+      "concierge": {"title": "Concierge", "desc": "24/7 bespoke service, every detail attended"}
     },
-    "roomShowcase": {
-      "single": {
-        "name": "Single Room",
-        "price": "¥299",
-        "desc": "Simple and comfortable, ideal for business trips"
-      },
-      "double": {
-        "name": "Double Room",
-        "price": "¥399",
-        "desc": "Spacious and cozy, more comfortable for two"
-      },
-      "suite": {
-        "name": "Suite",
-        "price": "¥699",
-        "desc": "Luxurious space, enjoy premium experience"
-      }
-    }
+    "ctaTitle": "Begin Your Journey",
+    "ctaDesc": "Reserve your stay at ÉLYSÉE and experience the art of refined hospitality.",
+    "ctaButton": "Reserve Now",
+    "footerAddress": "1 Boulevard de la Grande Armée, Paris",
+    "footerPhone": "+33 1 40 69 60 00",
+    "footerEmail": "reservations@elysee.com"
   },
   "rooms": {
     "title": "Room Browser",

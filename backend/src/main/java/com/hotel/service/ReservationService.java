@@ -52,6 +52,9 @@ public class ReservationService {
         if (request.getCheckInDate().isBefore(LocalDate.now())) {
             throw new BusinessException("入住日期不能早于今天");
         }
+        if (request.getCheckInDate().isAfter(LocalDate.now().plusDays(7))) {
+            throw new BusinessException("只能预订7天内的房间");
+        }
         BigDecimal totalPrice = room.getRoomType().getBasePrice().multiply(BigDecimal.valueOf(nights));
 
         List<Reservation> conflicts = reservationRepository.findConflictingReservations(

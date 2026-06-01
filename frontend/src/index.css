@@ -20,9 +20,20 @@
   --color-border: oklch(0.922 0 0);
   --color-input: oklch(0.922 0 0);
   --color-ring: oklch(0.708 0 0);
+  --color-gold: oklch(0.68 0.12 84);
+  --color-gold-hover: oklch(0.62 0.11 80);
+  --color-cream: oklch(0.98 0.01 92);
+  --color-charcoal: oklch(0.18 0 0);
+  --color-warm: oklch(0.55 0.02 70);
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --radius: 0.625rem;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
 }

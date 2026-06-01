@@ -348,49 +348,39 @@
     "system": "系统"
   },
   "home": {
-    "title": "精品酒店",
-    "subtitle": "舒适客房，贴心服务，让每一次入住都成为美好回忆",
+    "brand": "ÉLYSÉE",
+    "heroTitle": "Welcome to\nÉLYSÉE",
+    "heroSubtitle": "让每一刻都成为杰作",
+    "heroCTA": "探索套房",
+    "bookStay": "预订住宿",
     "checkIn": "入住日期",
     "checkOut": "退房日期",
     "searchRooms": "搜索可用房间",
-    "viewAllRooms": "查看全部房型 →",
-    "roomOverview": "客房一览",
-    "roomOverviewDesc": "从高品质单人间到豪华套房，满足不同需求",
-    "features": {
-      "highQuality": {
-        "title": "高品质客房",
-        "desc": "精心设计的舒适空间，为您带来宾至如归的感受"
-      },
-      "wifi": {
-        "title": "免费WiFi",
-        "desc": "全覆盖高速无线网络，随时保持连接"
-      },
-      "dining": {
-        "title": "精致餐饮",
-        "desc": "中西合璧的早餐与特色料理，满足您的味蕾"
-      },
-      "parking": {
-        "title": "免费停车",
-        "desc": "宽敞安全的停车场，出行无忧"
-      }
+    "brandTitle": "卓越传统",
+    "brandP1": "自 1995 年创立以来，ÉLYSÉE 大酒店一直是这座城市最尊贵的下榻之所。我们对永恒优雅与完美服务的执着，定义了每一次入住体验。",
+    "brandP2": "从精心挑选的大理石大厅，到高支棉床品，没有哪一处细节能逃过我们的专注。",
+    "statYears": "年服务",
+    "statSuites": "间套房",
+    "statGuests": "位宾客",
+    "roomsTitle": "精选客房",
+    "roomsDesc": "从温馨单人间到尊贵套房，每一间都是舒适与品味的殿堂。",
+    "roomsAction": "查看详情 →",
+    "singleDesc": "为独行旅者打造的舒适雅致空间，城市景观尽收眼底。",
+    "doubleDesc": "宽敞舒适的双人天地，配备大理石浴室和独立休憩区。",
+    "suiteDesc": "奢华之巅 — 独立起居空间，全景视野，管家服务。",
+    "amenitiesTitle": "尊享设施",
+    "amenities": {
+      "dining": {"title": "精致餐饮", "desc": "米其林星级料理，世界级主厨主理"},
+      "spa": {"title": "水疗康体", "desc": "焕活身心的理疗，静谧的避世之所"},
+      "pool": {"title": "无边际泳池", "desc": "城市天际线全景，全年恒温开放"},
+      "concierge": {"title": "礼宾服务", "desc": "24小时尊享定制服务，关怀每一个细节"}
     },
-    "roomShowcase": {
-      "single": {
-        "name": "单人间",
-        "price": "¥299",
-        "desc": "简约舒适，商务出行首选"
-      },
-      "double": {
-        "name": "双人间",
-        "price": "¥399",
-        "desc": "宽敞温馨，双人同住更惬意"
-      },
-      "suite": {
-        "name": "套房",
-        "price": "¥699",
-        "desc": "奢华空间，尽享尊贵体验"
-      }
-    }
+    "ctaTitle": "开启旅程",
+    "ctaDesc": "即刻预订 ÉLYSÉE，体验精致待客之道。",
+    "ctaButton": "立即预订",
+    "footerAddress": "巴黎大军团大街1号",
+    "footerPhone": "+33 1 40 69 60 00",
+    "footerEmail": "reservations@elysee.com"
   },
   "rooms": {
     "title": "客房浏览",

@@ -10,6 +10,7 @@ import com.hotel.repository.RoomRepository;
 import com.hotel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ public class FavoriteService {
     private final RoomRepository roomRepository;
     private final ReviewService reviewService;
 
+    @Transactional
     public FavoriteResponse addFavorite(Long userId, Long roomId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException("用户不存在"));
@@ -39,6 +41,7 @@ public class FavoriteService {
         return toResponse(favoriteRepository.save(favorite));
     }
 
+    @Transactional
     public void removeFavorite(Long userId, Long roomId) {
         favoriteRepository.deleteByUserIdAndRoomId(userId, roomId);
     }
