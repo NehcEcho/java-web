@@ -97,7 +97,7 @@ export default function CustomerRoomsPage() {
         <div className="flex gap-2 items-center">
           <span className="text-sm text-gray-500">{t('common.floor')}:</span>
           <Button variant={selectedFloor === undefined ? 'default' : 'outline'} size="sm" className={selectedFloor === undefined ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedFloor(undefined)}>{t('common.all')}</Button>
-          {[3, 4, 5].map(f => (
+          {[3, 4, 5, 6, 7, 8].map(f => (
             <Button key={f} variant={selectedFloor === f ? 'default' : 'outline'} size="sm" className={selectedFloor === f ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedFloor(f)}>{f}F</Button>
           ))}
         </div>
@@ -109,7 +109,7 @@ export default function CustomerRoomsPage() {
           return (
             <Card key={room.id} className="overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 group cursor-pointer rounded-2xl" onClick={() => navigate(`/rooms/detail/${room.id}`)}>
               <div className="h-44 overflow-hidden relative">
-                <RoomImg className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <RoomImg className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" roomNumber={room.roomNumber} />
                 <div className="absolute top-3 right-3" onClick={(e) => e.stopPropagation()}>
                   <FavoriteButton roomId={room.id} initialFavorited={room.isFavorited} />
                 </div>

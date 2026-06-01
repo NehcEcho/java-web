@@ -79,7 +79,7 @@ export default function MyReservationsPage() {
         onClick={() => navigate(`/my-reservations/${r.id}`)}
       >
         <div className="h-32">
-          <RoomImg className="w-full h-full object-cover" />
+          <RoomImg className="w-full h-full object-cover" roomNumber={r.roomNumber} />
         </div>
         <CardContent className="pt-4">
           <div className="flex justify-between items-start mb-3">

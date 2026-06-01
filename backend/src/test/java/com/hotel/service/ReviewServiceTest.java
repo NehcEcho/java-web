@@ -46,6 +46,9 @@ class ReviewServiceTest {
     @Mock
     private ReservationRepository reservationRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private ReviewService reviewService;
 

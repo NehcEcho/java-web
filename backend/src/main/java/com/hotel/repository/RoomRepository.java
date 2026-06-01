@@ -12,6 +12,7 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByStatus(RoomStatus status);
     List<Room> findByRoomTypeId(Long roomTypeId);
+    boolean existsByRoomTypeId(Long roomTypeId);
 
     @Query("SELECT r FROM Room r WHERE r.status = 'AVAILABLE' AND r.id NOT IN " +
            "(SELECT res.room.id FROM Reservation res WHERE res.status IN ('PENDING','CONFIRMED') " +

@@ -3,17 +3,21 @@ package com.hotel.service;
 import com.hotel.dto.notification.NotificationResponse;
 import com.hotel.entity.Notification;
 import com.hotel.entity.User;
+import com.hotel.entity.enums.UserRole;
 import com.hotel.exception.BusinessException;
 import com.hotel.repository.NotificationRepository;
 import com.hotel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
@@ -28,6 +32,19 @@ public class NotificationService {
         notification.setMessage(message);
         notification.setType(type);
         notificationRepository.save(notification);
+    }
+
+    public void createNotificationForRole(UserRole role, String title, String message, String type) {
+        List<User> users = userRepository.findByRole(role);
+        for (User user : users) {
+            Notification notification = new Notification();
+            notification.setUser(user);
+            notification.setTitle(title);
+            notification.setMessage(message);
+            notification.setType(type);
+            notificationRepository.save(notification);
+        }
+        log.debug("Sent {} notifications to {} users with role {}", title, users.size(), role);
     }
 
     public List<NotificationResponse> getUserNotifications(Long userId) {
@@ -53,6 +70,7 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
+    @Transactional
     public void markAllAsRead(Long userId) {
         notificationRepository.markAllAsRead(userId);
     }

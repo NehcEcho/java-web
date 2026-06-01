@@ -7,6 +7,7 @@ import com.hotel.exception.BusinessException;
 import com.hotel.repository.UserRepository;
 import com.hotel.security.CustomUserDetailsService;
 import com.hotel.security.JwtTokenProvider;
+import com.hotel.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService userDetailsService;
+    private final NotificationService notificationService;
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
@@ -49,6 +51,14 @@ public class AuthService {
         user.setPhone(request.getPhone());
         user.setEmail(request.getEmail());
         userRepository.save(user);
+
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "新用户注册",
+                request.getName() + "（" + user.getUsername() + "）刚刚注册了账户",
+                "SYSTEM"
+        );
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         String token = jwtTokenProvider.generateToken(userDetails);
         return new AuthResponse(token, user.getUsername(), user.getRole().name(), user.getId());

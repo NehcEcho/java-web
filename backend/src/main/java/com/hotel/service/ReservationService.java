@@ -7,14 +7,17 @@ import com.hotel.entity.Room;
 import com.hotel.entity.User;
 import com.hotel.entity.enums.ReservationStatus;
 import com.hotel.entity.enums.RoomStatus;
+import com.hotel.entity.enums.UserRole;
 import com.hotel.exception.BusinessException;
 import com.hotel.repository.ReservationRepository;
 import com.hotel.repository.RoomRepository;
 import com.hotel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,15 +31,26 @@ public class ReservationService {
     private final UserRepository userRepository;
     private final NotificationService notificationService;
 
+    @Transactional
     public ReservationResponse create(ReservationRequest request, Long userId) {
         Room room = roomRepository.findById(request.getRoomId())
                 .orElseThrow(() -> new BusinessException("房间不存在"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException("用户不存在"));
 
+        if (request.getGuestCount() != null && request.getGuestCount() < 1) {
+            throw new BusinessException("入住人数必须大于0");
+        }
+        if (request.getGuestCount() != null && request.getGuestCount() > room.getRoomType().getMaxGuests()) {
+            throw new BusinessException("入住人数超过该房型最大入住人数(" + room.getRoomType().getMaxGuests() + ")");
+        }
+
         long nights = ChronoUnit.DAYS.between(request.getCheckInDate(), request.getCheckOutDate());
         if (nights <= 0) {
             throw new BusinessException("退房日期必须晚于入住日期");
+        }
+        if (request.getCheckInDate().isBefore(LocalDate.now())) {
+            throw new BusinessException("入住日期不能早于今天");
         }
         BigDecimal totalPrice = room.getRoomType().getBasePrice().multiply(BigDecimal.valueOf(nights));
 
@@ -55,9 +69,25 @@ public class ReservationService {
         reservation.setSpecialRequests(request.getSpecialRequests());
         reservation.setUser(user);
         reservation.setRoom(room);
-        return toResponse(reservationRepository.save(reservation));
+        reservation = reservationRepository.save(reservation);
+
+        notificationService.createNotification(
+                user.getId(),
+                "预订已提交",
+                "您的预订 #" + reservation.getId() + " 已提交，等待确认",
+                "RESERVATION"
+        );
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "新预订待确认",
+                user.getName() + " 预订了房间 " + room.getRoomNumber() + "（#" + reservation.getId() + "），请及时处理",
+                "RESERVATION"
+        );
+
+        return toResponse(reservation);
     }
 
+    @Transactional
     public List<ReservationResponse> createBatch(List<ReservationRequest> requests, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException("用户不存在"));
@@ -107,6 +137,7 @@ public class ReservationService {
         return toResponse(reservation);
     }
 
+    @Transactional
     public ReservationResponse confirm(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("预订不存在"));
@@ -132,12 +163,26 @@ public class ReservationService {
                 "RESERVATION"
         );
 
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "预订已确认",
+                "预订 #" + reservation.getId() + "（房间 " + reservation.getRoom().getRoomNumber() + "）已确认",
+                "RESERVATION"
+        );
+
         return toResponse(reservationRepository.save(reservation));
     }
 
+    @Transactional
     public ReservationResponse cancel(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("预订不存在"));
+        if (reservation.getStatus() == ReservationStatus.CANCELLED) {
+            throw new BusinessException("预订已取消");
+        }
+        if (reservation.getStatus() == ReservationStatus.COMPLETED) {
+            throw new BusinessException("已完成的预订不能取消");
+        }
         if (reservation.getStatus() == ReservationStatus.CONFIRMED && reservation.getRoom().getStatus() == RoomStatus.RESERVED) {
             reservation.getRoom().setStatus(RoomStatus.AVAILABLE);
             roomRepository.save(reservation.getRoom());
@@ -148,6 +193,13 @@ public class ReservationService {
                 reservation.getUser().getId(),
                 "预订已取消",
                 "您的预订 #" + reservation.getId() + " 已取消",
+                "RESERVATION"
+        );
+
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "预订已取消",
+                "预订 #" + reservation.getId() + "（房间 " + reservation.getRoom().getRoomNumber() + "）已被取消",
                 "RESERVATION"
         );
 

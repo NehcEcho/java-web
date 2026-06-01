@@ -6,14 +6,18 @@
     "favorites": "收藏",
     "profile": "个人中心",
     "login": "登录",
-    "logout": "退出",
+    "logout": "退出登录",
     "dashboard": "仪表盘",
     "roomManagement": "房间管理",
     "roomTypes": "房型管理",
     "reservations": "预订管理",
-    "checkIns": "入住管理",
+    "checkIns": "入住退房",
     "users": "用户管理",
-    "reviews": "评价管理"
+    "reviews": "评价管理",
+    "auditLogs": "操作日志",
+    "export": "数据导出",
+    "adminPanel": "管理后台",
+    "backToMain": "返回首页"
   },
   "common": {
     "loading": "加载中...",
@@ -334,7 +338,9 @@
     "markRead": "标为已读",
     "reservation": "预订",
     "checkIn": "入住",
-    "checkOut": "退房"
+    "checkOut": "退房",
+    "review": "评价",
+    "system": "系统"
   },
   "home": {
     "title": "精品酒店",

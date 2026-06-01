@@ -47,7 +47,7 @@ public class DashboardAnalyticsService {
                 break;
         }
 
-        List<Reservation> reservations = reservationRepository.findCompletedReservationsInRange(startDate, now.plusDays(1));
+        List<Reservation> reservations = reservationRepository.findCompletedReservationsInRange(startDate.atStartOfDay(), now.plusDays(1).atStartOfDay());
 
         RevenueStats stats = new RevenueStats();
         BigDecimal totalRevenue = reservations.stream()
@@ -147,8 +147,8 @@ public class DashboardAnalyticsService {
         // Customer tiers
         int vipCount = 0, regularCount = 0, newCount = 0;
         for (Object[] row : spendingData) {
-            BigDecimal totalSpent = (BigDecimal) row[1];
-            long bookingCount = (long) row[2];
+            BigDecimal totalSpent = toBigDecimal(row[1]);
+            long bookingCount = ((Number) row[2]).longValue();
             if (totalSpent.compareTo(BigDecimal.valueOf(5000)) >= 0 || bookingCount >= 5) {
                 vipCount++;
             } else if (bookingCount >= 2) {
@@ -172,7 +172,7 @@ public class DashboardAnalyticsService {
         distribution.put("3000-5000", 0);
         distribution.put("5000+", 0);
         for (Object[] row : spendingData) {
-            BigDecimal totalSpent = (BigDecimal) row[1];
+            BigDecimal totalSpent = toBigDecimal(row[1]);
             if (totalSpent.compareTo(BigDecimal.valueOf(500)) < 0) distribution.merge("0-500", 1, Integer::sum);
             else if (totalSpent.compareTo(BigDecimal.valueOf(1000)) < 0) distribution.merge("500-1000", 1, Integer::sum);
             else if (totalSpent.compareTo(BigDecimal.valueOf(3000)) < 0) distribution.merge("1000-3000", 1, Integer::sum);
@@ -193,9 +193,9 @@ public class DashboardAnalyticsService {
         List<CustomerStats.TopCustomer> topCustomers = new ArrayList<>();
         for (Object[] row : topData) {
             if (topCustomers.size() >= 10) break;
-            Long userId = (Long) row[0];
-            Long bookingCount = (Long) row[1];
-            BigDecimal totalSpent = (BigDecimal) row[2];
+            Long userId = ((Number) row[0]).longValue();
+            Long bookingCount = ((Number) row[1]).longValue();
+            BigDecimal totalSpent = toBigDecimal(row[2]);
             User user = userRepository.findById(userId).orElse(null);
             if (user == null) continue;
 
@@ -210,6 +210,16 @@ public class DashboardAnalyticsService {
         stats.setTopCustomers(topCustomers);
 
         return stats;
+    }
+
+    private BigDecimal toBigDecimal(Object value) {
+        if (value instanceof BigDecimal) {
+            return (BigDecimal) value;
+        } else if (value instanceof Number) {
+            return BigDecimal.valueOf(((Number) value).doubleValue());
+        } else {
+            return new BigDecimal(value.toString());
+        }
     }
 
     private CustomerStats.CustomerTier createTier(String tier, int count, int total) {

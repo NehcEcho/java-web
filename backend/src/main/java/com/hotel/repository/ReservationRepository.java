@@ -23,12 +23,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findBookedDatesInRange(@Param("roomId") Long roomId, @Param("monthStart") LocalDate monthStart, @Param("monthEnd") LocalDate monthEnd);
 
     @Query("SELECT r FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') AND r.createdAt >= :startDate AND r.createdAt < :endDate")
-    List<Reservation> findCompletedReservationsInRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    List<Reservation> findCompletedReservationsInRange(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT r.user.id, COUNT(r) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id HAVING COUNT(r) > 1")
     List<Object[]> findReturningCustomers();
 
-    @Query("SELECT r.user.id, SUM(r.totalPrice) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id")
+    @Query("SELECT r.user.id, SUM(r.totalPrice), COUNT(r) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id")
     List<Object[]> findCustomerSpending();
 
     @Query("SELECT r.user.id, COUNT(r), SUM(r.totalPrice) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id ORDER BY SUM(r.totalPrice) DESC")

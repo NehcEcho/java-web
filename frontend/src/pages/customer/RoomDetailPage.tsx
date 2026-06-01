@@ -84,7 +84,7 @@ export default function RoomDetailPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="relative h-80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150">
-          <RoomImg className="w-full h-full object-cover" />
+          <RoomImg className="w-full h-full object-cover" roomNumber={room.roomNumber} />
           <div className="absolute top-3 right-3">
             {isAuthenticated && <FavoriteButton roomId={room.id} initialFavorited={room.isFavorited} size={24} />}
           </div>

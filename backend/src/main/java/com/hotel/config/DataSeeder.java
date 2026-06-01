@@ -62,17 +62,25 @@ public class DataSeeder implements CommandLineRunner {
             RoomType double_ = types.get(1);
             RoomType suite = types.get(2);
 
-            roomRepository.save(new Room(null, "301", 3, RoomStatus.AVAILABLE, single));
-            roomRepository.save(new Room(null, "302", 3, RoomStatus.AVAILABLE, single));
-            roomRepository.save(new Room(null, "303", 3, RoomStatus.AVAILABLE, double_));
-            roomRepository.save(new Room(null, "401", 4, RoomStatus.AVAILABLE, double_));
-            roomRepository.save(new Room(null, "402", 4, RoomStatus.AVAILABLE, double_));
-            roomRepository.save(new Room(null, "403", 4, RoomStatus.AVAILABLE, suite));
-            roomRepository.save(new Room(null, "404", 4, RoomStatus.AVAILABLE, suite));
-            roomRepository.save(new Room(null, "501", 5, RoomStatus.AVAILABLE, single));
-            roomRepository.save(new Room(null, "502", 5, RoomStatus.AVAILABLE, double_));
-            roomRepository.save(new Room(null, "503", 5, RoomStatus.AVAILABLE, suite));
-            log.info("创建10个示例房间");
+            int roomId = 1;
+            // Floors 3-7: 8 rooms each, mix of types
+            for (int floor = 3; floor <= 7; floor++) {
+                for (int r = 1; r <= 8; r++) {
+                    String number = floor + String.format("%02d", r);
+                    RoomType type;
+                    if (r <= 3) type = single;
+                    else if (r <= 6) type = double_;
+                    else type = suite;
+                    roomRepository.save(new Room(null, number, floor, RoomStatus.AVAILABLE, type));
+                    roomId++;
+                }
+            }
+            // Floor 8: 4 premium suites
+            for (int r = 1; r <= 4; r++) {
+                roomRepository.save(new Room(null, "80" + r, 8, RoomStatus.AVAILABLE, suite));
+                roomId++;
+            }
+            log.info("创建44个示例房间 (3-8层)");
         }
     }
 }

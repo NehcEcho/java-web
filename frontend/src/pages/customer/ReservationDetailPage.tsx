@@ -98,7 +98,7 @@ export default function ReservationDetailPage() {
             <CardContent className="pt-6">
               <div className="flex gap-4">
                 <div className="w-40 h-28 rounded-xl overflow-hidden flex-shrink-0">
-                  <RoomImg className="w-full h-full object-cover" />
+                  <RoomImg className="w-full h-full object-cover" roomNumber={reservation.roomNumber} />
                 </div>
                 <div className="flex-1">
                   <h2 className="text-xl font-bold mb-1">{reservation.roomNumber} - {reservation.roomType}</h2>

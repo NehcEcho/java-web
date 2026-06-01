@@ -2,12 +2,12 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
-import { Hotel, LogOut, Heart, User, Globe } from 'lucide-react';
+import { Hotel, LogOut, Heart, User, Globe, Shield } from 'lucide-react';
 import { NotificationBell } from '@/components/shared/NotificationBell';
 import { Button } from '@/components/ui/button';
 
 export const CustomerNav = memo(function CustomerNav() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, isAdmin, user, logout } = useAuth();
   const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
@@ -37,6 +37,11 @@ export const CustomerNav = memo(function CustomerNav() {
                 <User className="w-4 h-4" />{t('nav.profile')}
               </Link>
               <NotificationBell />
+              {isAdmin && (
+                <Link to="/admin/dashboard" className="text-sm bg-gray-900 text-white px-4 py-2 h-9 rounded-lg hover:bg-gray-800 font-medium inline-flex items-center gap-1.5 transition-colors">
+                  <Shield className="w-4 h-4" />{t('nav.adminPanel')}
+                </Link>
+              )}
               <span className="text-sm text-gray-500">{user?.username}</span>
               <button onClick={logout} className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors">
                 <LogOut className="w-4 h-4" />{t('nav.logout')}

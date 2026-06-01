@@ -8,12 +8,16 @@
     "login": "Login",
     "logout": "Logout",
     "dashboard": "Dashboard",
-    "roomManagement": "Room Management",
+    "roomManagement": "Rooms",
     "roomTypes": "Room Types",
     "reservations": "Reservations",
     "checkIns": "Check-ins",
     "users": "Users",
-    "reviews": "Reviews"
+    "reviews": "Reviews",
+    "auditLogs": "Audit Logs",
+    "export": "Export",
+    "adminPanel": "Admin Panel",
+    "backToMain": "Back to Site"
   },
   "common": {
     "loading": "Loading...",
@@ -334,7 +338,9 @@
     "markRead": "Mark as read",
     "reservation": "Reservation",
     "checkIn": "Check-in",
-    "checkOut": "Check-out"
+    "checkOut": "Check-out",
+    "review": "Review",
+    "system": "System"
   },
   "home": {
     "title": "Boutique Hotel",

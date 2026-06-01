@@ -140,7 +140,7 @@ export default function BookingPage() {
       <h1 className="text-3xl font-bold tracking-tight mb-6">{t('booking.title')}</h1>
       <Card className="rounded-2xl shadow-sm mb-6 overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150">
         <div className="h-48">
-          <RoomImg className="w-full h-full object-cover" />
+          <RoomImg className="w-full h-full object-cover" roomNumber={room.roomNumber} />
         </div>
         <CardContent className="pt-4">
           <div className="flex justify-between items-center">

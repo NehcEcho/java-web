@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Bell, Check, CheckCheck } from 'lucide-react';
 import { getUnreadNotifications, getUnreadCount, markAsRead, markAllAsRead, type Notification } from '@/api/notifications';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 export function NotificationBell() {
+  const { t } = useTranslation();
   const [count, setCount] = useState(0);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [open, setOpen] = useState(false);
@@ -65,7 +67,7 @@ export function NotificationBell() {
       await markAllAsRead();
       setNotifications([]);
       setCount(0);
-      toast.success('全部标为已读');
+      toast.success(t('notification.markAllRead'));
     } catch {}
   };
 
@@ -74,7 +76,20 @@ export function NotificationBell() {
       case 'RESERVATION': return 'bg-blue-100 text-blue-700';
       case 'CHECK_IN': return 'bg-green-100 text-green-700';
       case 'CHECK_OUT': return 'bg-purple-100 text-purple-700';
+      case 'REVIEW': return 'bg-orange-100 text-orange-700';
+      case 'SYSTEM': return 'bg-cyan-100 text-cyan-700';
       default: return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+  const getTypeLabel = (type: string) => {
+    switch (type) {
+      case 'RESERVATION': return t('notification.reservation');
+      case 'CHECK_IN': return t('notification.checkIn');
+      case 'CHECK_OUT': return t('notification.checkOut');
+      case 'REVIEW': return t('notification.review');
+      case 'SYSTEM': return t('notification.system');
+      default: return type;
     }
   };
 
@@ -92,10 +107,10 @@ export function NotificationBell() {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-96 overflow-hidden">
           <div className="flex items-center justify-between p-4 border-b border-gray-100">
-            <h3 className="font-semibold">通知</h3>
+            <h3 className="font-semibold">{t('notification.title')}</h3>
             {notifications.length > 0 && (
               <Button variant="ghost" size="sm" onClick={handleMarkAllAsRead}>
-                <CheckCheck className="w-4 h-4 mr-1" /> 全部已读
+                <CheckCheck className="w-4 h-4 mr-1" /> {t('notification.markAllRead')}
               </Button>
             )}
           </div>
@@ -103,7 +118,7 @@ export function NotificationBell() {
             {notifications.length === 0 ? (
               <div className="p-8 text-center text-gray-400">
                 <Bell className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>暂无未读通知</p>
+                <p>{t('notification.noUnread')}</p>
               </div>
             ) : (
               notifications.map(n => (
@@ -111,8 +126,8 @@ export function NotificationBell() {
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${getTypeColor(n.type)}`}>
-                          {n.type === 'RESERVATION' ? '预订' : n.type === 'CHECK_IN' ? '入住' : '退房'}
+                         <span className={`px-2 py-0.5 rounded-full text-xs ${getTypeColor(n.type)}`}>
+                          {getTypeLabel(n.type)}
                         </span>
                         <span className="text-xs text-gray-400">
                           {new Date(n.createdAt).toLocaleString('zh-CN')}

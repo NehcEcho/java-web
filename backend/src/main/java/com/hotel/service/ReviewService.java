@@ -6,11 +6,13 @@ import com.hotel.entity.Review;
 import com.hotel.entity.Room;
 import com.hotel.entity.User;
 import com.hotel.entity.enums.ReservationStatus;
+import com.hotel.entity.enums.UserRole;
 import com.hotel.exception.BusinessException;
 import com.hotel.repository.ReservationRepository;
 import com.hotel.repository.ReviewRepository;
 import com.hotel.repository.RoomRepository;
 import com.hotel.repository.UserRepository;
+import com.hotel.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
     private final ReservationRepository reservationRepository;
+    private final NotificationService notificationService;
 
     public ReviewResponse createReview(Long roomId, Long userId, ReviewRequest request) {
         Room room = roomRepository.findById(roomId)
@@ -49,7 +52,16 @@ public class ReviewService {
         review.setUser(user);
         review.setRoom(room);
         review.setVisible(true);
-        return toResponse(reviewRepository.save(review));
+        review = reviewRepository.save(review);
+
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "新评价",
+                user.getUsername() + " 对房间 " + room.getRoomNumber() + " 发表了评价（" + request.getRating() + "星）",
+                "REVIEW"
+        );
+
+        return toResponse(review);
     }
 
     public List<ReviewResponse> getRoomReviews(Long roomId) {

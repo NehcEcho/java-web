@@ -45,6 +45,9 @@ class AuthServiceTest {
     @Mock
     private CustomUserDetailsService userDetailsService;
 
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private AuthService authService;
 

@@ -3,6 +3,7 @@ package com.hotel.service;
 import com.hotel.entity.Reservation;
 import com.hotel.entity.CheckIn;
 import com.hotel.entity.User;
+import com.hotel.exception.BusinessException;
 import com.hotel.repository.ReservationRepository;
 import com.hotel.repository.CheckInRepository;
 import com.hotel.repository.UserRepository;
@@ -66,7 +67,7 @@ public class ExportService {
             workbook.write(baos);
             return baos.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("导出失败: " + e.getMessage());
+            throw new BusinessException(500, "导出失败: " + e.getMessage());
         }
     }
 
@@ -108,7 +109,7 @@ public class ExportService {
             workbook.write(baos);
             return baos.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("导出失败: " + e.getMessage());
+            throw new BusinessException(500, "导出失败: " + e.getMessage());
         }
     }
 
@@ -142,7 +143,7 @@ public class ExportService {
             workbook.write(baos);
             return baos.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("导出失败: " + e.getMessage());
+            throw new BusinessException(500, "导出失败: " + e.getMessage());
         }
     }
 }

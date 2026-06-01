@@ -4,6 +4,7 @@ import com.hotel.dto.roomtype.RoomTypeRequest;
 import com.hotel.dto.roomtype.RoomTypeResponse;
 import com.hotel.entity.RoomType;
 import com.hotel.exception.BusinessException;
+import com.hotel.repository.RoomRepository;
 import com.hotel.repository.RoomTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class RoomTypeService {
 
     private final RoomTypeRepository roomTypeRepository;
+    private final RoomRepository roomRepository;
 
     public List<RoomTypeResponse> findAll() {
         return roomTypeRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
@@ -49,6 +51,11 @@ public class RoomTypeService {
     }
 
     public void delete(Long id) {
+        RoomType roomType = roomTypeRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("房间类型不存在"));
+        if (roomRepository.existsByRoomTypeId(id)) {
+            throw new BusinessException("该房型下有房间，无法删除");
+        }
         roomTypeRepository.deleteById(id);
     }
 

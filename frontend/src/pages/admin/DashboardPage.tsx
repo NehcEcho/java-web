@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getDashboardStats, getRevenueStats, getCustomerStats, type DashboardStats, type RevenueStats, type CustomerStats } from '@/api/dashboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DoorOpen, Users, CalendarCheck, Wrench, LogIn, LogOut, Clock, AlertCircle, TrendingUp, PieChart as PieIcon, BarChart3, UserCheck } from 'lucide-react';
+import { DoorOpen, Users, CalendarCheck, Wrench, LogIn, LogOut, AlertCircle, TrendingUp, PieChart as PieIcon, BarChart3, UserCheck } from 'lucide-react';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
 const COLORS = ['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
@@ -27,6 +29,10 @@ function DashboardSkeleton() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
+        <div className="h-6 w-32 animate-pulse rounded bg-gray-200" />
+        <div className="h-72 animate-pulse rounded-xl bg-gray-100" />
       </div>
     </div>
   );
@@ -113,6 +119,7 @@ export default function DashboardPage() {
                 key={option.value}
                 variant={period === option.value ? 'default' : 'outline'}
                 size="sm"
+                className={`h-9 rounded-xl active:scale-[0.98] transition-all ${period === option.value ? 'bg-gray-900 text-white hover:bg-gray-800' : ''}`}
                 onClick={() => setPeriod(option.value)}
               >
                 {option.label}
@@ -275,41 +282,37 @@ export default function DashboardPage() {
 
         {/* VIP客户表格 */}
         {customers?.topCustomers && customers.topCustomers.length > 0 && (
-          <Card>
+          <Card className="rounded-2xl shadow-sm">
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-500">{t('dashboard.vipRanking')}</CardTitle>
+              <CardTitle className="text-base">{t('dashboard.vipRanking')}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('dashboard.rank')}</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('dashboard.customer')}</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('dashboard.bookingCount')}</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('dashboard.totalSpent')}</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('dashboard.tier')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {customers.topCustomers.map((c, i) => (
-                      <tr key={c.userId} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-3 px-4 text-sm font-bold">{i + 1}</td>
-                        <td className="py-3 px-4 text-sm font-medium">{c.name}</td>
-                        <td className="py-3 px-4 text-sm">{c.bookingCount} {t('dashboard.times')}</td>
-                        <td className="py-3 px-4 text-sm font-medium">{formatCurrency(c.totalSpent)}</td>
-                        <td className="py-3 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${
-                            c.tier === 'VIP' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-700'
-                          }`}>
-                            {c.tier}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <CardContent className="pt-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-16">{t('dashboard.rank')}</TableHead>
+                    <TableHead>{t('dashboard.customer')}</TableHead>
+                    <TableHead>{t('dashboard.bookingCount')}</TableHead>
+                    <TableHead>{t('dashboard.totalSpent')}</TableHead>
+                    <TableHead className="w-20">{t('dashboard.tier')}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {customers.topCustomers.map((c, i) => (
+                    <TableRow key={c.userId} className="hover:bg-gray-50 transition-colors">
+                      <TableCell className="font-bold text-gray-400">{i + 1}</TableCell>
+                      <TableCell className="font-medium">{c.name}</TableCell>
+                      <TableCell>{c.bookingCount} {t('dashboard.times')}</TableCell>
+                      <TableCell className="font-medium">{formatCurrency(c.totalSpent)}</TableCell>
+                      <TableCell>
+                        <Badge className={c.tier === 'VIP' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'}>
+                          {c.tier}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         )}

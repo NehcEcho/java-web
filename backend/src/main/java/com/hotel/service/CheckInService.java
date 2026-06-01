@@ -11,12 +11,14 @@ import com.hotel.entity.Room;
 import com.hotel.entity.enums.CheckInStatus;
 import com.hotel.entity.enums.ReservationStatus;
 import com.hotel.entity.enums.RoomStatus;
+import com.hotel.entity.enums.UserRole;
 import com.hotel.exception.BusinessException;
 import com.hotel.repository.CheckInRepository;
 import com.hotel.repository.ReservationRepository;
 import com.hotel.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -33,6 +35,7 @@ public class CheckInService {
     private final RoomRepository roomRepository;
     private final NotificationService notificationService;
 
+    @Transactional
     public CheckInResponse checkIn(CheckInRequest request) {
         Reservation reservation = reservationRepository.findById(request.getReservationId())
                 .orElseThrow(() -> new BusinessException("预订不存在"));
@@ -66,9 +69,17 @@ public class CheckInService {
                 "CHECK_IN"
         );
 
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "新入住",
+                reservation.getUser().getName() + " 已入住房间 " + reservation.getRoom().getRoomNumber(),
+                "CHECK_IN"
+        );
+
         return toResponse(checkInRepository.save(checkIn));
     }
 
+    @Transactional
     public CheckInResponse checkOut(Long id) {
         CheckIn checkIn = checkInRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("入住记录不存在"));
@@ -87,9 +98,17 @@ public class CheckInService {
                 "CHECK_OUT"
         );
 
+        notificationService.createNotificationForRole(
+                UserRole.ADMIN,
+                "退房",
+                checkIn.getReservation().getUser().getName() + " 已从房间 " + checkIn.getReservation().getRoom().getRoomNumber() + " 退房",
+                "CHECK_OUT"
+        );
+
         return toResponse(checkInRepository.save(checkIn));
     }
 
+    @Transactional
     public CheckInResponse extendStay(Long id, ExtendStayRequest request) {
         CheckIn checkIn = checkInRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("入住记录不存在"));
@@ -100,6 +119,12 @@ public class CheckInService {
         Reservation reservation = checkIn.getReservation();
         if (!request.getNewCheckOutDate().isAfter(reservation.getCheckOutDate())) {
             throw new BusinessException("新退房日期必须晚于原退房日期");
+        }
+
+        List<Reservation> conflicts = reservationRepository.findConflictingReservations(
+                reservation.getRoom().getId(), reservation.getCheckOutDate(), request.getNewCheckOutDate());
+        if (!conflicts.isEmpty()) {
+            throw new BusinessException("延住后的日期与已有预订冲突");
         }
 
         long extraDays = ChronoUnit.DAYS.between(reservation.getCheckOutDate(), request.getNewCheckOutDate());
@@ -115,6 +140,7 @@ public class CheckInService {
         return toResponse(checkInRepository.save(checkIn));
     }
 
+    @Transactional
     public CheckInResponse transferRoom(Long id, TransferRoomRequest request) {
         CheckIn checkIn = checkInRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("入住记录不存在"));

@@ -84,7 +84,7 @@ export default function MyFavoritesPage() {
           return (
             <Card key={fav.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 group cursor-pointer" onClick={() => navigate(`/rooms/detail/${fav.roomId}`)}>
               <div className="h-44 overflow-hidden">
-                <RoomImg className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <RoomImg className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" roomNumber={fav.roomNumber} />
               </div>
               <CardContent className="pt-4">
                 <div className="flex items-center justify-between mb-2">
