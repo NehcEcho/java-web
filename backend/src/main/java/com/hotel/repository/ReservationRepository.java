@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,4 +19,16 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT r FROM Reservation r WHERE r.room.id = :roomId AND r.status <> 'CANCELLED' AND r.checkInDate < :monthEnd AND r.checkOutDate > :monthStart")
     List<Reservation> findBookedDatesInRange(@Param("roomId") Long roomId, @Param("monthStart") LocalDate monthStart, @Param("monthEnd") LocalDate monthEnd);
+
+    @Query("SELECT r FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') AND r.createdAt >= :startDate AND r.createdAt < :endDate")
+    List<Reservation> findCompletedReservationsInRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT r.user.id, COUNT(r) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id HAVING COUNT(r) > 1")
+    List<Object[]> findReturningCustomers();
+
+    @Query("SELECT r.user.id, SUM(r.totalPrice) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id")
+    List<Object[]> findCustomerSpending();
+
+    @Query("SELECT r.user.id, COUNT(r), SUM(r.totalPrice) FROM Reservation r WHERE r.status IN ('CONFIRMED', 'COMPLETED') GROUP BY r.user.id ORDER BY SUM(r.totalPrice) DESC")
+    List<Object[]> findTopCustomers();
 }
