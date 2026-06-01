@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback, type ReactNode } from 'react';
 import { authApi, type AuthResponse } from '@/api/auth';
 import { toast } from 'sonner';
 
@@ -19,44 +19,43 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
+  const [user, setUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem('user');
     const savedToken = localStorage.getItem('token');
     if (savedUser && savedToken) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch {
+      try { return JSON.parse(savedUser); } catch {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       }
     }
-  }, []);
+    return null;
+  });
 
-  const loginFn = async (username: string, password: string) => {
+  const loginFn = useCallback(async (username: string, password: string) => {
     const res: AuthResponse = await authApi.login({ username, password });
     const userData: User = { userId: res.userId, username: res.username, role: res.role };
     localStorage.setItem('token', res.token);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
     toast.success('登录成功');
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
-  };
+  }, []);
+
+  const value = useMemo(() => ({
+    user,
+    isAuthenticated: !!user,
+    isAdmin: user?.role === 'ADMIN',
+    login: loginFn,
+    logout,
+  }), [user, loginFn, logout]);
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      isAuthenticated: !!user,
-      isAdmin: user?.role === 'ADMIN',
-      login: loginFn,
-      logout,
-    }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

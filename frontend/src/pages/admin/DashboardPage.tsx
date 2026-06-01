@@ -132,7 +132,7 @@ export default function DashboardPage() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="period" tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `¥${v}`} />
-                  <Tooltip formatter={(v: number) => formatCurrency(v)} />
+                  <Tooltip formatter={(v) => formatCurrency(Number(v))} />
                   <Line type="monotone" dataKey="revenue" stroke="#f59e0b" strokeWidth={2} dot={{ fill: '#f59e0b' }} />
                 </LineChart>
               </ResponsiveContainer>
@@ -157,13 +157,13 @@ export default function DashboardPage() {
                     cx="50%"
                     cy="50%"
                     outerRadius={100}
-                    label={({ roomType, percentage }) => `${roomType} ${percentage}%`}
+                    label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                   >
                     {(revenue?.byRoomType ?? []).map((_, i) => (
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(v: number) => formatCurrency(v)} />
+                  <Tooltip formatter={(v) => formatCurrency(Number(v))} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -184,7 +184,7 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="floor" tick={{ fontSize: 12 }} tickFormatter={(v) => `${v}F`} />
                 <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `¥${v}`} />
-                <Tooltip formatter={(v: number) => formatCurrency(v)} />
+                <Tooltip formatter={(v) => formatCurrency(Number(v))} />
                 <Bar dataKey="revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -216,7 +216,7 @@ export default function DashboardPage() {
                     cx="50%"
                     cy="50%"
                     outerRadius={80}
-                    label={({ tier, percentage }) => `${tier} ${percentage}%`}
+                    label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                   >
                     {(customers?.tiers ?? []).map((_, i) => (
                       <Cell key={i} fill={COLORS[i]} />

@@ -83,7 +83,7 @@ export default function AuditLogsPage() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
-            <Select value={action} onValueChange={setAction}>
+            <Select value={action} onValueChange={(v) => setAction(v ?? '')}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="操作类型" />
               </SelectTrigger>
