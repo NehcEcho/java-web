@@ -1,0 +1,174 @@
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - navigation [ref=e6]:
+      - generic [ref=e7]:
+        - link "ÉLYSÉE" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e9]: ÉLYSÉE
+        - generic [ref=e10]:
+          - link "浏览客房" [ref=e11] [cursor=pointer]:
+            - /url: /rooms
+          - link "我的预订" [ref=e72] [cursor=pointer]:
+            - /url: /my-reservations
+          - link "收藏" [ref=e73] [cursor=pointer]:
+            - /url: /my-favorites
+            - img [ref=e74]
+            - text: 收藏
+          - link "个人中心" [ref=e76] [cursor=pointer]:
+            - /url: /profile
+            - img [ref=e77]
+            - text: 个人中心
+          - button [ref=e81]:
+            - img
+          - generic [ref=e82]: testuser
+          - button "退出登录" [ref=e83]:
+            - img [ref=e84]
+            - text: 退出登录
+          - button "EN" [ref=e13]:
+            - img
+            - text: EN
+    - main [ref=e14]:
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - img "hotel room" [ref=e91]
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - img [ref=e96]
+              - img [ref=e98]
+              - img [ref=e100]
+              - img [ref=e102]
+              - img [ref=e104]
+            - heading "Welcome to ÉLYSÉE" [level=1] [ref=e106]
+            - paragraph [ref=e107]: 让每一刻都成为杰作
+            - button "探索套房" [ref=e108]:
+              - text: 探索套房
+              - img
+          - generic [ref=e110]:
+            - paragraph [ref=e111]: 预订住宿
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - generic [ref=e114]: 入住日期
+                - textbox [ref=e115]
+              - generic [ref=e116]:
+                - generic [ref=e117]: 退房日期
+                - textbox [ref=e118]
+            - button "搜索可用房间" [ref=e119]:
+              - img
+              - text: 搜索可用房间
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - img "hotel room" [ref=e126]
+            - img [ref=e128]
+          - generic [ref=e131]:
+            - heading "卓越传统" [level=2] [ref=e133]
+            - paragraph [ref=e134]: 自 1995 年创立以来，ÉLYSÉE 大酒店一直是这座城市最尊贵的下榻之所。我们对永恒优雅与完美服务的执着，定义了每一次入住体验。
+            - paragraph [ref=e135]: 从精心挑选的大理石大厅，到高支棉床品，没有哪一处细节能逃过我们的专注。
+            - generic [ref=e136]:
+              - generic [ref=e137]:
+                - paragraph [ref=e138]: "30"
+                - paragraph [ref=e139]: 年服务
+              - generic [ref=e140]:
+                - paragraph [ref=e141]: "800"
+                - paragraph [ref=e142]: 间套房
+              - generic [ref=e143]:
+                - paragraph [ref=e144]: 15K
+                - paragraph [ref=e145]: 位宾客
+        - generic [ref=e147]:
+          - generic [ref=e148]:
+            - heading "精选客房" [level=2] [ref=e149]
+            - paragraph [ref=e151]: 从温馨单人间到尊贵套房，每一间都是舒适与品味的殿堂。
+          - generic [ref=e152]:
+            - generic [ref=e153] [cursor=pointer]:
+              - generic [ref=e155]:
+                - img "hotel room" [ref=e156]
+                - generic [ref=e157]: 单人间
+              - generic [ref=e158]:
+                - generic [ref=e159]:
+                  - heading "单人间" [level=3] [ref=e160]
+                  - generic [ref=e161]: ¥299/晚
+                - paragraph [ref=e162]: 为独行旅者打造的舒适雅致空间，城市景观尽收眼底。
+                - text: 查看详情 →
+            - generic [ref=e163] [cursor=pointer]:
+              - generic [ref=e165]:
+                - img "hotel room" [ref=e166]
+                - generic [ref=e167]: 双人间
+              - generic [ref=e168]:
+                - generic [ref=e169]:
+                  - heading "双人间" [level=3] [ref=e170]
+                  - generic [ref=e171]: ¥399/晚
+                - paragraph [ref=e172]: 宽敞舒适的双人天地，配备大理石浴室和独立休憩区。
+                - text: 查看详情 →
+            - generic [ref=e173] [cursor=pointer]:
+              - generic [ref=e175]:
+                - img "hotel room" [ref=e176]
+                - generic [ref=e177]: 套房
+              - generic [ref=e178]:
+                - generic [ref=e179]:
+                  - heading "套房" [level=3] [ref=e180]
+                  - generic [ref=e181]: ¥699/晚
+                - paragraph [ref=e182]: 奢华之巅 — 独立起居空间，全景视野，管家服务。
+                - text: 查看详情 →
+        - generic [ref=e184]:
+          - heading "尊享设施" [level=2] [ref=e186]
+          - generic [ref=e188]:
+            - generic [ref=e189]:
+              - generic [ref=e190]: 🍽
+              - heading "精致餐饮" [level=4] [ref=e191]
+              - paragraph [ref=e192]: 米其林星级料理，世界级主厨主理
+            - generic [ref=e193]:
+              - generic [ref=e194]: 💆
+              - heading "水疗康体" [level=4] [ref=e195]
+              - paragraph [ref=e196]: 焕活身心的理疗，静谧的避世之所
+            - generic [ref=e197]:
+              - generic [ref=e198]: 🏊
+              - heading "无边际泳池" [level=4] [ref=e199]
+              - paragraph [ref=e200]: 城市天际线全景，全年恒温开放
+            - generic [ref=e201]:
+              - generic [ref=e202]: 🛎
+              - heading "礼宾服务" [level=4] [ref=e203]
+              - paragraph [ref=e204]: 24小时尊享定制服务，关怀每一个细节
+        - generic [ref=e206]:
+          - heading "开启旅程" [level=2] [ref=e207]
+          - paragraph [ref=e209]: 即刻预订 ÉLYSÉE，体验精致待客之道。
+          - button "立即预订" [ref=e210]
+          - paragraph [ref=e212]: 巴黎大军团大街1号 | +33 1 40 69 60 00 | reservations@elysee.com
+    - contentinfo [ref=e35]:
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - heading "ÉLYSÉE" [level=4] [ref=e39]
+            - paragraph [ref=e40]: 自 1995 年创立以来，ÉLYSÉE 大酒店一直是这座城市最尊贵的下榻之所。我们对永恒优雅与完美服务的执着，定义了每一...
+          - generic [ref=e41]:
+            - heading "浏览客房" [level=4] [ref=e42]
+            - generic [ref=e43]:
+              - link "单人间 / 双人间 / 套房" [ref=e44] [cursor=pointer]:
+                - /url: /rooms
+              - link "我的预订" [ref=e45] [cursor=pointer]:
+                - /url: /my-reservations
+              - link "个人中心" [ref=e46] [cursor=pointer]:
+                - /url: /profile
+          - generic [ref=e47]:
+            - heading "联系我们" [level=4] [ref=e48]
+            - generic [ref=e49]:
+              - paragraph [ref=e50]: 巴黎大军团大街1号
+              - paragraph [ref=e51]: +33 1 40 69 60 00
+              - paragraph [ref=e52]: reservations@elysee.com
+          - generic [ref=e53]:
+            - heading "个人中心" [level=4] [ref=e54]
+            - generic [ref=e55]:
+              - link "浏览客房" [ref=e56] [cursor=pointer]:
+                - /url: /rooms
+              - link "收藏" [ref=e57] [cursor=pointer]:
+                - /url: /my-favorites
+              - link "登录" [ref=e58] [cursor=pointer]:
+                - /url: /login
+        - generic [ref=e59]:
+          - paragraph [ref=e60]: © 2026 ÉLYSÉE Grand Hotel.
+          - generic [ref=e61]:
+            - generic [ref=e62] [cursor=pointer]: 隐私政策
+            - generic [ref=e63] [cursor=pointer]: 服务条款
+  - region "Notifications alt+T":
+    - list:
+      - listitem [ref=e213]:
+        - img [ref=e215]
+        - generic [ref=e219]: 登录成功

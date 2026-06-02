@@ -150,7 +150,7 @@ public class CheckInService {
 
         Reservation reservation = checkIn.getReservation();
         Room oldRoom = reservation.getRoom();
-        Room newRoom = roomRepository.findById(request.getNewRoomId())
+        Room newRoom = roomRepository.findByRoomNumber(request.getNewRoomNumber())
                 .orElseThrow(() -> new BusinessException("新房间不存在"));
 
         if (newRoom.getStatus() != RoomStatus.AVAILABLE) {

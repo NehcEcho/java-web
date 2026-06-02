@@ -33,7 +33,7 @@ export interface ExtendStayRequest {
 }
 
 export interface TransferRoomRequest {
-  newRoomId: number;
+  newRoomNumber: string;
   reason?: string;
 }
 

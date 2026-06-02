@@ -1,0 +1,52 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link "ÉLYSÉE" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: ÉLYSÉE
+        - generic [ref=e8]:
+          - link "浏览客房" [ref=e9] [cursor=pointer]:
+            - /url: /rooms
+          - link "登录" [ref=e10] [cursor=pointer]:
+            - /url: /login
+          - button "EN" [ref=e11]:
+            - img
+            - text: EN
+    - main [ref=e12]
+    - contentinfo [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - heading "ÉLYSÉE" [level=4] [ref=e17]
+            - paragraph [ref=e18]: 自 1995 年创立以来，ÉLYSÉE 大酒店一直是这座城市最尊贵的下榻之所。我们对永恒优雅与完美服务的执着，定义了每一...
+          - generic [ref=e19]:
+            - heading "浏览客房" [level=4] [ref=e20]
+            - generic [ref=e21]:
+              - link "单人间 / 双人间 / 套房" [ref=e22] [cursor=pointer]:
+                - /url: /rooms
+              - link "我的预订" [ref=e23] [cursor=pointer]:
+                - /url: /my-reservations
+              - link "个人中心" [ref=e24] [cursor=pointer]:
+                - /url: /profile
+          - generic [ref=e25]:
+            - heading "联系我们" [level=4] [ref=e26]
+            - generic [ref=e27]:
+              - paragraph [ref=e28]: 巴黎大军团大街1号
+              - paragraph [ref=e29]: +33 1 40 69 60 00
+              - paragraph [ref=e30]: reservations@elysee.com
+          - generic [ref=e31]:
+            - heading "个人中心" [level=4] [ref=e32]
+            - generic [ref=e33]:
+              - link "浏览客房" [ref=e34] [cursor=pointer]:
+                - /url: /rooms
+              - link "收藏" [ref=e35] [cursor=pointer]:
+                - /url: /my-favorites
+              - link "登录" [ref=e36] [cursor=pointer]:
+                - /url: /login
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: © 2026 ÉLYSÉE Grand Hotel.
+          - generic [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]: 隐私政策
+            - generic [ref=e41] [cursor=pointer]: 服务条款
+  - region "Notifications alt+T"

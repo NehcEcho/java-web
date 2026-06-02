@@ -1,0 +1,25 @@
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e9]:
+        - img [ref=e11]
+        - heading "ÉLYSÉE" [level=1] [ref=e13]
+        - paragraph [ref=e14]: 大酒店
+        - paragraph [ref=e16]: 卓越与热情款待的完美融合。以优雅与精准管理您的酒店。
+      - paragraph [ref=e18]: © 2026 ÉLYSÉE 大酒店
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "酒店管理系统" [level=2] [ref=e23]
+        - paragraph [ref=e24]: 管理后台
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: 用户名
+          - textbox "用户名" [ref=e28]:
+            - /placeholder: 请输入用户名
+            - text: admin
+        - generic [ref=e29]:
+          - generic [ref=e30]: 密码
+          - textbox "密码" [active] [ref=e31]:
+            - /placeholder: 请输入密码
+        - button "登录" [ref=e32]
+  - region "Notifications alt+T"

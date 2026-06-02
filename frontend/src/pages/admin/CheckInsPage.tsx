@@ -42,7 +42,7 @@ export default function CheckInsPage() {
   const [notes, setNotes] = useState('');
   const [newCheckOutDate, setNewCheckOutDate] = useState('');
   const [extendReason, setExtendReason] = useState('');
-  const [newRoomId, setNewRoomId] = useState('');
+  const [newRoomNumber, setNewRoomNumber] = useState('');
   const [transferReason, setTransferReason] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -92,14 +92,14 @@ export default function CheckInsPage() {
   };
 
   const handleTransfer = async () => {
-    if (!selectedCheckIn || !newRoomId) return;
+    if (!selectedCheckIn || !newRoomNumber) return;
     setSubmitting(true);
     try {
-      const data: TransferRoomRequest = { newRoomId: Number(newRoomId), reason: transferReason || undefined };
+      const data: TransferRoomRequest = { newRoomNumber, reason: transferReason || undefined };
       await transferRoom(selectedCheckIn.id, data);
       toast.success(t('checkIns.transferSuccess'));
       setTransferDialogOpen(false);
-      setNewRoomId('');
+      setNewRoomNumber('');
       setTransferReason('');
       load();
     } catch (err: any) { toast.error(err.message || t('checkIns.transferFailed')); } finally { setSubmitting(false); }
@@ -322,8 +322,8 @@ export default function CheckInsPage() {
               <p className="text-[#8A8278]">{t('checkIns.customerLabel')}：<span className="text-[#1C1915]">{selectedCheckIn.reservation.userName}</span></p>
               <p className="text-[#8A8278]">{t('checkIns.currentRoom')}：<span className="text-[#1C1915]">{selectedCheckIn.reservation.roomNumber}</span></p>
               <div className="space-y-2 pt-2">
-                <Label className="text-[#8A8278]">{t('checkIns.newRoomId')}</Label>
-                <Input type="number" value={newRoomId} onChange={e => setNewRoomId(e.target.value)} placeholder={t('checkIns.newRoomIdPlaceholder')} className="h-11 rounded-xl border-[#E5E0D5] focus-visible:ring-1 focus-visible:ring-[#C5A54E] focus-visible:border-[#C5A54E]" />
+                <Label className="text-[#8A8278]">{t('checkIns.newRoomNumber')}</Label>
+                <Input type="text" value={newRoomNumber} onChange={e => setNewRoomNumber(e.target.value)} placeholder={t('checkIns.newRoomNumberPlaceholder')} className="h-11 rounded-xl border-[#E5E0D5] focus-visible:ring-1 focus-visible:ring-[#C5A54E] focus-visible:border-[#C5A54E]" />
               </div>
               <div className="space-y-2">
                 <Label className="text-[#8A8278]">{t('checkIns.reasonLabel')}</Label>
@@ -333,7 +333,7 @@ export default function CheckInsPage() {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setTransferDialogOpen(false)} className="h-11 rounded-xl border-[#E5E0D5] text-[#1C1915] hover:bg-[#F9F8F6]">{t('common.cancel')}</Button>
-            <Button onClick={handleTransfer} disabled={submitting || !newRoomId} className="h-11 rounded-xl bg-[#1C1915] text-white hover:bg-[#2A2622] active:scale-[0.98] transition-all">
+            <Button onClick={handleTransfer} disabled={submitting || !newRoomNumber} className="h-11 rounded-xl bg-[#1C1915] text-white hover:bg-[#2A2622] active:scale-[0.98] transition-all">
               {submitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {t('checkIns.confirmTransfer')}
             </Button>

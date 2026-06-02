@@ -1,0 +1,216 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e33]:
+      - complementary [ref=e34]:
+        - generic [ref=e35]:
+          - img [ref=e37]
+          - generic [ref=e39]:
+            - text: ELYSÉE
+            - paragraph [ref=e40]: 管理后台
+        - navigation [ref=e41]:
+          - paragraph [ref=e42]: 菜单
+          - link "仪表盘" [ref=e43] [cursor=pointer]:
+            - /url: /admin/dashboard
+            - img [ref=e44]
+            - generic [ref=e49]: 仪表盘
+            - img [ref=e50]
+          - link "房间管理" [ref=e52] [cursor=pointer]:
+            - /url: /admin/rooms
+            - img [ref=e53]
+            - generic [ref=e56]: 房间管理
+          - link "房型管理" [ref=e57] [cursor=pointer]:
+            - /url: /admin/room-types
+            - img [ref=e58]
+            - generic [ref=e62]: 房型管理
+          - link "预订管理" [ref=e63] [cursor=pointer]:
+            - /url: /admin/reservations
+            - img [ref=e64]
+            - generic [ref=e67]: 预订管理
+          - link "入住退房" [ref=e68] [cursor=pointer]:
+            - /url: /admin/check-ins
+            - img [ref=e69]
+            - generic [ref=e72]: 入住退房
+          - link "评价管理" [ref=e73] [cursor=pointer]:
+            - /url: /admin/reviews
+            - img [ref=e74]
+            - generic [ref=e76]: 评价管理
+          - link "用户管理" [ref=e77] [cursor=pointer]:
+            - /url: /admin/users
+            - img [ref=e78]
+            - generic [ref=e83]: 用户管理
+          - link "操作日志" [ref=e84] [cursor=pointer]:
+            - /url: /admin/audit-logs
+            - img [ref=e85]
+            - generic [ref=e88]: 操作日志
+          - link "数据导出" [ref=e89] [cursor=pointer]:
+            - /url: /admin/export
+            - img [ref=e90]
+            - generic [ref=e93]: 数据导出
+        - button "退出登录" [ref=e95]:
+          - img [ref=e96]
+          - text: 退出登录
+      - generic [ref=e99]:
+        - banner [ref=e100]:
+          - link "返回首页" [ref=e102] [cursor=pointer]:
+            - /url: /
+            - img [ref=e103]
+            - text: 返回首页
+          - button "3" [ref=e107]:
+            - img
+            - generic [ref=e108]: "3"
+        - main [ref=e109]:
+          - generic [ref=e110]:
+            - heading "仪表盘" [level=1] [ref=e113]
+            - generic [ref=e114]:
+              - generic [ref=e116]:
+                - img [ref=e118]
+                - generic [ref=e121]:
+                  - paragraph [ref=e122]: 总房间数
+                  - paragraph [ref=e123]: "44"
+              - generic [ref=e125]:
+                - img [ref=e127]
+                - generic [ref=e130]:
+                  - paragraph [ref=e131]: 可用房间
+                  - paragraph [ref=e132]: "43"
+              - generic [ref=e134]:
+                - img [ref=e136]
+                - generic [ref=e141]:
+                  - paragraph [ref=e142]: 已入住
+                  - paragraph [ref=e143]: "1"
+              - generic [ref=e145]:
+                - img [ref=e147]
+                - generic [ref=e150]:
+                  - paragraph [ref=e151]: 已预订
+                  - paragraph [ref=e152]: "0"
+              - generic [ref=e154]:
+                - img [ref=e156]
+                - generic [ref=e158]:
+                  - paragraph [ref=e159]: 维修中
+                  - paragraph [ref=e160]: "0"
+              - generic [ref=e162]:
+                - img [ref=e164]
+                - generic [ref=e167]:
+                  - paragraph [ref=e168]: 今日入住
+                  - paragraph [ref=e169]: "1"
+              - generic [ref=e171]:
+                - img [ref=e173]
+                - generic [ref=e176]:
+                  - paragraph [ref=e177]: 今日退房
+                  - paragraph [ref=e178]: "0"
+              - generic [ref=e180]:
+                - img [ref=e182]
+                - generic [ref=e184]:
+                  - paragraph [ref=e185]: 待确认预订
+                  - paragraph [ref=e186]: "0"
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - heading "收入分析" [level=2] [ref=e191]
+                - generic [ref=e192]:
+                  - button "近7天" [ref=e193]
+                  - button "近30天" [ref=e194]
+                  - button "近1年" [ref=e195]
+              - generic [ref=e196]:
+                - generic [ref=e197]:
+                  - generic [ref=e198]:
+                    - generic [ref=e199]: 收入趋势
+                    - paragraph [ref=e200]: ¥4,885
+                  - application [ref=e204]:
+                    - generic [ref=e213]:
+                      - generic [ref=e214]:
+                        - generic [ref=e216]: 05-27
+                        - generic [ref=e218]: 05-28
+                        - generic [ref=e220]: 05-29
+                        - generic [ref=e222]: 05-30
+                        - generic [ref=e224]: 05-31
+                        - generic [ref=e226]: 06-01
+                        - generic [ref=e228]: 06-02
+                      - generic [ref=e229]:
+                        - generic [ref=e231]: ¥0
+                        - generic [ref=e233]: ¥950
+                        - generic [ref=e235]: ¥1900
+                        - generic [ref=e237]: ¥2850
+                        - generic [ref=e239]: ¥3800
+                - generic [ref=e240]:
+                  - generic [ref=e242]: 房型收入占比
+                  - application [ref=e246]
+              - generic [ref=e256]:
+                - generic [ref=e258]: 楼层收入对比
+                - application [ref=e262]:
+                  - generic [ref=e273]:
+                    - generic [ref=e276]: 3层
+                    - generic [ref=e277]:
+                      - generic [ref=e279]: ¥0
+                      - generic [ref=e281]: ¥1500
+                      - generic [ref=e283]: ¥3000
+                      - generic [ref=e285]: ¥4500
+                      - generic [ref=e287]: ¥6000
+            - generic [ref=e288]:
+              - heading "客户分析" [level=2] [ref=e291]
+              - generic [ref=e292]:
+                - generic [ref=e293]:
+                  - generic [ref=e294]:
+                    - generic [ref=e295]: 客户分层
+                    - paragraph [ref=e296]: "2"
+                  - application [ref=e300]
+                - generic [ref=e310]:
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: 消费分布
+                    - paragraph [ref=e313]: 回头率 50%
+                  - application [ref=e317]:
+                    - generic [ref=e328]:
+                      - generic [ref=e329]:
+                        - generic [ref=e331]: 0-500
+                        - generic [ref=e333]: 1000-3000
+                        - generic [ref=e335]: 5000+
+                      - generic [ref=e336]:
+                        - generic [ref=e338]: "0"
+                        - generic [ref=e340]: "0.5"
+                        - generic [ref=e342]: "1"
+                        - generic [ref=e344]: "1.5"
+                        - generic [ref=e346]: "2"
+                - generic [ref=e347]:
+                  - generic [ref=e349]: 回头客统计
+                  - generic [ref=e350]:
+                    - generic [ref=e351]:
+                      - generic [ref=e352]:
+                        - paragraph [ref=e353]: 回头客
+                        - paragraph [ref=e354]: "1"
+                      - img [ref=e355]
+                    - generic [ref=e359]:
+                      - generic [ref=e360]:
+                        - paragraph [ref=e361]: 总客户
+                        - paragraph [ref=e362]: "2"
+                      - img [ref=e363]
+              - generic [ref=e368]:
+                - generic [ref=e370]:
+                  - img [ref=e371]
+                  - generic [ref=e373]: VIP 客户排行
+                - table [ref=e376]:
+                  - rowgroup [ref=e377]:
+                    - row "# 客户 预订次数 总消费 等级" [ref=e378]:
+                      - columnheader "#" [ref=e379]
+                      - columnheader "客户" [ref=e380]
+                      - columnheader "预订次数" [ref=e381]
+                      - columnheader "总消费" [ref=e382]
+                      - columnheader "等级" [ref=e383]
+                  - rowgroup [ref=e384]:
+                    - row "1 cj 2 次 ¥2,493 普通" [ref=e385]:
+                      - cell "1" [ref=e386]
+                      - cell "cj" [ref=e387]
+                      - cell "2 次" [ref=e388]
+                      - cell "¥2,493" [ref=e389]
+                      - cell "普通" [ref=e390]:
+                        - generic [ref=e391]: 普通
+                    - row "2 管理员 1 次 ¥2,392 普通" [ref=e392]:
+                      - cell "2" [ref=e393]
+                      - cell "管理员" [ref=e394]
+                      - cell "1 次" [ref=e395]
+                      - cell "¥2,392" [ref=e396]
+                      - cell "普通" [ref=e397]:
+                        - generic [ref=e398]: 普通
+    - region "Notifications alt+T":
+      - list:
+        - listitem [ref=e399]:
+          - img [ref=e401]
+          - generic [ref=e405]: 登录成功
+  - generic [ref=e406]: "0"
