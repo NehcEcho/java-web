@@ -1,30 +1,35 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.145 0 0);
-  --color-card: oklch(1 0 0);
-  --color-card-foreground: oklch(0.145 0 0);
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0 0);
-  --color-primary: oklch(0.205 0 0);
-  --color-primary-foreground: oklch(0.985 0 0);
-  --color-secondary: oklch(0.97 0 0);
-  --color-secondary-foreground: oklch(0.205 0 0);
-  --color-muted: oklch(0.97 0 0);
-  --color-muted-foreground: oklch(0.556 0 0);
-  --color-accent: oklch(0.97 0 0);
-  --color-accent-foreground: oklch(0.205 0 0);
-  --color-destructive: oklch(0.577 0.245 27.325);
-  --color-destructive-foreground: oklch(0.577 0.245 27.325);
-  --color-border: oklch(0.922 0 0);
-  --color-input: oklch(0.922 0 0);
-  --color-ring: oklch(0.708 0 0);
-  --color-gold: oklch(0.68 0.12 84);
-  --color-gold-hover: oklch(0.62 0.11 80);
-  --color-cream: oklch(0.98 0.01 92);
-  --color-charcoal: oklch(0.18 0 0);
-  --color-warm: oklch(0.55 0.02 70);
+  --color-background: #F9F8F6;
+  --color-foreground: #1C1915;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1C1915;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1C1915;
+  --color-primary: #C5A54E;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #F3F1EC;
+  --color-secondary-foreground: #1C1915;
+  --color-muted: #F3F1EC;
+  --color-muted-foreground: #9C9690;
+  --color-accent: #F5F3EE;
+  --color-accent-foreground: #1C1915;
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #E5E0D5;
+  --color-input: #F3F1EC;
+  --color-ring: #C5A54E;
+  --color-gold: #C5A54E;
+  --color-gold-hover: #B8943A;
+  --color-gold-light: #F5EFE0;
+  --color-gold-border: rgba(197, 165, 78, 0.25);
+  --color-cream: #F9F8F6;
+  --color-charcoal: #1C1915;
+  --color-warm: #6B6560;
+  --color-sidebar: #1C1915;
+  --color-sidebar-hover: #2A2622;
+  --color-sidebar-foreground: #A9A39C;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --radius: 0.625rem;
@@ -36,4 +41,52 @@ body {
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+}
+
+.luxury-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(197, 165, 78, 0.12);
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.luxury-card:hover {
+  border-color: rgba(197, 165, 78, 0.25);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(197, 165, 78, 0.06);
+}
+
+.luxury-btn-primary {
+  background: #C5A54E;
+  color: #FFFFFF;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.luxury-btn-primary:hover {
+  background: #B8943A;
+  box-shadow: 0 2px 12px rgba(197, 165, 78, 0.3);
+}
+
+.luxury-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.luxury-input {
+  background: #F9F8F6;
+  border: 1px solid #E5E0D5;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.luxury-input:focus {
+  border-color: #C5A54E;
+  box-shadow: 0 0 0 3px rgba(197, 165, 78, 0.1);
+  outline: none;
 }

@@ -26,10 +26,10 @@ export default function MyReservationsPage() {
   const [cancelTarget, setCancelTarget] = useState<number | null>(null);
 
   const statusConfig: Record<string, { label: string; className: string }> = {
-    PENDING: { label: t('reservation.status.pending'), className: 'bg-yellow-100 text-yellow-800' },
-    CONFIRMED: { label: t('reservation.status.confirmed'), className: 'bg-green-100 text-green-800' },
-    CANCELLED: { label: t('reservation.status.cancelled'), className: 'bg-red-100 text-red-800' },
-    COMPLETED: { label: t('reservation.status.completed'), className: 'bg-gray-100 text-gray-800' },
+    PENDING: { label: t('reservation.status.pending'), className: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    CONFIRMED: { label: t('reservation.status.confirmed'), className: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+    CANCELLED: { label: t('reservation.status.cancelled'), className: 'bg-rose-50 text-rose-700 border border-rose-200' },
+    COMPLETED: { label: t('reservation.status.completed'), className: 'bg-gray-50 text-gray-600 border border-gray-200' },
   };
 
   useEffect(() => {
@@ -39,9 +39,16 @@ export default function MyReservationsPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-md mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold tracking-tight mb-4">{t('auth.loginRequired')}</h2>
-        <Button className="h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white active:scale-[0.98] transition-all" onClick={() => navigate('/login')}>{t('auth.goToLogin')}</Button>
+      <div className="min-h-screen bg-[#F9F8F6]">
+        <div className="max-w-md mx-auto px-6 py-20">
+          <Card className="rounded-2xl border-[#E5E0D5] shadow-sm">
+            <CardContent className="py-16 text-center">
+              <h2 className="text-3xl font-['Playfair_Display'] font-bold text-[#1C1915] tracking-tight mb-4">{t('auth.loginRequired')}</h2>
+              <p className="text-[#6B6560] mb-8">{t('auth.loginToView')}</p>
+              <Button className="h-11 rounded-xl bg-[#C5A54E] hover:bg-[#B8943A] text-white active:scale-[0.98] transition-all" onClick={() => navigate('/login')}>{t('auth.goToLogin')}</Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -63,10 +70,13 @@ export default function MyReservationsPage() {
   const historyReservations = reservations.filter(r => r.status === 'CANCELLED' || r.status === 'COMPLETED');
 
   if (loading) return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
-      <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('myReservations.title') }]} />
-      <h1 className="text-3xl font-bold tracking-tight mb-6">{t('myReservations.title')}</h1>
-      <ListSkeleton count={3} />
+    <div className="min-h-screen bg-[#F9F8F6]">
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('myReservations.title') }]} />
+        <h1 className="text-3xl font-['Playfair_Display'] font-bold tracking-tight text-[#1C1915] mb-2">{t('myReservations.title')}</h1>
+        <div className="w-12 h-1 bg-[#C5A54E] mb-6" />
+        <ListSkeleton count={3} />
+      </div>
     </div>
   );
 
@@ -76,88 +86,111 @@ export default function MyReservationsPage() {
     return (
       <Card
         key={r.id}
-        className="rounded-2xl shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 cursor-pointer"
+        className="rounded-2xl border-[#E5E0D5] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer bg-white"
         onClick={() => navigate(`/my-reservations/${r.id}`)}
       >
-        <div className="h-32">
-          <RoomImg className="w-full h-full object-cover" roomNumber={r.roomNumber} />
-        </div>
-        <CardContent className="pt-4">
-          <div className="flex justify-between items-start mb-3">
+        <div className="flex flex-col sm:flex-row">
+          <div className="w-full sm:w-48 h-44 sm:h-auto flex-shrink-0">
+            <RoomImg className="w-full h-full object-cover" roomNumber={r.roomNumber} />
+          </div>
+          <CardContent className="flex-1 p-5 flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-lg">{r.roomNumber} - {typeName}</h3>
-              <p className="text-sm text-gray-500">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)} · {t('myReservations.guests', { count: r.guestCount })}</p>
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="font-bold text-lg text-[#1C1915]">{r.roomNumber} - {typeName}</h3>
+                  <p className="text-sm text-[#6B6560] mt-0.5">{formatDate(r.checkInDate)} ~ {formatDate(r.checkOutDate)} · {t('myReservations.guests', { count: r.guestCount })}</p>
+                </div>
+                <Badge className={`${statusConfig[r.status]?.className ?? ''} text-xs px-3 py-0.5 rounded-full`}>{statusConfig[r.status]?.label ?? r.status}</Badge>
+              </div>
             </div>
-            <Badge className={statusConfig[r.status]?.className ?? ''}>{statusConfig[r.status]?.label ?? r.status}</Badge>
-          </div>
-          <div className="flex justify-between items-center" onClick={e => e.stopPropagation()}>
-            <span className="text-xl font-bold text-amber-600">{formatPrice(r.totalPrice)}</span>
-            {showCancel && (r.status === 'PENDING' || r.status === 'CONFIRMED') && (
-              <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700 h-11 rounded-xl active:scale-[0.98] transition-all" onClick={() => setCancelTarget(r.id)}>{t('myReservations.cancel')}</Button>
-            )}
-          </div>
-        </CardContent>
+            <div className="flex justify-between items-center mt-3" onClick={e => e.stopPropagation()}>
+              <span className="text-xl font-bold text-[#C5A54E]">{formatPrice(r.totalPrice)}</span>
+              {showCancel && (r.status === 'PENDING' || r.status === 'CONFIRMED') && (
+                <Button variant="outline" size="sm" className="text-rose-500 border-rose-200 hover:bg-rose-50 hover:text-rose-600 h-10 rounded-xl active:scale-[0.98] transition-all" onClick={() => setCancelTarget(r.id)}>{t('myReservations.cancel')}</Button>
+              )}
+            </div>
+          </CardContent>
+        </div>
       </Card>
     );
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
-      <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('myReservations.title') }]} />
-      <h1 className="text-3xl font-bold tracking-tight mb-6">{t('myReservations.title')}</h1>
+    <div className="min-h-screen bg-[#F9F8F6]">
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('myReservations.title') }]} />
+        <h1 className="text-3xl font-['Playfair_Display'] font-bold tracking-tight text-[#1C1915] mb-2">{t('myReservations.title')}</h1>
+        <div className="w-12 h-1 bg-[#C5A54E] mb-6" />
 
-      <div className="flex gap-2 mb-6">
-        <Button
-          variant={activeTab === 'active' ? 'default' : 'outline'}
-          className={`h-11 rounded-xl active:scale-[0.98] transition-all ${activeTab === 'active' ? 'bg-gray-900 text-white' : ''}`}
-          onClick={() => setActiveTab('active')}
-        >
-          <Clock className="w-4 h-4 mr-2" />
-          {t('myReservations.active')}
-          {activeReservations.length > 0 && (
-            <span className="ml-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">{activeReservations.length}</span>
-          )}
-        </Button>
-        <Button
-          variant={activeTab === 'history' ? 'default' : 'outline'}
-          className={`h-11 rounded-xl active:scale-[0.98] transition-all ${activeTab === 'history' ? 'bg-gray-900 text-white' : ''}`}
-          onClick={() => setActiveTab('history')}
-        >
-          <History className="w-4 h-4 mr-2" />
-          {t('myReservations.history')}
-          {historyReservations.length > 0 && (
-            <span className="ml-2 bg-gray-400 text-white text-xs px-2 py-0.5 rounded-full">{historyReservations.length}</span>
-          )}
-        </Button>
+        <div className="flex gap-2 mb-6">
+          <Button
+            variant="ghost"
+            className={`h-10 rounded-xl active:scale-[0.98] transition-all font-medium ${
+              activeTab === 'active'
+                ? 'bg-[#C5A54E] text-white hover:bg-[#B8943A]'
+                : 'bg-[#F3F1EC] text-[#8A8278] hover:bg-[#EBE7DF]'
+            }`}
+            onClick={() => setActiveTab('active')}
+          >
+            <Clock className="w-4 h-4 mr-2" />
+            {t('myReservations.active')}
+            {activeReservations.length > 0 && (
+              <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+                activeTab === 'active' ? 'bg-white/20 text-white' : 'bg-[#C5A54E]/10 text-[#C5A54E]'
+              }`}>{activeReservations.length}</span>
+            )}
+          </Button>
+          <Button
+            variant="ghost"
+            className={`h-10 rounded-xl active:scale-[0.98] transition-all font-medium ${
+              activeTab === 'history'
+                ? 'bg-[#C5A54E] text-white hover:bg-[#B8943A]'
+                : 'bg-[#F3F1EC] text-[#8A8278] hover:bg-[#EBE7DF]'
+            }`}
+            onClick={() => setActiveTab('history')}
+          >
+            <History className="w-4 h-4 mr-2" />
+            {t('myReservations.history')}
+            {historyReservations.length > 0 && (
+              <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+                activeTab === 'history' ? 'bg-white/20 text-white' : 'bg-[#C5A54E]/10 text-[#C5A54E]'
+              }`}>{historyReservations.length}</span>
+            )}
+          </Button>
+        </div>
+
+        {activeTab === 'active' ? (
+          activeReservations.length === 0 ? (
+            <Card className="rounded-2xl border-[#E5E0D5] shadow-sm bg-white">
+              <CardContent className="py-16 text-center text-[#6B6560]">{t('myReservations.noActive')}</CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-4">
+              {activeReservations.map(r => renderCard(r, true))}
+            </div>
+          )
+        ) : (
+          historyReservations.length === 0 ? (
+            <Card className="rounded-2xl border-[#E5E0D5] shadow-sm bg-white">
+              <CardContent className="py-16 text-center text-[#6B6560]">{t('myReservations.noHistory')}</CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-4">
+              {historyReservations.map(r => renderCard(r, false))}
+            </div>
+          )
+        )}
+
+        <ConfirmDialog
+          open={cancelTarget !== null}
+          onOpenChange={open => { if (!open) setCancelTarget(null); }}
+          title={t('myReservations.cancelDialog.title')}
+          description={t('myReservations.cancelDialog.description')}
+          confirmText={t('myReservations.cancelDialog.confirm')}
+          onConfirm={handleCancel}
+          variant="destructive"
+        />
       </div>
-
-      {activeTab === 'active' ? (
-        activeReservations.length === 0 ? (
-          <Card className="rounded-2xl shadow-sm"><CardContent className="py-12 text-center text-gray-500">{t('myReservations.noActive')}</CardContent></Card>
-        ) : (
-          <div className="space-y-4">
-            {activeReservations.map(r => renderCard(r, true))}
-          </div>
-        )
-      ) : (
-        historyReservations.length === 0 ? (
-          <Card className="rounded-2xl shadow-sm"><CardContent className="py-12 text-center text-gray-500">{t('myReservations.noHistory')}</CardContent></Card>
-        ) : (
-          <div className="space-y-4">
-            {historyReservations.map(r => renderCard(r, false))}
-          </div>
-        )
-      )}
-
-      <ConfirmDialog
-        open={cancelTarget !== null}
-        onOpenChange={open => { if (!open) setCancelTarget(null); }}
-        title={t('myReservations.cancelDialog.title')}
-        description={t('myReservations.cancelDialog.description')}
-        confirmText={t('myReservations.cancelDialog.confirm')}
-        onConfirm={handleCancel}
-        variant="destructive"
-      />
     </div>
   );
 }

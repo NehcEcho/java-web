@@ -73,12 +73,12 @@ export function NotificationBell() {
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'RESERVATION': return 'bg-blue-100 text-blue-700';
-      case 'CHECK_IN': return 'bg-green-100 text-green-700';
-      case 'CHECK_OUT': return 'bg-purple-100 text-purple-700';
-      case 'REVIEW': return 'bg-orange-100 text-orange-700';
-      case 'SYSTEM': return 'bg-cyan-100 text-cyan-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'RESERVATION': return 'bg-blue-100 text-blue-700 border border-blue-200';
+      case 'CHECK_IN': return 'bg-green-100 text-green-700 border border-green-200';
+      case 'CHECK_OUT': return 'bg-purple-100 text-purple-700 border border-purple-200';
+      case 'REVIEW': return 'bg-orange-100 text-orange-700 border border-orange-200';
+      case 'SYSTEM': return 'bg-cyan-100 text-cyan-700 border border-cyan-200';
+      default: return 'bg-gray-100 text-gray-700 border border-gray-200';
     }
   };
 
@@ -95,48 +95,48 @@ export function NotificationBell() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <Button variant="ghost" size="sm" className="relative" onClick={handleToggle}>
+      <Button variant="ghost" size="sm" className="relative text-[#8A8278] hover:text-[#C5A54E]" onClick={handleToggle}>
         <Bell className="w-5 h-5" />
         {count > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#C5A54E] text-white text-xs rounded-full flex items-center justify-center">
             {count > 9 ? '9+' : count}
           </span>
         )}
       </Button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-96 overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-[#E5E0D5] rounded-2xl shadow-lg z-50 max-h-96 overflow-hidden">
+          <div className="flex items-center justify-between p-4 border-b border-[#E5E0D5]">
             <h3 className="font-semibold">{t('notification.title')}</h3>
             {notifications.length > 0 && (
-              <Button variant="ghost" size="sm" onClick={handleMarkAllAsRead}>
+              <Button variant="ghost" size="sm" className="text-[#C5A54E] hover:bg-[#C5A54E]/5" onClick={handleMarkAllAsRead}>
                 <CheckCheck className="w-4 h-4 mr-1" /> {t('notification.markAllRead')}
               </Button>
             )}
           </div>
           <div className="overflow-y-auto max-h-80">
             {notifications.length === 0 ? (
-              <div className="p-8 text-center text-gray-400">
-                <Bell className="w-8 h-8 mx-auto mb-2 opacity-50" />
+              <div className="p-8 text-center text-[#8A8278]">
+                <Bell className="w-8 h-8 mx-auto mb-2 text-[#C5A54E]/30" />
                 <p>{t('notification.noUnread')}</p>
               </div>
             ) : (
               notifications.map(n => (
-                <div key={n.id} className="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                <div key={n.id} className="p-4 border-b border-[#F3F1EC] hover:bg-[#F9F8F6] transition-colors">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                          <span className={`px-2 py-0.5 rounded-full text-xs ${getTypeColor(n.type)}`}>
                           {getTypeLabel(n.type)}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-[#8A8278]">
                           {new Date(n.createdAt).toLocaleString('zh-CN')}
                         </span>
                       </div>
-                      <p className="font-medium text-sm">{n.title}</p>
-                      <p className="text-sm text-gray-500 truncate">{n.message}</p>
+                      <p className="font-medium text-sm text-[#1C1915]">{n.title}</p>
+                      <p className="text-sm text-[#6B6560] truncate">{n.message}</p>
                     </div>
-                    <Button variant="ghost" size="sm" className="shrink-0" onClick={() => handleMarkAsRead(n.id)}>
+                    <Button variant="ghost" size="sm" className="shrink-0 text-[#8A8278] hover:text-[#C5A54E]" onClick={() => handleMarkAsRead(n.id)}>
                       <Check className="w-4 h-4" />
                     </Button>
                   </div>

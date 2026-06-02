@@ -40,48 +40,90 @@ export default function CustomerLoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-6 py-20">
-      <Card className="rounded-2xl shadow-sm">
-        <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-3">
-            <Hotel className="w-8 h-8 text-amber-400" />
-          </div>
-          <CardTitle className="text-2xl">{isLogin ? t('login.customerLogin') : t('login.customerRegister')}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">{t('login.username')}</Label>
-              <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t('login.usernamePlaceholder')} required className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(197,165,78,0.08) 0%, transparent 60%), #F9F8F6' }}
+    >
+      <div className="w-full max-w-md">
+        <Card className="bg-white border-[#E5E0D5] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
+          <CardHeader className="text-center space-y-6">
+            <div className="w-16 h-16 bg-[#C5A54E] rounded-full flex items-center justify-center mx-auto">
+              <Hotel className="w-8 h-8 text-white" />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">{t('login.password')}</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('login.passwordPlaceholder')} required className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
-            </div>
-            {!isLogin && (
-              <>
-                <div className="space-y-2">
-                  <Label htmlFor="name">{t('login.name')}</Label>
-                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder={t('login.namePlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">{t('login.phone')}</Label>
-                  <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t('login.phonePlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
-                </div>
-              </>
-            )}
-            <Button type="submit" className="w-full h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white active:scale-[0.98] transition-all" disabled={loading}>
-              {loading ? t('login.processing') : (isLogin ? t('auth.login') : t('auth.register'))}
-            </Button>
-            <p className="text-center text-sm text-gray-500">
-              {isLogin ? t('login.noAccount') : t('login.hasAccount')}
-              <button type="button" className="text-gray-900 font-medium hover:underline ml-1" onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? t('login.goToRegister') : t('login.goToLogin')}
-              </button>
-            </p>
-          </form>
-        </CardContent>
-      </Card>
+            <CardTitle className="font-['Playfair_Display'] text-2xl font-bold text-[#1C1915]">
+              {isLogin ? t('login.customerLogin') : t('login.customerRegister')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="username">{t('login.username')}</Label>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder={t('login.usernamePlaceholder')}
+                  required
+                  className="bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-[#C5A54E]/10 h-12 rounded-xl"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">{t('login.password')}</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t('login.passwordPlaceholder')}
+                  required
+                  className="bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-[#C5A54E]/10 h-12 rounded-xl"
+                />
+              </div>
+              {!isLogin && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">{t('login.name')}</Label>
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder={t('login.namePlaceholder')}
+                      className="bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-[#C5A54E]/10 h-12 rounded-xl"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">{t('login.phone')}</Label>
+                    <Input
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder={t('login.phonePlaceholder')}
+                      className="bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-[#C5A54E]/10 h-12 rounded-xl"
+                    />
+                  </div>
+                </>
+              )}
+              <Button
+                type="submit"
+                className="w-full h-12 rounded-xl bg-[#C5A54E] hover:bg-[#B8943A] text-white shadow-lg shadow-[#C5A54E]/15 active:scale-[0.98] transition-all"
+                disabled={loading}
+              >
+                {loading ? t('login.processing') : (isLogin ? t('auth.login') : t('auth.register'))}
+              </Button>
+              <p className="text-center text-sm text-gray-500">
+                {isLogin ? t('login.noAccount') : t('login.hasAccount')}
+                <button
+                  type="button"
+                  className="text-[#C5A54E] font-medium hover:underline ml-1"
+                  onClick={() => setIsLogin(!isLogin)}
+                >
+                  {isLogin ? t('login.goToRegister') : t('login.goToLogin')}
+                </button>
+              </p>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -48,10 +48,22 @@ export default function CustomerRoomsPage() {
 
   const filteredRooms = selectedType ? rooms.filter(r => r.roomType.id === selectedType) : rooms;
 
+  const statusConfig: Record<string, string> = {
+    AVAILABLE: t('room.availableToBook'),
+    OCCUPIED: t('rooms.occupied'),
+    MAINTENANCE: t('rooms.maintenance'),
+    RESERVED: t('rooms.reserved'),
+  };
+
+  const btnActive = 'bg-[#C5A54E] text-white hover:bg-[#B8943A] rounded-lg h-9 px-4 text-sm font-medium shadow-none border-0';
+  const btnInactive = 'bg-[#F3F1EC] text-[#8A8278] hover:bg-[#E5E0D5] rounded-lg h-9 px-4 text-sm font-medium shadow-none border-0';
+
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.title') }]} />
+      <div className="max-w-6xl mx-auto px-6 py-8 bg-transparent">
+        <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.browseTitle') }]} />
+        <h1 className="font-['Playfair_Display'] text-3xl font-bold text-[#1C1915] mb-1">{t('rooms.browseTitle')}</h1>
+        <div className="h-0.5 w-16 bg-[#C5A54E] mb-6 rounded-full" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => <CardSkeleton key={i} />)}
         </div>
@@ -60,45 +72,47 @@ export default function CustomerRoomsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
-      <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.title') }]} />
+    <div className="max-w-6xl mx-auto px-6 py-8 bg-transparent">
+      <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('rooms.browseTitle') }]} />
 
-      <h1 className="text-3xl font-bold tracking-tight mb-2">{t('rooms.title')}</h1>
+      <h1 className="font-['Playfair_Display'] text-3xl font-bold text-[#1C1915] mb-1">{t('rooms.browseTitle')}</h1>
+      <div className="h-0.5 w-16 bg-[#C5A54E] mb-6 rounded-full" />
+
       {checkIn && checkOut ? (
-        <p className="text-gray-500 mb-6">{t('rooms.availableRooms', { checkIn, checkOut })}</p>
+        <p className="text-[#6B6560] mb-6">{t('rooms.availableRooms', { checkIn, checkOut })}</p>
       ) : (
-        <p className="text-gray-500 mb-6">{t('rooms.selectRoom')}</p>
+        <p className="text-[#6B6560] mb-6">{t('rooms.selectRoom')}</p>
       )}
 
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="flex flex-wrap items-center gap-3 mb-8">
         <div className="flex gap-2">
-          <Button variant={selectedType === null ? 'default' : 'outline'} size="sm" className={selectedType === null ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedType(null)}>{t('common.all')}</Button>
+          <Button className={selectedType === null ? btnActive : btnInactive} onClick={() => setSelectedType(null)}>{t('common.all')}</Button>
           {roomTypes.map(rt => (
-            <Button key={rt.id} variant={selectedType === rt.id ? 'default' : 'outline'} size="sm" className={selectedType === rt.id ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedType(rt.id)}>
-              {rt.name}
+            <Button key={rt.id} className={selectedType === rt.id ? btnActive : btnInactive} onClick={() => setSelectedType(rt.id)}>
+              {t(getRoomTypeKey(rt.name))}
             </Button>
           ))}
         </div>
 
-        <div className="h-8 w-px bg-gray-200" />
+        <div className="h-8 w-px bg-[#E5E0D5]" />
 
         <div className="flex gap-2 items-center">
-          <span className="text-sm text-gray-500">{t('common.sort')}:</span>
-          <Button variant={sortBy === 'price' ? 'default' : 'outline'} size="sm" className={sortBy === 'price' ? 'bg-gray-900 text-white' : ''} onClick={() => { setSortBy('price'); setSortDir(sortDir === 'asc' && sortBy === 'price' ? 'desc' : 'asc'); }}>
+          <span className="text-sm text-[#6B6560]">{t('common.sort')}:</span>
+          <Button className={sortBy === 'price' ? btnActive : btnInactive} onClick={() => { setSortBy('price'); setSortDir(sortDir === 'asc' && sortBy === 'price' ? 'desc' : 'asc'); }}>
             {t('common.price')} {sortBy === 'price' && (sortDir === 'asc' ? '↑' : '↓')}
           </Button>
-          <Button variant={sortBy === 'floor' ? 'default' : 'outline'} size="sm" className={sortBy === 'floor' ? 'bg-gray-900 text-white' : ''} onClick={() => { setSortBy('floor'); setSortDir(sortDir === 'asc' && sortBy === 'floor' ? 'desc' : 'asc'); }}>
+          <Button className={sortBy === 'floor' ? btnActive : btnInactive} onClick={() => { setSortBy('floor'); setSortDir(sortDir === 'asc' && sortBy === 'floor' ? 'desc' : 'asc'); }}>
             {t('common.floor')} {sortBy === 'floor' && (sortDir === 'asc' ? '↑' : '↓')}
           </Button>
         </div>
 
-        <div className="h-8 w-px bg-gray-200" />
+        <div className="h-8 w-px bg-[#E5E0D5]" />
 
         <div className="flex gap-2 items-center">
-          <span className="text-sm text-gray-500">{t('common.floor')}:</span>
-          <Button variant={selectedFloor === undefined ? 'default' : 'outline'} size="sm" className={selectedFloor === undefined ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedFloor(undefined)}>{t('common.all')}</Button>
+          <span className="text-sm text-[#6B6560]">{t('common.floor')}:</span>
+          <Button className={selectedFloor === undefined ? btnActive : btnInactive} onClick={() => setSelectedFloor(undefined)}>{t('common.all')}</Button>
           {[3, 4, 5, 6, 7, 8].map(f => (
-            <Button key={f} variant={selectedFloor === f ? 'default' : 'outline'} size="sm" className={selectedFloor === f ? 'bg-gray-900 text-white' : ''} onClick={() => setSelectedFloor(f)}>{f}F</Button>
+            <Button key={f} className={selectedFloor === f ? btnActive : btnInactive} onClick={() => setSelectedFloor(f)}>{f}{t('common.floorSuffix')}</Button>
           ))}
         </div>
       </div>
@@ -108,33 +122,33 @@ export default function CustomerRoomsPage() {
           const RoomImg = getRoomImage(room.roomType.name);
           const typeName = t(getRoomTypeKey(room.roomType.name));
           return (
-            <Card key={room.id} className="overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 group cursor-pointer rounded-2xl" onClick={() => navigate(`/rooms/detail/${room.id}`)}>
+            <Card key={room.id} className="bg-white rounded-2xl border-[#E5E0D5] overflow-hidden hover:shadow-lg hover:-translate-y-0.5 hover:border-[#C5A54E]/20 transition-all duration-300 group cursor-pointer border shadow-none p-0" onClick={() => navigate(`/rooms/detail/${room.id}`)}>
               <div className="h-44 overflow-hidden relative">
                 <RoomImg className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" roomNumber={room.roomNumber} />
                 <div className="absolute top-3 right-3" onClick={(e) => e.stopPropagation()}>
                   <FavoriteButton roomId={room.id} initialFavorited={room.isFavorited} />
                 </div>
               </div>
-              <CardContent className="pt-4">
+              <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold">{room.roomNumber} - {typeName}</h3>
-                  <Badge className="bg-green-100 text-green-800">{room.status === 'AVAILABLE' ? t('room.availableToBook') : room.status}</Badge>
+                  <h3 className="text-lg font-bold text-[#1C1915]">{room.roomNumber} - {typeName}</h3>
+                  <Badge className="bg-[#C5A54E]/10 text-[#C5A54E] hover:bg-[#C5A54E]/10 border border-[#C5A54E]/20 rounded-full text-xs font-medium px-2.5 py-0.5">{statusConfig[room.status] || room.status}</Badge>
                 </div>
-                <p className="text-sm text-gray-500 mb-3">{room.roomType.description}</p>
-                <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                <p className="text-sm text-[#6B6560] mb-3">{room.roomType.description}</p>
+                <div className="flex items-center gap-4 text-sm text-[#6B6560] mb-3">
                   <span className="flex items-center gap-1"><Users className="w-4 h-4" />{t('rooms.guests', { count: room.roomType.maxGuests })}</span>
-                  <span className="flex items-center gap-1 text-amber-600 font-semibold">{room.floor}F</span>
-                  <span className="flex items-center gap-1"><Wifi className="w-4 h-4" />WiFi</span>
+                  <span className="flex items-center gap-1 text-[#C5A54E] font-semibold">{room.floor}{t('common.floorSuffix')}</span>
+                  <span className="flex items-center gap-1"><Wifi className="w-4 h-4" />{t('roomDetail.amenities')}</span>
                 </div>
                 {room.avgRating > 0 && (
                   <div className="flex items-center gap-2 mb-3">
                     <StarRating rating={Math.round(room.avgRating)} readonly size={14} />
-                    <span className="text-sm text-gray-500">{room.avgRating.toFixed(1)} {t('rooms.reviews', { count: room.reviewCount })}</span>
+                    <span className="text-sm text-[#6B6560]">{room.avgRating.toFixed(1)} {t('rooms.reviews', { count: room.reviewCount })}</span>
                   </div>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold text-amber-600">{formatPrice(room.roomType.basePrice)}<span className="text-sm font-normal text-gray-500">{t('common.perNight')}</span></span>
-                  <Button size="sm" className="bg-gray-900 hover:bg-gray-800 text-white h-9 rounded-xl active:scale-[0.98] transition-all" onClick={(e) => { e.stopPropagation(); navigate(`/rooms/detail/${room.id}`); }}>{t('rooms.viewDetail')}</Button>
+                  <span className="text-xl font-bold text-[#C5A54E]">{formatPrice(room.roomType.basePrice)}<span className="text-sm font-normal text-[#6B6560]">{t('common.perNight')}</span></span>
+                  <Button size="sm" className="bg-[#1C1915] text-white hover:bg-[#2A2622] rounded-lg h-9 px-4 text-sm font-medium transition-colors duration-200 border-0 shadow-none active:scale-[0.98]" onClick={(e) => { e.stopPropagation(); navigate(`/rooms/detail/${room.id}`); }}>{t('rooms.viewDetail')}</Button>
                 </div>
               </CardContent>
             </Card>
@@ -142,7 +156,7 @@ export default function CustomerRoomsPage() {
         })}
       </div>
       {filteredRooms.length === 0 && (
-        <p className="text-center text-gray-500 py-12">{t('rooms.noRooms')}</p>
+        <p className="text-center text-[#6B6560] py-12">{t('rooms.noRooms')}</p>
       )}
     </div>
   );

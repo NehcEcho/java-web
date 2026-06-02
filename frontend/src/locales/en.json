@@ -17,7 +17,9 @@
     "auditLogs": "Audit Logs",
     "export": "Export",
     "adminPanel": "Admin Panel",
-    "backToMain": "Back to Site"
+    "backToMain": "Back to Site",
+    "menu": "Menu",
+    "adminPanelSubtitle": "Admin Panel"
   },
   "common": {
     "loading": "Loading...",
@@ -41,6 +43,8 @@
     "sort": "Sort",
     "floor": "Floor",
     "perNight": "/night",
+    "floorSuffix": "F",
+    "loginRequired": "Please login first",
     "confirmDelete": "Are you sure?",
     "operationFailed": "Operation failed",
     "loadFailed": "Failed to load data",
@@ -83,7 +87,10 @@
     "bookingCount": "Bookings",
     "totalSpent": "Total Spent",
     "tier": "Tier",
-    "times": "times"
+    "times": "times",
+    "vip": "VIP",
+    "regular": "Regular",
+    "revenue": "Revenue"
   },
   "rooms": {
     "title": "Room Management",
@@ -106,7 +113,14 @@
     "roomTypeLabel": "Room Type",
     "selectRoomType": "Select room type",
     "create": "Create",
-    "update": "Update"
+    "update": "Update",
+    "browseTitle": "Room Browser",
+    "availableRooms": "{{checkIn}} ~ {{checkOut}} Available Rooms",
+    "selectRoom": "Choose your favorite room",
+    "guests": "{{count}} guests",
+    "reviews": "({{count}} reviews)",
+    "viewDetail": "View Details",
+    "noRooms": "No rooms available"
   },
   "roomTypes": {
     "title": "Room Types",
@@ -147,7 +161,9 @@
     "cancel": "Cancel",
     "confirmCancelMessage": "Cancel this reservation?",
     "confirmSuccess": "Confirmed successfully",
-    "cancelSuccess": "Cancelled successfully"
+    "cancelSuccess": "Cancelled successfully",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out"
   },
   "checkIns": {
     "title": "Check-in/out Management",
@@ -217,7 +233,8 @@
     "phone": "Phone",
     "email": "Email",
     "admin": "Admin",
-    "customer": "Customer"
+    "customer": "Customer",
+    "staff": "Staff"
   },
   "reviewsPage": {
     "title": "Reviews",
@@ -291,7 +308,14 @@
     "password": "Password",
     "loggingIn": "Logging in...",
     "login": "Login",
-    "loginFailed": "Login failed"
+    "loginFailed": "Login failed",
+    "brand": "ÉLYSÉE",
+    "brandSubtitle": "Grand Hotel",
+    "tagline": "Where excellence meets hospitality. Manage your hotel with elegance and precision.",
+    "portal": "Admin Portal",
+    "usernamePlaceholder": "Enter username",
+    "passwordPlaceholder": "Enter password",
+    "footer": "© 2026 ELYSÉE Grand Hotel"
   },
   "auth": {
     "login": "Login",
@@ -302,7 +326,8 @@
     "logoutSuccess": "Logged out",
     "loginRequired": "Please login first",
     "loginMessage": "Login required to book rooms",
-    "goToLogin": "Go to Login"
+    "goToLogin": "Go to Login",
+    "loginToView": "Please login to view"
   },
   "room": {
     "roomNumber": "Room Number",
@@ -381,15 +406,6 @@
     "footerAddress": "1 Boulevard de la Grande Armée, Paris",
     "footerPhone": "+33 1 40 69 60 00",
     "footerEmail": "reservations@elysee.com"
-  },
-  "rooms": {
-    "title": "Room Browser",
-    "availableRooms": "{{checkIn}} ~ {{checkOut}} Available Rooms",
-    "selectRoom": "Choose your favorite room",
-    "guests": "{{count}} guests",
-    "reviews": "({{count}} reviews)",
-    "viewDetail": "View Details",
-    "noRooms": "No rooms available"
   },
   "roomDetail": {
     "roomNotFound": "Room not found",
@@ -472,6 +488,7 @@
     "cancelSuccess": "Cancelled successfully",
     "cancelFailed": "Cancellation failed",
     "writeReview": "Write Review",
+    "includesTaxes": "Taxes & service fees included",
     "cancelDialog": {
       "title": "Cancel Reservation",
       "description": "Confirm cancellation? Cannot be undone after cancellation.",
@@ -516,5 +533,15 @@
     "goToLogin": "Login",
     "loginFailed": "Login failed",
     "registerFailed": "Registration failed"
+  },
+  "layout": {
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "calendar": {
+    "selected": "Selected",
+    "booked": "Booked",
+    "available": "Available"
   }
 }

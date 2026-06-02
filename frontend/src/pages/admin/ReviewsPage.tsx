@@ -12,18 +12,26 @@ import { Eye, EyeOff, MessageSquare } from 'lucide-react';
 
 function ReviewsSkeleton() {
   return (
-    <div className="p-6 space-y-4">
-      <div className="h-9 w-32 animate-pulse rounded-xl bg-gray-200" />
-      <div className="flex gap-2">
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-3">
+        <div className="h-7 w-[3px] animate-pulse rounded-full bg-[#E5E0D5]" />
+        <div className="h-9 w-48 animate-pulse rounded-lg bg-[#F3F1EC]" />
+      </div>
+      <div className="flex gap-2 flex-wrap">
         {[1, 2, 3].map(i => (
-          <div key={i} className="h-11 w-24 animate-pulse rounded-xl bg-gray-200" />
+          <div key={i} className="h-10 w-24 animate-pulse rounded-lg bg-[#F3F1EC]" />
         ))}
       </div>
-      <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-12 animate-pulse rounded bg-gray-100" />
-        ))}
-      </div>
+      <Card className="rounded-2xl border-[#E5E0D5] shadow-sm">
+        <CardContent className="p-0">
+          <div className="p-4 space-y-3">
+            <div className="h-10 animate-pulse rounded bg-[#E5E0D5]" />
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="h-14 animate-pulse rounded-lg bg-[#F3F1EC]" />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
@@ -68,73 +76,99 @@ export default function ReviewsPage() {
   ];
 
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-3xl font-bold tracking-tight">{t('reviewsPage.title')}</h1>
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-3">
+        <div className="w-[3px] h-7 rounded-full bg-[#C5A54E]" />
+        <h1 className="text-2xl font-bold tracking-tight text-[#1C1915]">{t('reviewsPage.title')}</h1>
+      </div>
 
       <div className="flex gap-2 flex-wrap">
         {tabs.map(tab => (
-          <Button
+          <button
             key={tab.key}
-            variant={filter === tab.key ? 'default' : 'outline'}
-            size="sm"
-            className={`h-11 rounded-xl active:scale-[0.98] transition-all ${filter === tab.key ? 'bg-gray-900 text-white hover:bg-gray-800' : ''}`}
             onClick={() => setFilter(tab.key)}
+            className={`inline-flex items-center gap-1.5 h-10 px-4 rounded-lg text-sm font-medium transition-all duration-200 active:scale-[0.97] ${
+              filter === tab.key
+                ? 'bg-[#C5A54E] text-white shadow-sm'
+                : 'bg-[#F3F1EC] text-[#8A8278] hover:bg-[#E5E0D5] hover:text-[#1C1915]'
+            }`}
           >
             {tab.label}
             {tab.count > 0 && (
-              <span className="ml-1.5 bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded-full">{tab.count}</span>
+              <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${
+                filter === tab.key
+                  ? 'bg-white/20 text-white'
+                  : 'bg-[#C5A54E]/10 text-[#C5A54E]'
+              }`}>
+                {tab.count}
+              </span>
             )}
-          </Button>
+          </button>
         ))}
       </div>
 
-      <Card className="rounded-2xl shadow-sm">
-        <CardContent className="pt-4">
+      <Card className="rounded-2xl border-[#E5E0D5] shadow-sm overflow-hidden">
+        <CardContent className="p-0">
           {filtered.length === 0 ? (
-            <div className="text-center py-16 text-gray-400">
-              <MessageSquare className="w-12 h-12 mx-auto mb-3 opacity-40" />
+            <div className="flex flex-col items-center justify-center py-20 text-[#8A8278]">
+              <MessageSquare className="w-12 h-12 mb-3 opacity-30" />
               <p className="text-lg font-medium">{t('common.noData')}</p>
             </div>
           ) : (
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="w-16">{t('reviewsPage.id')}</TableHead>
-                  <TableHead>{t('reviewsPage.room')}</TableHead>
-                  <TableHead>{t('reviewsPage.customer')}</TableHead>
-                  <TableHead className="w-32">{t('reviewsPage.rating')}</TableHead>
-                  <TableHead className="w-64">{t('reviewsPage.content')}</TableHead>
-                  <TableHead>{t('reviewsPage.date')}</TableHead>
-                  <TableHead className="w-20">{t('reviewsPage.status')}</TableHead>
-                  <TableHead className="text-right w-24">{t('common.actions')}</TableHead>
+                <TableRow className="border-b border-[#E5E0D5] hover:bg-transparent">
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4 pl-6 w-16">{t('reviewsPage.id')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4">{t('reviewsPage.room')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4">{t('reviewsPage.customer')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4 w-32">{t('reviewsPage.rating')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4 w-64">{t('reviewsPage.content')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4">{t('reviewsPage.date')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4 w-20">{t('reviewsPage.status')}</TableHead>
+                  <TableHead className="uppercase text-xs tracking-wider text-[#8A8278] font-semibold py-4 pr-6 text-right w-24">{t('common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.map(review => (
-                  <TableRow key={review.id} className="hover:bg-gray-50 transition-colors">
-                    <TableCell className="text-gray-400 text-sm">{review.id}</TableCell>
-                    <TableCell className="font-medium">#{review.roomId}</TableCell>
-                    <TableCell>{review.username}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1.5">
-                        <StarRating rating={review.rating} readonly size={14} />
-                        <span className="text-sm font-medium text-amber-600">{review.rating}</span>
+                  <TableRow key={review.id} className="border-b border-[#E5E0D5] hover:bg-[#F9F8F6] transition-colors">
+                    <TableCell className="pl-6 py-4">
+                      <span className="text-sm text-[#8A8278] font-mono">#{review.id}</span>
+                    </TableCell>
+                    <TableCell className="py-4 font-medium text-[#1C1915]">#{review.roomId}</TableCell>
+                    <TableCell className="py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-[#F9F8F6] flex items-center justify-center text-xs font-semibold text-[#C5A54E]">
+                          {review.username.charAt(0).toUpperCase()}
+                        </div>
+                        <span className="font-medium text-[#1C1915]">{review.username}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="max-w-xs">
-                      <p className="truncate text-sm">{review.content}</p>
+                    <TableCell className="py-4">
+                      <div className="flex items-center gap-1.5">
+                        <StarRating rating={review.rating} readonly size={14} />
+                        <span className="text-sm font-semibold text-[#C5A54E]">{review.rating}</span>
+                      </div>
                     </TableCell>
-                    <TableCell className="text-sm text-gray-500">{formatDate(review.createdAt)}</TableCell>
-                    <TableCell>
-                      <Badge className={review.visible ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
+                    <TableCell className="py-4 max-w-xs">
+                      <p className="truncate text-sm text-[#1C1915]">{review.content}</p>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="text-sm text-[#8A8278]">{formatDate(review.createdAt)}</span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <Badge className={`inline-flex items-center gap-1 px-2.5 py-0.5 border font-medium rounded-full text-xs ${
+                        review.visible
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-gray-50 text-gray-500 border-gray-200'
+                      }`}>
                         {review.visible ? t('reviewsPage.show') : t('reviewsPage.hide')}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="py-4 pr-6 text-right">
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-9 rounded-xl active:scale-[0.98] transition-all"
+                        className="h-9 w-9 p-0 rounded-lg border-[#E5E0D5] text-[#8A8278] hover:bg-[#F9F8F6] hover:text-[#C5A54E] hover:border-[#C5A54E] active:scale-[0.97] transition-all"
                         onClick={() => handleToggleVisibility(review.id)}
                         title={review.visible ? t('reviewsPage.hideReview') : t('reviewsPage.showReview')}
                       >

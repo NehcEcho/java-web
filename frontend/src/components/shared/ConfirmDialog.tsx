@@ -27,10 +27,10 @@ export function ConfirmDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{cancelText}</AlertDialogCancel>
+          <AlertDialogCancel className="border-[#E5E0D5] text-[#6B6560]">{cancelText}</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className={cn(variant === 'destructive' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-gray-900 hover:bg-gray-800 text-white')}
+            className={cn(variant === 'destructive' ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-[#C5A54E] hover:bg-[#B8943A] text-white')}
           >
             {confirmText}
           </AlertDialogAction>

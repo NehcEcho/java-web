@@ -16,20 +16,23 @@ import { getRoomTypeKey } from '@/lib/utils';
 
 function RoomsSkeleton() {
   return (
-    <div className="p-6 space-y-4">
+    <div className="p-6 space-y-4 bg-[#F9F8F6] min-h-screen">
       <div className="flex justify-between items-center">
-        <div className="h-9 w-32 animate-pulse rounded-xl bg-gray-200" />
-        <div className="h-11 w-28 animate-pulse rounded-xl bg-gray-200" />
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-7 rounded-full bg-[#E5E0D5] animate-pulse" />
+          <div className="h-9 w-32 animate-pulse rounded-xl bg-[#E5E0D5]" />
+        </div>
+        <div className="h-11 w-28 animate-pulse rounded-xl bg-[#E5E0D5]" />
       </div>
       <div className="flex gap-3">
-        <div className="h-11 w-56 animate-pulse rounded-xl bg-gray-200" />
+        <div className="h-11 w-56 animate-pulse rounded-xl bg-[#E5E0D5]" />
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-11 w-20 animate-pulse rounded-xl bg-gray-200" />
+          <div key={i} className="h-11 w-20 animate-pulse rounded-xl bg-[#E5E0D5]" />
         ))}
       </div>
-      <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
+      <div className="rounded-2xl bg-white border border-[#E5E0D5] p-6 shadow-sm space-y-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-12 animate-pulse rounded bg-gray-100" />
+          <div key={i} className="h-12 animate-pulse rounded bg-[#F3F1EC]" />
         ))}
       </div>
     </div>
@@ -48,10 +51,10 @@ export default function RoomsPage() {
   const [statusFilter, setStatusFilter] = useState('ALL');
 
   const statusConfig: Record<string, { label: string; className: string }> = {
-    AVAILABLE: { label: t('rooms.available'), className: 'bg-green-100 text-green-800' },
-    OCCUPIED: { label: t('rooms.occupied'), className: 'bg-blue-100 text-blue-800' },
-    MAINTENANCE: { label: t('rooms.maintenance'), className: 'bg-amber-100 text-amber-800' },
-    RESERVED: { label: t('rooms.reserved'), className: 'bg-purple-100 text-purple-800' },
+    AVAILABLE: { label: t('rooms.available'), className: 'bg-green-50 text-green-700' },
+    OCCUPIED: { label: t('rooms.occupied'), className: 'bg-blue-50 text-blue-700' },
+    MAINTENANCE: { label: t('rooms.maintenance'), className: 'bg-amber-50 text-amber-700' },
+    RESERVED: { label: t('rooms.reserved'), className: 'bg-purple-50 text-purple-700' },
   };
 
   const filterOptions = [
@@ -132,20 +135,25 @@ export default function RoomsPage() {
     .filter(r => r.roomNumber.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="p-6 space-y-4">
+    <div className="p-6 space-y-4 bg-[#F9F8F6] min-h-screen">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">{t('rooms.title')}</h1>
-        <Button onClick={openCreate} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all"><Plus className="w-4 h-4 mr-1" />{t('rooms.addRoom')}</Button>
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-7 rounded-full bg-[#C5A54E]" />
+          <h1 className="text-3xl font-bold tracking-tight text-[#1C1915]">{t('rooms.title')}</h1>
+        </div>
+        <Button onClick={openCreate} className="h-11 rounded-xl bg-[#C5A54E] text-white hover:bg-[#B8943A] active:scale-[0.98] transition-all shadow-sm">
+          <Plus className="w-4 h-4 mr-1" />{t('rooms.addRoom')}
+        </Button>
       </div>
 
       <div className="flex gap-3 flex-wrap items-center">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B8B3AC]" />
           <Input
             placeholder={t('rooms.searchRoomNumber')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-11 w-56 pl-9 rounded-xl focus:ring-2 focus:ring-amber-500"
+            className="h-11 w-56 pl-9 rounded-xl bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-2 focus:ring-[#C5A54E]/10 placeholder:text-[#B8B3AC]"
           />
         </div>
         <div className="flex gap-2">
@@ -154,7 +162,11 @@ export default function RoomsPage() {
               key={opt.value}
               variant={statusFilter === opt.value ? 'default' : 'outline'}
               size="sm"
-              className={`h-11 rounded-xl active:scale-[0.98] transition-all ${statusFilter === opt.value ? 'bg-gray-900 text-white hover:bg-gray-800' : ''}`}
+              className={`h-11 rounded-xl active:scale-[0.98] transition-all font-medium ${
+                statusFilter === opt.value
+                  ? 'bg-[#C5A54E] text-white hover:bg-[#B8943A] border-[#C5A54E] shadow-sm'
+                  : 'bg-[#F3F1EC] text-[#8A8278] border-[#E5E0D5] hover:bg-[#E5E0D5] hover:text-[#1C1915]'
+              }`}
               onClick={() => setStatusFilter(opt.value)}
             >
               {opt.label}
@@ -163,29 +175,29 @@ export default function RoomsPage() {
         </div>
       </div>
 
-      <Card className="rounded-2xl shadow-sm hover:shadow-lg transition-all">
+      <Card className="rounded-2xl border border-[#E5E0D5] shadow-sm bg-white">
         <CardContent className="pt-4">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>{t('rooms.roomNumber')}</TableHead>
-                <TableHead>{t('rooms.floor')}</TableHead>
-                <TableHead>{t('rooms.roomType')}</TableHead>
-                <TableHead>{t('rooms.unitPrice')}</TableHead>
-                <TableHead>{t('rooms.status')}</TableHead>
-                <TableHead className="text-right">{t('common.actions')}</TableHead>
+              <TableRow className="border-[#E5E0D5]">
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278]">{t('rooms.roomNumber')}</TableHead>
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278]">{t('rooms.floor')}</TableHead>
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278]">{t('rooms.roomType')}</TableHead>
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278]">{t('rooms.unitPrice')}</TableHead>
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278]">{t('rooms.status')}</TableHead>
+                <TableHead className="text-xs uppercase tracking-wider text-[#8A8278] text-right">{t('common.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.map((room) => (
-                <TableRow key={room.id} className="hover:bg-gray-50 transition-colors">
-                  <TableCell className="font-medium">{room.roomNumber}</TableCell>
-                  <TableCell>{room.floor}F</TableCell>
-                  <TableCell>{t(getRoomTypeKey(room.roomType?.name ?? ''))}</TableCell>
-                  <TableCell>¥{room.roomType?.basePrice ?? '-'}{t('common.perNight')}</TableCell>
+                <TableRow key={room.id} className="hover:bg-[#F9F8F6] transition-colors border-[#E5E0D5]">
+                  <TableCell className="font-medium text-[#1C1915]">{room.roomNumber}</TableCell>
+                  <TableCell className="text-[#8A8278]">{room.floor}{t('common.floorSuffix')}</TableCell>
+                  <TableCell className="text-[#1C1915]">{t(getRoomTypeKey(room.roomType?.name ?? ''))}</TableCell>
+                  <TableCell className="text-[#C5A54E] font-medium">¥{room.roomType?.basePrice ?? '-'}{t('common.perNight')}</TableCell>
                   <TableCell>
                     <Select value={room.status} onValueChange={(v: string | null) => { if (v) handleStatusChange(room.id, v); }}>
-                      <SelectTrigger className="w-28">
+                      <SelectTrigger className="w-28 h-9 border-[#E5E0D5] bg-[#F9F8F6]">
                         <Badge className={statusConfig[room.status]?.className ?? ''}>
                           {statusConfig[room.status]?.label ?? room.status}
                         </Badge>
@@ -198,13 +210,19 @@ export default function RoomsPage() {
                     </Select>
                   </TableCell>
                   <TableCell className="text-right space-x-1">
-                    <Button variant="ghost" size="icon-sm" onClick={() => openEdit(room)}><Pencil className="w-4 h-4" /></Button>
-                    <Button variant="ghost" size="icon-sm" onClick={() => handleDelete(room.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                    <Button variant="ghost" size="icon-sm" className="text-[#8A8278] hover:text-[#C5A54E] hover:bg-[#F9F8F6]" onClick={() => openEdit(room)}>
+                      <Pencil className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon-sm" className="text-[#8A8278] hover:text-red-500 hover:bg-red-50" onClick={() => handleDelete(room.id)}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
               {filtered.length === 0 && (
-                <TableRow><TableCell colSpan={6} className="text-center text-gray-500">{t('common.noData')}</TableCell></TableRow>
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center text-[#B8B3AC] py-16">{t('common.noData')}</TableCell>
+                </TableRow>
               )}
             </TableBody>
           </Table>
@@ -212,21 +230,25 @@ export default function RoomsPage() {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>{editingRoom ? t('rooms.editRoom') : t('rooms.newRoom')}</DialogTitle></DialogHeader>
+        <DialogContent className="sm:max-w-md rounded-2xl border border-[#E5E0D5] bg-white shadow-xl border-t-[3px] border-t-[#C5A54E]">
+          <DialogHeader>
+            <DialogTitle className="text-[#1C1915]">{editingRoom ? t('rooms.editRoom') : t('rooms.newRoom')}</DialogTitle>
+          </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>{t('rooms.roomNumberLabel')}</Label>
-              <Input value={form.roomNumber} onChange={(e) => setForm({ ...form, roomNumber: e.target.value })} placeholder={t('rooms.roomNumberPlaceholder')} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+              <Label className="text-[#8A8278]">{t('rooms.roomNumberLabel')}</Label>
+              <Input value={form.roomNumber} onChange={(e) => setForm({ ...form, roomNumber: e.target.value })} placeholder={t('rooms.roomNumberPlaceholder')} className="h-11 rounded-xl bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-2 focus:ring-[#C5A54E]/10 placeholder:text-[#B8B3AC]" />
             </div>
             <div className="space-y-2">
-              <Label>{t('rooms.floorLabel')}</Label>
-              <Input type="number" value={form.floor} onChange={(e) => setForm({ ...form, floor: Number(e.target.value) })} className="h-11 rounded-xl focus:ring-2 focus:ring-amber-500" />
+              <Label className="text-[#8A8278]">{t('rooms.floorLabel')}</Label>
+              <Input type="number" value={form.floor} onChange={(e) => setForm({ ...form, floor: Number(e.target.value) })} className="h-11 rounded-xl bg-[#F9F8F6] border-[#E5E0D5] focus:border-[#C5A54E] focus:ring-2 focus:ring-[#C5A54E]/10 placeholder:text-[#B8B3AC]" />
             </div>
             <div className="space-y-2">
-              <Label>{t('rooms.roomTypeLabel')}</Label>
+              <Label className="text-[#8A8278]">{t('rooms.roomTypeLabel')}</Label>
               <Select value={String(form.roomTypeId)} onValueChange={(v) => setForm({ ...form, roomTypeId: Number(v) })}>
-                <SelectTrigger className="h-11 rounded-xl"><SelectValue placeholder={t('rooms.selectRoomType')} /></SelectTrigger>
+                <SelectTrigger className="h-11 rounded-xl border-[#E5E0D5] bg-[#F9F8F6] focus:border-[#C5A54E] focus:ring-2 focus:ring-[#C5A54E]/10">
+                  <SelectValue placeholder={t('rooms.selectRoomType')} />
+                </SelectTrigger>
                 <SelectContent>
                   {roomTypes.map((rt) => (
                     <SelectItem key={rt.id} value={String(rt.id)}>{t(getRoomTypeKey(rt.name))} - ¥{rt.basePrice}{t('common.perNight')}</SelectItem>
@@ -236,8 +258,12 @@ export default function RoomsPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)} className="h-11 rounded-xl">{t('common.cancel')}</Button>
-            <Button onClick={handleSubmit} className="h-11 rounded-xl bg-gray-900 text-white hover:bg-gray-800 active:scale-[0.98] transition-all">{editingRoom ? t('rooms.update') : t('rooms.create')}</Button>
+            <Button variant="outline" onClick={() => setDialogOpen(false)} className="h-11 rounded-xl border-[#E5E0D5] text-[#8A8278] hover:bg-[#F3F1EC] hover:text-[#1C1915]">
+              {t('common.cancel')}
+            </Button>
+            <Button onClick={handleSubmit} className="h-11 rounded-xl bg-[#C5A54E] text-white hover:bg-[#B8943A] active:scale-[0.98] transition-all shadow-sm">
+              {editingRoom ? t('rooms.update') : t('rooms.create')}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

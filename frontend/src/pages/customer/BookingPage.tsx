@@ -61,9 +61,12 @@ export default function BookingPage() {
   if (!isAuthenticated) {
     return (
       <div className="max-w-md mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold tracking-tight mb-4">{t('auth.loginRequired')}</h2>
-        <p className="text-gray-500 mb-6">{t('auth.loginMessage')}</p>
-        <Button className="h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white active:scale-[0.98] transition-all" onClick={() => navigate('/login')}>{t('auth.goToLogin')}</Button>
+        <div className="bg-white rounded-2xl border border-[#E5E0D5] p-10 shadow-sm">
+          <h2 className="text-3xl font-['Playfair_Display'] font-bold tracking-tight mb-4">{t('auth.loginRequired')}</h2>
+          <div className="mx-auto mb-6 h-0.5 w-12 bg-[#C5A54E] rounded-full" />
+          <p className="text-gray-500 mb-6">{t('auth.loginMessage')}</p>
+          <Button className="h-12 rounded-xl bg-[#C5A54E] hover:bg-[#B8943A] text-white shadow-lg shadow-[#C5A54E]/15 active:scale-[0.98] transition-all" onClick={() => navigate('/login')}>{t('auth.goToLogin')}</Button>
+        </div>
       </div>
     );
   }
@@ -71,6 +74,10 @@ export default function BookingPage() {
   if (loading) return (
     <div className="max-w-2xl mx-auto px-6 py-8">
       <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('booking.title') }]} />
+      <div className="mb-8">
+        <h1 className="text-3xl font-['Playfair_Display'] font-bold tracking-tight">{t('booking.title')}</h1>
+        <div className="mt-2 h-0.5 w-12 bg-[#C5A54E] rounded-full" />
+      </div>
       <DetailSkeleton />
     </div>
   );
@@ -81,7 +88,7 @@ export default function BookingPage() {
         <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('booking.title') }]} />
         <div className="text-center py-20">
           <p className="text-gray-500 text-lg mb-4">{t('booking.roomNotFound')}</p>
-          <Button variant="outline" className="h-11 rounded-xl active:scale-[0.98] transition-all" onClick={() => navigate('/rooms')}>{t('booking.backToList')}</Button>
+          <Button variant="outline" className="h-11 rounded-xl border-[#E5E0D5] active:scale-[0.98] transition-all" onClick={() => navigate('/rooms')}>{t('booking.backToList')}</Button>
         </div>
       </div>
     );
@@ -139,24 +146,27 @@ export default function BookingPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-8">
       <Breadcrumb items={[{ label: t('nav.home'), href: '/' }, { label: t('booking.title') }]} />
-      <h1 className="text-3xl font-bold tracking-tight mb-6">{t('booking.title')}</h1>
-      <Card className="rounded-2xl shadow-sm mb-6 overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150">
+      <div className="mb-8">
+        <h1 className="text-3xl font-['Playfair_Display'] font-bold tracking-tight">{t('booking.title')}</h1>
+        <div className="mt-2 h-0.5 w-12 bg-[#C5A54E] rounded-full" />
+      </div>
+      <div className="rounded-2xl border border-[#E5E0D5] bg-white overflow-hidden mb-6">
         <div className="h-48">
           <RoomImg className="w-full h-full object-cover" roomNumber={room.roomNumber} />
         </div>
-        <CardContent className="pt-4">
+        <div className="p-5">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-xl font-bold">{room.roomNumber} - {typeName}</h2>
               <p className="text-gray-500">{room.roomType?.description}</p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-amber-600">{formatPrice(room.roomType?.basePrice ?? 0)}</p>
+              <p className="text-2xl font-bold text-[#C5A54E]">{formatPrice(room.roomType?.basePrice ?? 0)}</p>
               <p className="text-sm text-gray-500">{t('booking.perNight')}</p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -199,31 +209,31 @@ export default function BookingPage() {
             max={room.roomType?.maxGuests ?? 1}
             value={form.guestCount}
             onChange={e => setForm({ ...form, guestCount: Number(e.target.value) })}
-            className="flex h-11 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="flex h-11 w-full rounded-xl border border-[#E5E0D5] bg-[#F9F8F6] px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A54E]/10"
           />
           <p className="text-sm text-gray-500">{t('booking.maxGuests', { count: room.roomType?.maxGuests ?? 1 })}</p>
         </div>
         <div className="space-y-2">
           <Label>{t('booking.specialRequests')}</Label>
-          <Textarea value={form.specialRequests} onChange={e => setForm({ ...form, specialRequests: e.target.value })} placeholder={t('booking.specialRequestsPlaceholder')} className="focus:ring-2 focus:ring-amber-500" />
+          <Textarea value={form.specialRequests} onChange={e => setForm({ ...form, specialRequests: e.target.value })} placeholder={t('booking.specialRequestsPlaceholder')} className="border-[#E5E0D5] bg-[#F9F8F6] focus-visible:ring-2 focus-visible:ring-[#C5A54E]/10 rounded-xl" />
         </div>
 
         {hasDateConflict && (
-          <p className="text-sm text-red-500">{t('booking.dateConflict')}</p>
+          <div className="text-sm text-red-500 bg-red-50 rounded-lg px-4 py-3">
+            {t('booking.dateConflict')}
+          </div>
         )}
 
         {nights > 0 && (
-          <Card className="rounded-2xl shadow-sm bg-amber-50 border-amber-200">
-            <CardContent className="pt-4">
-              <div className="flex justify-between items-center">
-                <span>{t('booking.nightsPrice', { nights, price: formatPrice(room.roomType?.basePrice ?? 0) })}</span>
-                <span className="text-2xl font-bold text-amber-600">{t('booking.total', { price: formatPrice(totalPrice) })}</span>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="rounded-2xl bg-[#C5A54E]/5 border border-[#C5A54E]/20 p-5">
+            <div className="flex justify-between items-center">
+              <span>{t('booking.nightsPrice', { nights, price: formatPrice(room.roomType?.basePrice ?? 0) })}</span>
+              <span className="text-2xl font-bold text-[#C5A54E]">{t('booking.total', { price: formatPrice(totalPrice) })}</span>
+            </div>
+          </div>
         )}
 
-        <Button type="submit" size="lg" className="w-full h-11 rounded-xl bg-gray-900 hover:bg-gray-800 text-white active:scale-[0.98] transition-all" disabled={submitting || nights <= 0 || hasDateConflict}>
+        <Button type="submit" size="lg" className="w-full h-12 rounded-xl bg-[#C5A54E] hover:bg-[#B8943A] text-white shadow-lg shadow-[#C5A54E]/15 active:scale-[0.98] transition-all disabled:opacity-50" disabled={submitting || nights <= 0 || hasDateConflict}>
           {submitting ? t('booking.submitting') : t('booking.confirm')}
         </Button>
       </form>

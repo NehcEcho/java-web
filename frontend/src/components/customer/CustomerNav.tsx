@@ -17,37 +17,37 @@ export const CustomerNav = memo(function CustomerNav() {
   };
 
   return (
-    <nav className="bg-white/95 backdrop-blur border-b border-gold/10 sticky top-0 z-50">
+    <nav className="bg-white/95 backdrop-blur border-b border-[rgba(197,165,78,0.15)] sticky top-0 z-50 h-16">
       <div className="max-w-6xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-serif text-2xl font-bold text-charcoal tracking-tight">ÉLYSÉE</span>
+          <span className="font-serif text-2xl font-bold text-[#1C1915]">ÉLYSÉE</span>
         </Link>
         <div className="flex items-center gap-6">
-          <Link to="/rooms" className="text-sm text-warm hover:text-charcoal font-medium transition-colors">{t('nav.rooms')}</Link>
+          <Link to="/rooms" className="text-sm text-[#6B6560] hover:text-[#C5A54E] font-medium transition-colors">{t('nav.rooms')}</Link>
           {isAuthenticated ? (
             <>
-              <Link to="/my-reservations" className="text-sm text-warm hover:text-charcoal font-medium transition-colors">{t('nav.myReservations')}</Link>
-              <Link to="/my-favorites" className="text-sm text-warm hover:text-charcoal font-medium transition-colors flex items-center gap-1">
+              <Link to="/my-reservations" className="text-sm text-[#6B6560] hover:text-[#C5A54E] font-medium transition-colors">{t('nav.myReservations')}</Link>
+              <Link to="/my-favorites" className="text-sm text-[#6B6560] hover:text-[#C5A54E] font-medium transition-colors flex items-center gap-1">
                 <Heart className="w-4 h-4" />{t('nav.favorites')}
               </Link>
-              <Link to="/profile" className="text-sm text-warm hover:text-charcoal font-medium transition-colors flex items-center gap-1">
+              <Link to="/profile" className="text-sm text-[#6B6560] hover:text-[#C5A54E] font-medium transition-colors flex items-center gap-1">
                 <User className="w-4 h-4" />{t('nav.profile')}
               </Link>
               <NotificationBell />
               {isAdmin && (
-                <Link to="/admin/dashboard" className="text-sm bg-gold text-white px-4 py-2 h-9 rounded-lg hover:bg-gold-hover font-medium inline-flex items-center gap-1.5 transition-colors">
+                <Link to="/admin/dashboard" className="text-sm bg-[#C5A54E] text-white px-4 py-2 rounded-lg hover:bg-[#B8943A] font-medium inline-flex items-center gap-1.5 transition-colors">
                   <Shield className="w-4 h-4" />{t('nav.adminPanel')}
                 </Link>
               )}
-              <span className="text-sm text-gold">{user?.username}</span>
-              <button onClick={logout} className="flex items-center gap-1 text-sm text-warm hover:text-red-500 transition-colors">
+              <span className="text-sm text-[#C5A54E] font-medium">{user?.username}</span>
+              <button onClick={logout} className="flex items-center gap-1 text-sm text-[#8A8278] hover:text-red-500 transition-colors">
                 <LogOut className="w-4 h-4" />{t('nav.logout')}
               </button>
             </>
           ) : (
-            <Link to="/login" className="text-sm bg-gold text-white px-5 py-2 h-10 rounded-lg hover:bg-gold-hover font-medium inline-flex items-center transition-colors">{t('nav.login')}</Link>
+            <Link to="/login" className="text-sm bg-[#1C1915] text-white px-5 py-2 rounded-lg hover:bg-[#2A2622] font-medium inline-flex items-center transition-colors">{t('nav.login')}</Link>
           )}
-          <Button variant="ghost" size="sm" onClick={toggleLanguage} className="text-warm">
+          <Button variant="ghost" size="sm" onClick={toggleLanguage} className="text-[#8A8278] hover:text-[#C5A54E]">
             <Globe className="w-4 h-4 mr-1" />
             {i18n.language === 'zh' ? 'EN' : '中'}
           </Button>

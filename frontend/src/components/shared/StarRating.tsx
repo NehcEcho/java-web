@@ -22,7 +22,7 @@ export function StarRating({ rating, onChange, readonly = false, size = 20 }: St
           <Star
             className={cn(
               'transition-colors',
-              star <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'
+              star <= rating ? 'fill-[#C5A54E] text-[#C5A54E]' : 'text-[#D4CFC7]'
             )}
             style={{ width: size, height: size }}
           />

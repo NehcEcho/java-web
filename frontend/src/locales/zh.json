@@ -17,7 +17,9 @@
     "auditLogs": "操作日志",
     "export": "数据导出",
     "adminPanel": "管理后台",
-    "backToMain": "返回首页"
+    "backToMain": "返回首页",
+    "menu": "菜单",
+    "adminPanelSubtitle": "管理后台"
   },
   "common": {
     "loading": "加载中...",
@@ -41,6 +43,8 @@
     "sort": "排序",
     "floor": "楼层",
     "perNight": "/晚",
+    "floorSuffix": "层",
+    "loginRequired": "请先登录",
     "confirmDelete": "确认删除？",
     "operationFailed": "操作失败",
     "loadFailed": "加载数据失败",
@@ -83,7 +87,10 @@
     "bookingCount": "预订次数",
     "totalSpent": "总消费",
     "tier": "等级",
-    "times": "次"
+    "times": "次",
+    "vip": "VIP",
+    "regular": "普通",
+    "revenue": "收入"
   },
   "rooms": {
     "title": "房间管理",
@@ -106,7 +113,14 @@
     "roomTypeLabel": "房型",
     "selectRoomType": "选择房型",
     "create": "创建",
-    "update": "更新"
+    "update": "更新",
+    "browseTitle": "客房浏览",
+    "availableRooms": "{{checkIn}} ~ {{checkOut}} 可预订房间",
+    "selectRoom": "选择心仪的房间",
+    "guests": "{{count}}人",
+    "reviews": "({{count}}条评价)",
+    "viewDetail": "查看详情",
+    "noRooms": "暂无可用房间"
   },
   "roomTypes": {
     "title": "房型管理",
@@ -147,7 +161,9 @@
     "cancel": "取消",
     "confirmCancelMessage": "确认取消此预订？",
     "confirmSuccess": "确认成功",
-    "cancelSuccess": "取消成功"
+    "cancelSuccess": "取消成功",
+    "checkIn": "入住",
+    "checkOut": "退房"
   },
   "checkIns": {
     "title": "入住退房管理",
@@ -217,7 +233,8 @@
     "phone": "手机号",
     "email": "邮箱",
     "admin": "管理员",
-    "customer": "客户"
+    "customer": "客户",
+    "staff": "员工"
   },
   "reviewsPage": {
     "title": "评价管理",
@@ -291,7 +308,14 @@
     "password": "密码",
     "loggingIn": "登录中...",
     "login": "登录",
-    "loginFailed": "登录失败"
+    "loginFailed": "登录失败",
+    "brand": "ÉLYSÉE",
+    "brandSubtitle": "大酒店",
+    "tagline": "卓越与热情款待的完美融合。以优雅与精准管理您的酒店。",
+    "portal": "管理门户",
+    "usernamePlaceholder": "请输入用户名",
+    "passwordPlaceholder": "请输入密码",
+    "footer": "© 2026 ÉLYSÉE 大酒店"
   },
   "auth": {
     "login": "登录",
@@ -302,7 +326,8 @@
     "logoutSuccess": "已退出登录",
     "loginRequired": "请先登录",
     "loginMessage": "预订房间需要登录账号",
-    "goToLogin": "去登录"
+    "goToLogin": "去登录",
+    "loginToView": "请登录后查看"
   },
   "room": {
     "roomNumber": "房间号",
@@ -381,15 +406,6 @@
     "footerAddress": "巴黎大军团大街1号",
     "footerPhone": "+33 1 40 69 60 00",
     "footerEmail": "reservations@elysee.com"
-  },
-  "rooms": {
-    "title": "客房浏览",
-    "availableRooms": "{{checkIn}} ~ {{checkOut}} 可预订房间",
-    "selectRoom": "选择心仪的房间",
-    "guests": "{{count}}人",
-    "reviews": "({{count}}条评价)",
-    "viewDetail": "查看详情",
-    "noRooms": "暂无可用房间"
   },
   "roomDetail": {
     "roomNotFound": "房间不存在",
@@ -472,6 +488,7 @@
     "cancelSuccess": "取消成功",
     "cancelFailed": "取消失败",
     "writeReview": "写评价",
+    "includesTaxes": "含税及服务费",
     "cancelDialog": {
       "title": "取消预订",
       "description": "确认取消此预订？取消后无法恢复。",
@@ -516,5 +533,15 @@
     "goToLogin": "去登录",
     "loginFailed": "登录失败",
     "registerFailed": "注册失败"
+  },
+  "layout": {
+    "contact": "联系我们",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
+  },
+  "calendar": {
+    "selected": "已选",
+    "booked": "已订",
+    "available": "可选"
   }
 }

@@ -11,7 +11,7 @@ export default function CustomerLayout() {
       <main className="flex-1">
         <Outlet />
       </main>
-      <footer className="bg-charcoal text-white/60 py-16">
+      <footer className="bg-[#1C1915] text-[#A9A39C]/70 py-16">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-1">
@@ -23,33 +23,33 @@ export default function CustomerLayout() {
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">{t('nav.rooms')}</h4>
               <div className="space-y-2">
-                <Link to="/rooms" className="block text-sm hover:text-gold transition-colors">{t('roomType.single')} / {t('roomType.double')} / {t('roomType.suite')}</Link>
-                <Link to="/my-reservations" className="block text-sm hover:text-gold transition-colors">{t('nav.myReservations')}</Link>
-                <Link to="/profile" className="block text-sm hover:text-gold transition-colors">{t('nav.profile')}</Link>
+                <Link to="/rooms" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('roomType.single')} / {t('roomType.double')} / {t('roomType.suite')}</Link>
+                <Link to="/my-reservations" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('nav.myReservations')}</Link>
+                <Link to="/profile" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('nav.profile')}</Link>
               </div>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Contact</h4>
+              <h4 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">{t('layout.contact')}</h4>
               <div className="space-y-2 text-sm">
                 <p>{t('home.footerAddress')}</p>
-                <p className="text-gold">{t('home.footerPhone')}</p>
+                <p className="text-[#C5A54E]">{t('home.footerPhone')}</p>
                 <p>{t('home.footerEmail')}</p>
               </div>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">{t('nav.profile')}</h4>
               <div className="space-y-2">
-                <Link to="/rooms" className="block text-sm hover:text-gold transition-colors">{t('nav.rooms')}</Link>
-                <Link to="/my-favorites" className="block text-sm hover:text-gold transition-colors">{t('nav.favorites')}</Link>
-                <Link to="/login" className="block text-sm hover:text-gold transition-colors">{t('nav.login')}</Link>
+                <Link to="/rooms" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('nav.rooms')}</Link>
+                <Link to="/my-favorites" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('nav.favorites')}</Link>
+                <Link to="/login" className="block text-sm hover:text-[#C5A54E] transition-colors">{t('nav.login')}</Link>
               </div>
             </div>
           </div>
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm">&copy; 2026 {t('home.brand')} Grand Hotel.</p>
-            <div className="flex gap-6 text-sm">
-              <span className="hover:text-gold cursor-pointer transition-colors">Privacy</span>
-              <span className="hover:text-gold cursor-pointer transition-colors">Terms</span>
+          <div className="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-[#5A5550]">&copy; 2026 {t('home.brand')} Grand Hotel.</p>
+            <div className="flex gap-6 text-sm text-[#5A5550]">
+              <span className="hover:text-[#C5A54E] cursor-pointer transition-colors">{t('layout.privacy')}</span>
+              <span className="hover:text-[#C5A54E] cursor-pointer transition-colors">{t('layout.terms')}</span>
             </div>
           </div>
         </div>
